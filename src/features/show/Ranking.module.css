@@ -1,0 +1,140 @@
+@import "../../styles/colors.module.css";
+
+.rankingContainer {
+  font-family: "Pretendard", "Noto Sans KR", sans-serif;
+  min-height: 100vh;
+  background: var(--background-light, #faf9fb);
+  display: flex;
+  flex-direction: column;
+}
+
+.rankingMain {
+  flex: 1;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.rankingTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 32px;
+  color: var(--text);
+}
+
+.rankingGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.rankingCardWrap {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(102, 51, 255, 0.06);
+  padding: 16px 8px 8px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rankBadge {
+  position: absolute;
+  top: -18px;
+  left: 16px;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 60%,
+    var(--primary-700) 100%
+  );
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(102, 51, 255, 0.12);
+  border: 2px solid #fff;
+  z-index: 2;
+}
+
+.loadingText {
+  text-align: center;
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-top: 60px;
+}
+
+.rankingList {
+  margin: 48px auto 0 auto;
+  max-width: 900px;
+  width: 100%;
+  list-style: none;
+  padding: 0;
+}
+
+.rankingListItem {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 8px rgba(102, 51, 255, 0.04);
+  margin-bottom: 20px;
+  padding: 18px 28px;
+  transition: box-shadow 0.2s;
+  gap: 24px;
+}
+.rankingListItem:hover {
+  box-shadow: 0 4px 16px rgba(102, 51, 255, 0.1);
+}
+
+.listRank {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary);
+  width: 32px;
+  text-align: center;
+}
+
+.listThumb {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 1px 4px rgba(102, 51, 255, 0.08);
+  background: #f5f5f5;
+}
+
+.listInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.listTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.listVenue {
+  font-size: 0.97rem;
+  color: #666;
+}
+
+.listPeriod {
+  font-size: 0.95rem;
+  color: #888;
+}

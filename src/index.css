@@ -1,0 +1,26 @@
+/* 전체 요소에 box-sizing 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HTML, Body 기본 설정 */
+html,
+body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff;
+}
+
+/* 코드 텍스트 폰트 */
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}

@@ -1,0 +1,197 @@
+@import "../../styles/colors.module.css";
+
+.container {
+  background: var(--background-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.inner {
+  display: flex;
+  gap: 32px;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 24px 0 24px;
+}
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 18px;
+}
+.breadcrumb {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 18px;
+}
+.productTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.section {
+  background: var(--background-light);
+  border: 1px solid var(--divider);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(102, 51, 255, 0.04);
+  margin-bottom: 28px;
+  padding: 24px 24px 18px 24px;
+}
+.flexRow {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.thumbnail {
+  width: 180px;
+  height: 240px;
+  flex-shrink: 0;
+}
+
+.infoTable {
+  flex: 1;
+  min-width: 0;
+}
+
+.infoTable th {
+  width: 120px;
+  white-space: nowrap;
+}
+
+.infoTable td {
+  word-break: keep-word;
+}
+
+.mapBtn {
+  background: var(--background-light);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  font-size: 13px;
+  padding: 2px 10px;
+  margin-left: 6px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.mapBtn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+.ticketMethod {
+  color: var(--primary);
+  font-weight: 600;
+}
+.noticeBox {
+  background: var(--background-light);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.payTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  margin-bottom: 0;
+}
+.payTable th,
+.payTable td {
+  text-align: center;
+  padding: 8px 6px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.payTable th {
+  background: var(--background-light);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.payTable td {
+  color: var(--text);
+}
+.paySummary {
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  margin-top: 10px;
+  font-size: 15px;
+}
+.paySummary span {
+  color: var(--primary);
+  font-weight: 600;
+}
+.cautionTitle {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.cautionBox {
+  background: var(--background-light);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+.cautionTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 8px;
+}
+.cautionTable th,
+.cautionTable td {
+  text-align: center;
+  padding: 7px 4px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.cautionTable th {
+  background: var(--background-light);
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+.cautionTable td {
+  color: var(--text);
+}
+.cautionRed {
+  color: #e60033;
+  font-weight: 600;
+}
+.caution10 {
+  color: var(--primary);
+  font-weight: 600;
+}
+.btnRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.btn {
+  background: var(--background-light);
+  border: 1px solid var(--divider);
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.15s, border 0.15s, color 0.15s;
+}
+.btnMain {
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+}
+.btnMain:hover {
+  background: var(--primary);
+  border: 1px solid var(--primary);
+}
+.btn:hover:not(.btnMain) {
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+}
