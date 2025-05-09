@@ -1,0 +1,15 @@
+.show-info {
+  margin-top: 20px;
+}
+
+.show-info h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.show-info p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #555;
+}
