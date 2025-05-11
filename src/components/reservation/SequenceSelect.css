@@ -1,0 +1,21 @@
+.sequence-select {
+  flex: 0 0 100%;
+  padding: 20px 15px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.step {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+  flex: 1;
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+.step.active {
+  background-color: #4CAF50;
+  color: white;
+}

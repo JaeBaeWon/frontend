@@ -1,0 +1,31 @@
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, auto); /* 가로 3개 */
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.seat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.seat-row {
+  display: flex;
+  gap: 2px;
+}
+
+.seat {
+  width: 10px;
+  height: 10px;
+  background-color: #8e44ad;
+  border: 1px solid #5c2a83;
+  cursor: pointer;
+  padding: 0;
+}
+
+.seat.selected {
+  background-color: #2ecc71;
+}

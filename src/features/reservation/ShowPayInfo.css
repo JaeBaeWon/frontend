@@ -1,0 +1,56 @@
+.payment-complete-container {
+  text-align: center;
+  padding: 40px;
+  font-family: 'sans-serif';
+}
+
+.payment-complete-title {
+  font-size: 28px;
+  margin-bottom: 40px;
+  font-weight: bold;
+}
+
+.payment-info-sections {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.info-block {
+  min-width: 240px;
+  border-top: 1px solid #aaa;
+  padding-top: 10px;
+  font-size: 16px;
+}
+
+.info-block h4 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #222;
+}
+
+.info-block p {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.payment-complete-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.payment-complete-buttons button {
+  background-color: #ccc;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.payment-complete-buttons button:hover {
+  background-color: #bbb;
+}

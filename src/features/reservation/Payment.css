@@ -1,0 +1,46 @@
+.payment-container {
+  padding: 20px;
+  font-size: 15px;
+}
+
+.payment-methods {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.payment-methods img {
+  width: 80px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.refund-info {
+  margin-top: 30px;
+}
+
+.refund-deadline {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.refund-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.refund-table th,
+.refund-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.agreements {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

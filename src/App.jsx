@@ -19,6 +19,8 @@ import RefundAlertComplete from "./features/mypage/RefundAlertComplete";
 import ManageAddress from "./features/mypage/ManageAddress";
 import Ranking from "./features/show/Ranking";
 
+import ReservationFlow from "./features/reservation/ReservationFlow";
+
 function App() {
   return (
     <BrowserRouter>
@@ -46,6 +48,10 @@ function App() {
         />
         <Route path="/mypage/manageaddress" element={<ManageAddress />} />
         <Route path="/show/ranking" element={<Ranking />} />
+
+        <Route path="/Reservation" element={<ReservationFlow />} />
+
+
       </Routes>
     </BrowserRouter>
   );
