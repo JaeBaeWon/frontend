@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './Payment.css';
 
 const Payment = () => {
-  const [selectedMethod, setSelectedMethod] = useState('card');
-  const [selectedPg, setSelectedPg] = useState('html5_inicis');
-  const [agreeAll, setAgreeAll] = useState(false);
-  const [agreements, setAgreements] = useState({
+    const navigate = useNavigate();
+
+    const [selectedMethod, setSelectedMethod] = useState('card');
+    const [selectedPg, setSelectedPg] = useState('html5_inicis');
+    const [agreeAll, setAgreeAll] = useState(false);
+    const [agreements, setAgreements] = useState({
     terms: false,
     cancelPolicy: false,
     thirdParty: false,
@@ -25,94 +29,87 @@ const Payment = () => {
     });
   };
 
-  const onClickPayment = async () => {
-    if (!window.IMP) return;
-    const IMP = window.IMP;
-    IMP.init("imp00577760");
+  const onClickPayment = async (pg, method) => {
+      if (!window.IMP) return;
+      const IMP = window.IMP;
+      IMP.init("imp00577760");
 
-    try {
-      const reservationResponse = await fetch("http://localhost:8080/reservation/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: 1,
-          performanceId: 1,
-          seatId: 1
-        }),
-      });
+      try {
 
-      if (!reservationResponse.ok) throw new Error("예약 생성 실패");
-      const json = await reservationResponse.json();
-      const reservationId = json.reservationId;
+        // 1️⃣ 공연 정보 가져오기
+//         const res = await fetch(`http://localhost:8080/reservation/check/reservation/${reservationId}`);
+//         const data = await res.json();
+//         console.log("🎯 공연 정보 응답:", data);
+        const data = {
+                title: "지킬 앤 하이드",
+                price: 150000,
+                email: "user@example.com",
+                username: "홍길동",
+                phone: "01012345678",
+              };
 
-      const res = await fetch(`http://localhost:8080/reservation/check/reservation/${reservationId}`);
-      const data = await res.json();
+        // 2️⃣ 결제창 호출
+        IMP.request_pay(
+          {
+            pg: pg,
+            pay_method: method,
+            merchant_uid: "order_" + new Date().getTime(),
+            name: data.title,
+            amount: data.price,
+            buyer_email: data.email,
+            buyer_name: data.username,
+            buyer_tel: data.phone
+          },
+          async function (rsp) {
+            if (rsp.success) {
+              alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
 
-      IMP.request_pay(
-        {
-          pg: selectedPg,
-          pay_method: selectedMethod,
-          merchant_uid: "order_" + new Date().getTime(),
-          name: data.title,
-          amount: data.price,
-          buyer_email: data.email,
-          buyer_name: data.username,
-          buyer_tel: data.phone
-        },
-        async function (rsp) {
-          if (rsp.success) {
-            alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
+              // 3️⃣ 서버에 결제 검증
+              try {
+                const verifyResponse = await fetch("http://localhost:8080/payment/verify", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    impUid: rsp.imp_uid,
+                    merchantUid: rsp.merchant_uid,
+                    userId: 1,
+                    performanceId: 1,
+                    seatId: 1
+                  }),
+                });
 
-            try {
-              const verifyResponse = await fetch("http://localhost:8080/payment/verify", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  impUid: rsp.imp_uid,
-                  merchantUid: rsp.merchant_uid,
-                  reservationId: reservationId
-                }),
-              });
+                if (!verifyResponse.ok) throw new Error("검증 실패");
 
-              if (!verifyResponse.ok) throw new Error("검증 실패");
-              alert("🎉 결제 검증 및 저장 성공!");
-            } catch (error) {
-              console.error("결제 검증 실패:", error);
-              alert("❗ 결제는 되었지만 서버 저장 실패");
+                const resJson = await verifyResponse.json();
+                alert("🎉 결제 및 예매 완료!");
+
+//                 // 4️⃣ 다음 화면으로 reservationId 전달
+//                 const reservationId = resJson.reservationId;
+//                 navigate('/reservation/complete', { state: { reservationId } });
+//
+
+              } catch (error) {
+                console.error("결제 검증 실패:", error);
+                alert("❗ 결제는 되었지만 서버 저장 실패");
+              }
+            } else {
+              alert(`❌ 결제 실패: ${rsp.error_msg}`);
             }
-          } else {
-            alert(`❌ 결제 실패: ${rsp.error_msg}`);
           }
-        }
-      );
-    } catch (error) {
-      console.error("예약/결제 흐름 오류:", error);
-      alert("예약 또는 결제 과정 중 오류 발생");
-    }
-  };
+        );
+      } catch (error) {
+        console.error("예약/결제 흐름 오류:", error);
+        alert("예약 또는 결제 과정 중 오류 발생");
+      }
+    };
 
   return (
-    <div className="payment-container">
-      <h3>결제 방법 선택</h3>
-      <div className="payment-methods">
-        <label>
-          <input
-            type="radio"
-            name="pg"
-            checked={selectedPg === 'html5_inicis'}
-            onChange={() => setSelectedPg('html5_inicis')}
-          />
-          신용카드
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="pg"
-            checked={selectedPg === 'kakaopay'}
-            onChange={() => setSelectedPg('kakaopay')}
-          />
-          카카오페이
-        </label>
+    <div>
+      <div style={{ padding: "40px", textAlign: "center" }}>
+        <button onClick={() => onClickPayment("kakaopay", "card")}>🟡 카카오페이 결제</button>
+        <button onClick={() => onClickPayment("html5_inicis", "card")}>💳 신용카드 결제 (이니시스)</button>
       </div>
 
       <div className="refund-info">
