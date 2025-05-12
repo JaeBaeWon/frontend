@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./Header.module.css";
+import Logo from "./Logo";
 
 function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -38,22 +39,19 @@ function Header() {
   };
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} ${styles.notoSansKR}`}>
       <div className={styles.headerInner}>
-        {/* 로고 */}
-        <Link to="/" className={styles.logo}>
-          <img src="/logo.png" alt="포도피커 로고" />
-        </Link>
-
-        {/* 네비게이션 */}
-        <nav className={styles.nav}>
+        <div className={styles.leftArea}>
+          <Link to="/" className={styles.logo}>
+            <Logo />
+          </Link>
+        </div>
+        <nav className={styles.centerArea}>
           {genres.map((g) => (
             <Link
               key={g.value}
               to={`/shows?genre=${g.value}`}
-              className={`${styles.navLink} ${
-                currentGenre === g.value ? styles.activeLink : ""
-              }`}
+              className={styles.navLink}
             >
               {g.label}
             </Link>
@@ -62,54 +60,16 @@ function Header() {
             실시간 랭킹
           </Link>
         </nav>
-
-        {/* 검색 */}
-        <div className={styles.searchBar}>
-          <input
-            type="text"
-            placeholder="원하는 좌석을 찾아보세요"
-            className={styles.searchInput}
-          />
-        </div>
-
-        {/* 로그인 / 드롭다운 */}
-        <div className={styles.accountArea} ref={dropdownRef}>
-          {isLoggedIn ? (
-            <div
-              className={styles.dropdownTrigger}
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-            >
-              마이페이지 ▾
-              {dropdownOpen && (
-                <div className={styles.dropdownMenu}>
-                  <Link to="/mypage" className={styles.dropdownItem}>
-                    내 정보
-                  </Link>
-                  <Link
-                    to="/mypage/reservations"
-                    className={styles.dropdownItem}
-                  >
-                    예매 내역
-                  </Link>
-                  <Link to="/mypage/shipment" className={styles.dropdownItem}>
-                    배송지 관리
-                  </Link>
-                  <div className={styles.dropdownItem} onClick={handleLogout}>
-                    로그아웃
-                  </div>
-                </div>
-              )}
-            </div>
-          ) : (
-            <div className={styles.authLinks}>
-              <Link to="/login" className={styles.authBtn}>
-                로그인
-              </Link>
-              <Link to="/signup" className={styles.authBtn}>
-                회원가입
-              </Link>
-            </div>
-          )}
+        <div className={styles.rightArea}>
+          <div className={styles.authAreaBg}></div>
+          <div className={styles.authLinks}>
+            <Link to="/login" className={styles.authLink}>
+              로그인
+            </Link>
+            <Link to="/signup" className={styles.authLink}>
+              회원가입
+            </Link>
+          </div>
         </div>
       </div>
     </header>
