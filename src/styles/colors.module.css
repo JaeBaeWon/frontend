@@ -1,9 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
 :root {
   /* Primary Color*/
-  --primary: #6633ff;
+  --primary: #3f00bf;
   --primary-100: #ddd6ff;
   --primary-300: #a288ff;
-  --primary-700: #3f00bf;
+  --primary-700: #6633ff;
   --primary-900: #1a0066;
 
   /* 상태 색상 (필수만 유지) */
