@@ -19,6 +19,8 @@ const ReservationFlow = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
+  const [reservationId, setReservationId] = useState(null);
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -26,9 +28,9 @@ const ReservationFlow = () => {
       case 2:
         return <CheckUserInfo />;
       case 3:
-        return <Payment />;
+        return <Payment setCurrentStep={setCurrentStep} setReservationId={setReservationId} />;
       case 4:
-        return <ShowPayInfo />;
+        return <ShowPayInfo reservationId={reservationId} />;
       default:
         return null;
     }

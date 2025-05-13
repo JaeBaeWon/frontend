@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ShowPayInfo.css';
 
-const ShowPayInfo = () => {
+const ShowPayInfo = ({ reservationId }) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const reservationId = location.state?.reservationId;
 
   const [paymentInfo, setPaymentInfo] = useState(null);
 
@@ -17,7 +15,7 @@ const ShowPayInfo = () => {
       return;
     }
 
-    axios.get(`http://localhost:8080/payment/info/{reservationId}`)
+    axios.get(`http://localhost:8080/payment/info/${reservationId}`)
       .then((res) => {
         setPaymentInfo(res.data);
       })
