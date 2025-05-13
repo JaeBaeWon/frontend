@@ -15,6 +15,22 @@ const Payment = ({ setCurrentStep, setReservationId }) => {
     thirdParty: false,
   });
 
+    const getRefundDeadline = () => {
+      if (!performanceData?.performStartAt) return '';
+
+      const date = new Date(performanceData.performStartAt);
+      date.setDate(date.getDate() - 1); // 하루 전
+      date.setHours(17, 0, 0); // 17:00 고정
+
+      return date.toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    };
+
     // 1️⃣ 공연 정보 가져오기
     const [performanceData, setPerformanceData] = useState(null);
     const [userId, setUserId] = useState(1);
@@ -133,82 +149,102 @@ const Payment = ({ setCurrentStep, setReservationId }) => {
     };
 
   return (
-    <div>
-      <div style={{ padding: "40px", textAlign: "center" }}>
-        <button onClick={() => onClickPayment("kakaopay", "card")}>🟡 카카오페이 결제</button>
-        <button onClick={() => onClickPayment("html5_inicis", "card")}>💳 신용카드 결제 (이니시스)</button>
-      </div>
+        <div className="payment-container">
+            <div>
+                  <div className="payment-buttons">
+                    <button
+                      className={selectedPg === "kakaopay" ? "selected" : ""}
+                      onClick={() => {
+                        setSelectedPg("kakaopay");
+                        setSelectedMethod("card");
+                      }}
+                    >
+                      🟡 카카오페이 결제
+                    </button>
+                    <button
+                      className={selectedPg === "html5_inicis" ? "selected" : ""}
+                      onClick={() => {
+                        setSelectedPg("html5_inicis");
+                        setSelectedMethod("card");
+                      }}
+                    >
+                      💳 신용카드 결제 (이니시스)
+                    </button>
+                  </div>
 
-      <div className="refund-info">
-        <div className="refund-deadline">
-          <strong>취소 가능 마감 시간 : </strong>
-          <span style={{ color: 'red' }}>2025년 06월 05일 17:00까지</span>
-        </div>
-        <table className="refund-table">
-          <thead>
-            <tr>
-              <th>내용</th>
-              <th>취소수수료</th>
-              <th>비고</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>예매 후 7일 이내</td>
-              <td>없음</td>
-              <td>뮤지컬, 콘서트 등: 장당 4,000원</td>
-            </tr>
-            <tr>
-              <td>예매 후 8~10일 경과까지</td>
-              <td>티켓 금액의 10%</td>
-              <td>연극 등: 장당 2,000원</td>
-            </tr>
-            <tr>
-              <td>공연일 9일 전 ~ 7일 전까지</td>
-              <td>티켓 금액의 10%</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>공연일 6일 전 ~ 3일 전까지</td>
-              <td>티켓 금액의 20%</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>공연일 2일 전 ~ 1일 전까지</td>
-              <td>티켓 금액의 30%</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                  <div className="refund-info">
+                    <div className="refund-deadline">
+                      <strong>취소 가능 마감 시간 : </strong>
+                      <span style={{ color: 'red' }}>{getRefundDeadline()}까지</span>
+                    </div>
+                    <table className="refund-table">
+                      <thead>
+                        <tr>
+                          <th>내용</th>
+                          <th>취소수수료</th>
+                          <th>비고</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>예매 후 7일 이내</td>
+                          <td>없음</td>
+                          <td>뮤지컬, 콘서트 등: 장당 4,000원</td>
+                        </tr>
+                        <tr>
+                          <td>예매 후 8~10일 경과까지</td>
+                          <td>티켓 금액의 10%</td>
+                          <td>연극 등: 장당 2,000원</td>
+                        </tr>
+                        <tr>
+                          <td>공연일 9일 전 ~ 7일 전까지</td>
+                          <td>티켓 금액의 10%</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>공연일 6일 전 ~ 3일 전까지</td>
+                          <td>티켓 금액의 20%</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td>공연일 2일 전 ~ 1일 전까지</td>
+                          <td>티켓 금액의 30%</td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-      <div className="agreements">
-        <label>
-          <input type="checkbox" checked={agreeAll} onChange={toggleAll} />
-          모두 동의합니다.
-        </label>
-        <label>
-          <input type="checkbox" checked={agreements.terms} onChange={() => toggleAgreement('terms')} />
-          개인정보 수집 및 이용에 동의합니다.
-        </label>
-        <label>
-          <input type="checkbox" checked={agreements.cancelPolicy} onChange={() => toggleAgreement('cancelPolicy')} />
-          취소수수료 및 취소기한을 확인했으며, 동의합니다.
-        </label>
-        <label>
-          <input type="checkbox" checked={agreements.thirdParty} onChange={() => toggleAgreement('thirdParty')} />
-          개인정보 제3자 제공에 동의합니다.
-        </label>
-      </div>
+                  <div className="agreements">
+                    <label>
+                      <input type="checkbox" checked={agreeAll} onChange={toggleAll} />
+                      모두 동의합니다.
+                    </label>
+                    <label>
+                      <input type="checkbox" checked={agreements.terms} onChange={() => toggleAgreement('terms')} />
+                      개인정보 수집 및 이용에 동의합니다.
+                    </label>
+                    <label>
+                      <input type="checkbox" checked={agreements.cancelPolicy} onChange={() => toggleAgreement('cancelPolicy')} />
+                      취소수수료 및 취소기한을 확인했으며, 동의합니다.
+                    </label>
+                    <label>
+                      <input type="checkbox" checked={agreements.thirdParty} onChange={() => toggleAgreement('thirdParty')} />
+                      개인정보 제3자 제공에 동의합니다.
+                    </label>
+                  </div>
 
-      <button
-        className="next-button"
-        onClick={onClickPayment}
-        disabled={!(agreements.terms && agreements.cancelPolicy && agreements.thirdParty)}
-      >
-        결제
-      </button>
-    </div>
+                </div>
+
+                <button
+                  className="confirm-pay-button"
+                  onClick={() => onClickPayment(selectedPg, selectedMethod)}
+                  disabled={!(agreements.terms && agreements.cancelPolicy && agreements.thirdParty)}
+                >
+                  결제하기
+                </button>
+            </div>
+
   );
 };
 

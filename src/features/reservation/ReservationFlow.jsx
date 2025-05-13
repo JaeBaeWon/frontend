@@ -52,7 +52,7 @@ const ReservationFlow = () => {
                       {currentStep > 1 && (
                         <button className="next-button" onClick={handlePrev}>이전</button>
                       )}
-                      {currentStep < 4 && (
+                      {currentStep < 3 && (
                         <button className="next-button" onClick={handleNext}>다음</button>
                       )}
                     </div>
