@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Payment.css';
 
-const Payment = () => {
+const Payment = ({ setCurrentStep, setReservationId }) => {
     const navigate = useNavigate();
 
     const [selectedMethod, setSelectedMethod] = useState('card');
@@ -14,6 +14,41 @@ const Payment = () => {
     cancelPolicy: false,
     thirdParty: false,
   });
+
+    // 1️⃣ 공연 정보 가져오기
+    const [performanceData, setPerformanceData] = useState(null);
+    const [userId, setUserId] = useState(1);
+    const [performId, setPerformId] = useState(5);
+
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+      if (userId) {
+        fetch(`http://localhost:8080/reservation/check/user/${userId}`)
+          .then((res) => {
+            if (!res.ok) throw new Error("사용자 정보 로드 실패");
+            return res.json();
+          })
+          .then((data) => setUserData(data))
+          .catch((err) => {
+            console.error("사용자 정보 오류:", err);
+          });
+      }
+    }, [userId]);
+
+      // 공연 정보 가져오기 (performId 기반)
+      useEffect(() => {
+        if (performId) {
+          axios
+            .get(`http://localhost:8080/performance/${performId}`)
+            .then((response) => {
+              setPerformanceData(response.data); // 공연 정보 상태에 저장
+            })
+            .catch((error) => {
+              console.error("공연 정보를 로드하는 데 실패했습니다.", error);
+            });
+        }
+      }, [performId]);
 
   const toggleAgreement = (key) => {
     setAgreements({ ...agreements, [key]: !agreements[key] });
@@ -34,31 +69,23 @@ const Payment = () => {
       const IMP = window.IMP;
       IMP.init("imp00577760");
 
+      if (!performanceData) {
+            alert('공연 정보가 로드되지 않았습니다.');
+            return;
+          }
+
       try {
-
-        // 1️⃣ 공연 정보 가져오기
-//         const res = await fetch(`http://localhost:8080/reservation/check/reservation/${reservationId}`);
-//         const data = await res.json();
-//         console.log("🎯 공연 정보 응답:", data);
-        const data = {
-                title: "지킬 앤 하이드",
-                price: 150000,
-                email: "user@example.com",
-                username: "홍길동",
-                phone: "01012345678",
-              };
-
         // 2️⃣ 결제창 호출
         IMP.request_pay(
           {
             pg: pg,
             pay_method: method,
             merchant_uid: "order_" + new Date().getTime(),
-            name: data.title,
-            amount: data.price,
-            buyer_email: data.email,
-            buyer_name: data.username,
-            buyer_tel: data.phone
+            name: performanceData.title,
+            amount: performanceData.price,
+            buyer_email: userData.email,
+            buyer_name: userData.username,
+            buyer_tel: userData.phone
           },
           async function (rsp) {
             if (rsp.success) {
@@ -74,8 +101,8 @@ const Payment = () => {
                   body: JSON.stringify({
                     impUid: rsp.imp_uid,
                     merchantUid: rsp.merchant_uid,
-                    userId: 1,
-                    performanceId: 1,
+                    userId: userId,
+                    performanceId: performId,
                     seatId: 1
                   }),
                 });
@@ -85,10 +112,10 @@ const Payment = () => {
                 const resJson = await verifyResponse.json();
                 alert("🎉 결제 및 예매 완료!");
 
-//                 // 4️⃣ 다음 화면으로 reservationId 전달
-//                 const reservationId = resJson.reservationId;
-//                 navigate('/reservation/complete', { state: { reservationId } });
-//
+                // 4️⃣ 다음 화면으로 reservationId 전달
+                setReservationId(resJson.reservationId);
+                setCurrentStep(4); // ShowPayInfo로 이동
+
 
               } catch (error) {
                 console.error("결제 검증 실패:", error);
