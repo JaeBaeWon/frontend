@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import SeatGrid from './SeatGrid';
-import './Reservation.css';
 
-const SelectSeat = () => {
-    const performanceId = 5;
+const SelectSeat = ({ onSelectedSeatsChange }) => {
+  const performanceId = 5;
+
+  const handleSeatSelect = (selectedSeats) => {
+    onSelectedSeatsChange(selectedSeats); // ⬅️ 부모에게 전달
+  };
 
   return (
     <div>
-        <SeatGrid performanceId={performanceId} />
+      <SeatGrid performanceId={performanceId} onSeatSelect={handleSeatSelect} />
     </div>
   );
 };
