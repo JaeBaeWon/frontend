@@ -3,9 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Payment.css';
 
-const Payment = ({ setCurrentStep, setReservationId }) => {
-    const navigate = useNavigate();
-
+const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds }) => {
     const [selectedMethod, setSelectedMethod] = useState('card');
     const [selectedPg, setSelectedPg] = useState('html5_inicis');
     const [agreeAll, setAgreeAll] = useState(false);
@@ -119,7 +117,7 @@ const Payment = ({ setCurrentStep, setReservationId }) => {
                     merchantUid: rsp.merchant_uid,
                     userId: userId,
                     performanceId: performId,
-                    seatId: 1
+                    seatId: selectedSeatIds[0]
                   }),
                 });
 

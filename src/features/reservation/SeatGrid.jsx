@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SeatGrid.css';
 
-const SeatGrid = ({ performanceId }) => {
+const SeatGrid = ({ performanceId, onSeatSelect }) => {
   const [seats, setSeats] = useState([]);
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
@@ -16,20 +16,24 @@ const SeatGrid = ({ performanceId }) => {
       });
   }, [performanceId]);
 
-  // 좌석 선택/해제 토글
-  const handleSeatClick = (seatId) => {
-    setSelectedSeatIds(prev =>
-      prev.includes(seatId)
-        ? prev.filter(id => id !== seatId)
-        : [...prev, seatId]
-    );
-  };
+  // ✅ 상태가 바뀔 때만 부모에게 전달
+    useEffect(() => {
+      onSeatSelect(selectedSeatIds);
+    }, [selectedSeatIds, onSeatSelect]);
 
-  // 좌석이 선점되었으면 클릭 무시
-  const handleClick = (seatId, seatStatus) => {
+    const handleSeatClick = (seatId) => {
+      setSelectedSeatIds(prev =>
+        prev.includes(seatId) ? [] : [seatId]
+      );
+    };
+
+    const handleClick = (seatId, seatStatus) => {
       if (seatStatus !== 'AVAILABLE') return;
       handleSeatClick(seatId);
-  };
+    };
+
+
+
 
   const sections = ['A', 'B', 'C', 'D', 'E', 'F'];
 
