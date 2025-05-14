@@ -4,6 +4,8 @@ import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import ShowGrid from "../../components/performance/ShowGrid";
 import Pagination from "../../components/performance/Pagination";
+import axios from "axios";
+
 
 function ShowList() {
   const location = useLocation();
@@ -21,6 +23,7 @@ function ShowList() {
   const displayGenre = genreMap[genreSlug] || "뮤지컬";
 
   const [events, setEvents] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
@@ -28,26 +31,24 @@ function ShowList() {
 
   useEffect(() => {
     setLoading(true);
-    const endpoint =
-      genreSlug === "upcoming"
-        ? "/api/upcoming-events"
-        : `/api/events?genre=${genreSlug}`; // 이미 슬러그 형태이므로 인코딩 불필요
 
-    fetch(endpoint)
-      .then((res) => res.json())
-      .then((data) => {
-        setEvents(data);
-        setCurrentPage(1);
+    axios
+      .get(`http://localhost:8080/performance/category?category=${genreSlug.toUpperCase()}&page=${currentPage - 1}`)
+      .then((res) => {
+        setEvents(res.data.content);
+        setTotalPages(res.data.totalPages);
       })
       .catch((err) => console.error("공연 데이터 로딩 실패:", err))
       .finally(() => setLoading(false));
-  }, [genreSlug]);
+  }, [genreSlug, currentPage]);
 
-  const totalPages = Math.ceil(events.length / eventsPerPage);
-  const currentShows = events.slice(
-    (currentPage - 1) * eventsPerPage,
-    currentPage * eventsPerPage
-  );
+  const mappedShows = events.map(item => ({
+    id: item.performId,
+    title: item.title,
+    venue: item.location,
+    period: `${item.performStartAt} ~ ${item.performEndAt}`,
+    thumbnailUrl: item.performImg,
+  }));
 
   return (
     <div
@@ -85,7 +86,7 @@ function ShowList() {
             <p style={{ textAlign: "center" }}>공연이 없습니다.</p>
           ) : (
             <>
-              <ShowGrid shows={currentShows} />
+            <ShowGrid shows={mappedShows} />
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}

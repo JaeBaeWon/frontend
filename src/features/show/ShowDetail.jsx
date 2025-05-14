@@ -3,45 +3,26 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
+import axios from "axios";
 
 function ShowDetail() {
-  const { id } = useParams();
+  const { performId } = useParams();
   const [show, setShow] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //   useEffect(() => {
-  //     axios
-  //       .get(`/api/shows/${id}`)
-  //       .then((res) => {
-  //         setShow(res.data);
-  //         setLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         console.error("공연 정보를 불러오는데 실패했습니다.", err);
-  //         setLoading(false);
-  //       });
-  //   }, [id]);
-
-  // 테스트용 더미 데이터
   useEffect(() => {
-    const dummy = {
-      id: 1,
-      title: "NEO CITY : SEOUL THE LINK",
-      imageUrl: "https://via.placeholder.com/400x600?text=공연+포스터",
-      location: "서울 코엑스 아티움",
-      date: "2025.05.20 - 2025.05.30",
-      startDate: "2025-05-20",
-      endDate: "2025-05-30",
-      ticketOpenDate: "2025-05-10",
-      ticketCloseDate: "2025-05-15",
-      time: "오후 3시 ~ 오후 7시",
-      price: 150000,
-      views: 127,
-    };
+    axios
+      .get(`/performance/${performId}`)
+      .then((res) => {
+        setShow(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("공연 정보를 불러오는데 실패했습니다.", err);
+        setLoading(false);
+      });
+  }, [performId]);
 
-    setShow(dummy);
-    setLoading(false);
-  }, [id]);
 
   const navigate = useNavigate();
 

@@ -33,8 +33,6 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
     };
 
 
-
-
   const sections = ['A', 'B', 'C', 'D', 'E', 'F'];
 
   return (
