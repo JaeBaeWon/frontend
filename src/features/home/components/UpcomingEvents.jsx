@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ShowGrid from "../performance/ShowGrid";
+import ShowGrid from "../../show/components/ShowGrid";
 
 function UpcomingEvents() {
   const [events, setEvents] = useState([]);

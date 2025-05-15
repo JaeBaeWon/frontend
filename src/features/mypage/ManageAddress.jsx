@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import Sidebar from "../../components/navigation/Sidebar";
-import styles from "./ManageAddress.module.css";
+import styles from "./ManageAddress.css";
 
 const ManageAddress = () => {
   const [isEdit, setIsEdit] = useState(false);

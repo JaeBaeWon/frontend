@@ -1,0 +1,33 @@
+.showlist-container {
+  min-height: 100vh;
+  background: #faf9fb;
+  font-family: Pretendard, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.showlist-main {
+  flex: 1;
+}
+
+.showlist-section {
+  padding: 60px 40px 0 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.showlist-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 32px;
+  color: #222;
+}
+
+.showlist-loading {
+  text-align: center;
+}
+
+.showlist-empty {
+  text-align: center;
+}

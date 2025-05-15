@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../../components/layout/Header";
-import Banner from "../../components/home/Banner";
-import UpcomingEvents from "../../components/home/UpcomingEvents";
-import GenreRanking from "../../components/home/GenreRanking";
+import Banner from "./components/Banner";
+import UpcomingEvents from "./components/UpcomingEvents";
+import GenreRanking from "./components/GenreRanking";
 import Footer from "../../components/layout/Footer";
-import styles from "./Mainpage.module.css";
+import styles from "./Mainpage.css";
 
 function Mainpage() {
   return (

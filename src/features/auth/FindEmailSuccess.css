@@ -1,0 +1,104 @@
+.fes-container {
+  display: flex;
+  min-height: 100dvh;
+  width: 100vw;
+  font-family: Pretendard, sans-serif;
+}
+
+.fes-left {
+  width: 480px;
+  min-width: 320px;
+  background-color: var(--primary);
+}
+
+.fes-right {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.fes-content {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  padding: 0 16px;
+}
+
+.fes-title {
+  font-weight: bold;
+  font-size: 2rem;
+  align-self: flex-start;
+  margin-bottom: 8px;
+}
+
+.fes-icon-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  margin: 0 auto 8px auto;
+}
+
+.fes-check-icon {
+  font-size: 2rem;
+  color: #fff;
+}
+
+.fes-description {
+  margin-top: 0;
+  padding: 0 8px;
+  line-height: 1.6;
+}
+
+.fes-text {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.fes-email {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #222;
+  background-color: var(--primary);
+  padding: 10px 16px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+}
+
+.fes-button {
+  width: 100%;
+  height: 48px;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.fes-text-link-wrapper {
+  width: 100%;
+  text-align: right;
+}
+
+.fes-text-link {
+  font-size: 1rem;
+  color: #666;
+  text-decoration: underline;
+  cursor: pointer;
+}

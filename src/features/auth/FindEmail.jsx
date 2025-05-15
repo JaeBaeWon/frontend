@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import "./FindEmail.css";
 
 function FindEmailPage() {
   const [birthdate, setBirthdate] = useState("");
@@ -35,26 +36,28 @@ function FindEmailPage() {
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="findemail-container">
       {/* 왼쪽 보라색 영역 */}
-      <div style={leftStyle}></div>
+      <div className="findemail-left"></div>
       {/* 오른쪽 카드 영역 */}
-      <div style={rightStyle}>
-        <form onSubmit={handleSubmit} style={formStyle}>
-          <h2 style={titleStyle}>아이디 찾기</h2>
-          <div style={fieldStyle}>
-            <label style={labelStyle}>생년월일</label>
+      <div className="findemail-right">
+        <form onSubmit={handleSubmit} className="findemail-form">
+          <h2 className="findemail-title">아이디 찾기</h2>
+          <div className="findemail-field">
+            <label className="findemail-label">생년월일</label>
             <input
               type="text"
               placeholder="생년월일 8자리 [YYYYMMDD]"
               value={birthdate}
               onChange={(e) => setBirthdate(e.target.value)}
-              style={inputStyle}
+              className="findemail-input"
             />
           </div>
-          <div style={fieldStyle}>
-            <label style={labelStyle}>가입 시 인증한 휴대폰 번호 입력</label>
-            <div style={{ display: "flex", gap: "8px" }}>
+          <div className="findemail-field">
+            <label className="findemail-label">
+              가입 시 인증한 휴대폰 번호 입력
+            </label>
+            <div className="findemail-phone-row">
               <input
                 type="text"
                 placeholder="휴대폰 번호 입력( - 없이 입력)"
@@ -63,21 +66,12 @@ function FindEmailPage() {
                   setPhoneNumber(e.target.value);
                   if (phoneError) setPhoneError("");
                 }}
-                style={{ ...inputStyle, flex: 1, marginTop: 0, height: "48px" }}
+                className="findemail-input findemail-phone-input"
               />
               <button
-                style={{
-                  ...buttonStyle,
-                  width: "120px",
-                  height: "48px",
-                  fontSize: "1rem",
-                  padding: 0,
-                  marginTop: 0,
-                  borderRadius: "6px",
-                  backgroundColor: phoneNumber ? "var(--primary)" : "#e0e0e0",
-                  color: phoneNumber ? "#fff" : "#aaa",
-                  cursor: phoneNumber ? "pointer" : "not-allowed",
-                }}
+                className={`findemail-button findemail-verify-btn${
+                  phoneNumber ? " active" : ""
+                }`}
                 onClick={handleSendVerify}
                 type="button"
                 disabled={!phoneNumber}
@@ -85,34 +79,24 @@ function FindEmailPage() {
                 인증
               </button>
             </div>
-            {phoneError && (
-              <div
-                style={{
-                  color: "#e53935",
-                  fontSize: "0.98rem",
-                  marginTop: "6px",
-                }}
-              >
-                {phoneError}
-              </div>
-            )}
+            {phoneError && <div className="findemail-error">{phoneError}</div>}
           </div>
           {showVerifyInput && (
-            <div style={fieldStyle}>
-              <label style={labelStyle}>인증번호 입력</label>
+            <div className="findemail-field">
+              <label className="findemail-label">인증번호 입력</label>
               <input
                 type="text"
                 placeholder="인증번호 입력"
                 value={verifyCode}
                 onChange={(e) => setVerifyCode(e.target.value)}
-                style={inputStyle}
+                className="findemail-input"
               />
             </div>
           )}
-          <button type="submit" style={buttonStyle}>
+          <button type="submit" className="findemail-button">
             확인
           </button>
-          <Link to="/login" style={linkButtonStyle}>
+          <Link to="/login" className="findemail-linkbtn">
             로그인 하기
           </Link>
         </form>
@@ -120,90 +104,5 @@ function FindEmailPage() {
     </div>
   );
 }
-
-const containerStyle = {
-  display: "flex",
-  minHeight: "100dvh",
-  width: "100vw",
-  fontFamily: "Pretendard, sans-serif",
-};
-
-const leftStyle = {
-  flex: 1,
-  backgroundColor: "var(--primary)",
-};
-
-const rightStyle = {
-  flex: 1,
-  background: "#fff",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
-const formStyle = {
-  width: "100%",
-  maxWidth: "480px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "28px",
-  padding: "0 16px",
-};
-
-const titleStyle = {
-  fontWeight: "bold",
-  fontSize: "2rem",
-  marginBottom: "8px",
-  textAlign: "left",
-};
-
-const fieldStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-};
-
-const labelStyle = {
-  fontWeight: 600,
-  fontSize: "1.1rem",
-  marginBottom: "2px",
-};
-
-const inputStyle = {
-  width: "100%",
-  padding: "16px 12px",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "1.1rem",
-  boxSizing: "border-box",
-  background: "#fafafa",
-};
-
-const buttonStyle = {
-  width: "100%",
-  height: "52px",
-  backgroundColor: "var(--primary)",
-  color: "#fff",
-  fontWeight: "bold",
-  fontSize: "1.1rem",
-  borderRadius: "8px",
-  border: "none",
-  marginTop: "8px",
-  cursor: "pointer",
-};
-
-const linkButtonStyle = {
-  display: "block",
-  width: "100%",
-  padding: "0",
-  backgroundColor: "transparent",
-  border: "none",
-  color: "#888",
-  fontSize: "1.05rem",
-  textAlign: "right",
-  cursor: "pointer",
-  textDecoration: "underline",
-  marginTop: "4px",
-};
 
 export default FindEmailPage;

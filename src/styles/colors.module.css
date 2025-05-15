@@ -1,13 +1,12 @@
 :root {
-  /* Primary Color*/
+  /* 서비스 키 컬러 */
   --primary: #6633ff;
   --primary-100: #ddd6ff;
   --primary-300: #a288ff;
   --primary-700: #3f00bf;
   --primary-900: #1a0066;
 
-  /* 상태 색상 (필수만 유지) */
-
+  /* 성공 색상 */
   --success: #22c55e;
   --success-bg: #e6f9ed;
 

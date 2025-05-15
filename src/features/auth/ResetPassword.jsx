@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./ResetPassword.css";
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -35,44 +36,39 @@ function ResetPassword() {
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={leftStyle}></div>
-      <div style={rightStyle}>
-        <form onSubmit={handleSubmit} style={formStyle}>
-          <h2 style={titleStyle}>비밀번호 재설정</h2>
+    <div className="resetpw-container">
+      <div className="resetpw-left"></div>
+      <div className="resetpw-right">
+        <form onSubmit={handleSubmit} className="resetpw-form">
+          <h2 className="resetpw-title">비밀번호 재설정</h2>
 
-          <div style={fieldStyle}>
-            <label style={labelStyle}>현재 비밀번호</label>
+          <div className="resetpw-field">
+            <label className="resetpw-label">현재 비밀번호</label>
             <input
               type="password"
               value={currentPw}
               onChange={(e) => setCurrentPw(e.target.value)}
-              style={inputStyle}
+              className="resetpw-input"
             />
           </div>
 
-          <div style={fieldStyle}>
-            <label style={labelStyle}>새 비밀번호</label>
+          <div className="resetpw-field">
+            <label className="resetpw-label">새 비밀번호</label>
             <input
               type="password"
               value={newPw}
               onChange={(e) => setNewPw(e.target.value)}
-              style={inputStyle}
+              className="resetpw-input"
             />
-            <ul style={pwRuleListStyle}>
+            <ul className="resetpw-pwrule-list">
               {pwRules.map((rule, idx) => (
                 <li
                   key={idx}
-                  style={{
-                    color: rule.valid ? "#4caf50" : "#d32f2f",
-                    fontWeight: rule.valid ? 600 : 400,
-                    fontSize: "0.98rem",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                  }}
+                  className={
+                    rule.valid ? "resetpw-pwrule valid" : "resetpw-pwrule"
+                  }
                 >
-                  <span style={{ fontSize: "1.1em" }}>
+                  <span className="resetpw-pwrule-icon">
                     {rule.valid ? "✔️" : "❌"}
                   </span>
                   {rule.label}
@@ -81,24 +77,24 @@ function ResetPassword() {
             </ul>
           </div>
 
-          <div style={fieldStyle}>
-            <label style={labelStyle}>새 비밀번호 확인</label>
+          <div className="resetpw-field">
+            <label className="resetpw-label">새 비밀번호 확인</label>
             <input
               type="password"
               value={confirmPw}
               onChange={(e) => setConfirmPw(e.target.value)}
-              style={inputStyle}
+              className="resetpw-input"
             />
           </div>
 
-          <p style={infoTextStyle}>
+          <p className="resetpw-info-text">
             8~16자의 영문 대/소문자, 숫자, 특수기호를 조합하여 사용해주세요.
             <br />
             개인정보나 연속된 키보드 배열과 같은 쉬운 비밀번호는 보안에 취약하니
             피해주세요.
           </p>
 
-          <button type="submit" style={buttonStyle}>
+          <button type="submit" className="resetpw-button">
             확인
           </button>
         </form>
@@ -106,94 +102,5 @@ function ResetPassword() {
     </div>
   );
 }
-
-// 스타일 정의
-const containerStyle = {
-  display: "flex",
-  minHeight: "100dvh",
-  width: "100vw",
-  fontFamily: "Pretendard, sans-serif",
-};
-
-const leftStyle = {
-  flex: 1,
-  backgroundColor: "var(--primary)",
-};
-
-const rightStyle = {
-  flex: 1,
-  background: "#fff",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
-
-const formStyle = {
-  width: "100%",
-  maxWidth: "480px",
-  display: "flex",
-  flexDirection: "column",
-  gap: "28px",
-  padding: "0 16px",
-};
-
-const titleStyle = {
-  fontWeight: "bold",
-  fontSize: "2rem",
-  marginBottom: "8px",
-  textAlign: "left",
-};
-
-const fieldStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "10px",
-};
-
-const labelStyle = {
-  fontWeight: 600,
-  fontSize: "1.1rem",
-  marginBottom: "2px",
-};
-
-const inputStyle = {
-  width: "100%",
-  padding: "16px 12px",
-  borderRadius: "6px",
-  border: "1px solid #ccc",
-  fontSize: "1.1rem",
-  boxSizing: "border-box",
-  background: "#fafafa",
-};
-
-const buttonStyle = {
-  width: "100%",
-  height: "52px",
-  backgroundColor: "var(--primary)",
-  color: "#fff",
-  fontWeight: "bold",
-  fontSize: "1.1rem",
-  borderRadius: "8px",
-  border: "none",
-  marginTop: "8px",
-  cursor: "pointer",
-};
-
-const infoTextStyle = {
-  fontSize: "13px",
-  color: "#666",
-  lineHeight: 1.7,
-  marginTop: "-4px",
-  marginBottom: "8px",
-};
-
-const pwRuleListStyle = {
-  listStyle: "none",
-  padding: 0,
-  margin: "8px 0 0 0",
-  display: "flex",
-  flexDirection: "column",
-  gap: "4px",
-};
 
 export default ResetPassword;

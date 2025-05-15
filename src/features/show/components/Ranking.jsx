@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import Header from "../../components/layout/Header";
-import Footer from "../../components/layout/Footer";
-import styles from "./Ranking.module.css";
-import ShowCard from "../../components/performance/ShowCard";
+import Header from "../../../components/layout/Header";
+import Footer from "../../../components/layout/Footer";
+import styles from "../Ranking.css";
+import ShowCard from "./ShowCard";
 
 // 더미 데이터 20개 (실제 API 연동 시 대체)
 const dummyRanking = [

@@ -1,0 +1,143 @@
+.showdetail-loading {
+  text-align: center;
+  padding: 80px;
+  font-family: Pretendard, sans-serif;
+  background: #faf9fb;
+  min-height: 100vh;
+}
+
+.showdetail-container {
+  min-height: 100vh;
+  background: #faf9fb;
+  font-family: Pretendard, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.showdetail-main {
+  flex: 1;
+}
+
+.showdetail-section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 48px;
+  padding: 60px 40px 0 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.showdetail-poster-wrap {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0;
+}
+
+.showdetail-poster-inner {
+  text-align: center;
+  width: 100%;
+}
+
+.showdetail-poster-img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #fff;
+}
+
+.showdetail-alert-btn {
+  margin-top: 24px;
+  padding: 10px 24px;
+  border: 1px solid var(--primary);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.showdetail-info-wrap {
+  width: 50%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  padding: 40px 32px;
+}
+
+.showdetail-status {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.showdetail-status-공연\ 예정 {
+  color: #f97316;
+}
+.showdetail-status-공연\ 종료 {
+  color: #888;
+}
+.showdetail-status-공연\ 진행\ 중 {
+  color: #16a34a;
+}
+
+.showdetail-views {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.showdetail-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+.showdetail-price {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  color: var(--primary);
+}
+
+.showdetail-hr {
+  margin: 24px 0;
+  border: none;
+  border-top: 1px solid #eee;
+}
+
+.showdetail-location {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.showdetail-date {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.showdetail-time {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.showdetail-select-btn {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 12px 32px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  margin-top: 12px;
+  transition: background 0.2s, color 0.2s;
+}

@@ -1,9 +1,9 @@
 import React from "react";
-import Header from "../../components/layout/Header";
-import Footer from "../../components/layout/Footer";
-import styles from "./ReservationDetail.module.css";
+import Header from "../../../components/layout/Header";
+import Footer from "../../../components/layout/Footer";
+import styles from "./ReservationDetail.css";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/navigation/Sidebar";
+import Sidebar from "../../../components/navigation/Sidebar";
 
 // 더미 데이터
 const reservationDetail = {

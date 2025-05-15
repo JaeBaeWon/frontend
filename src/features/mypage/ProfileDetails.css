@@ -1,0 +1,96 @@
+.profile-container {
+  display: flex;
+  min-height: 100dvh;
+  width: 100vw;
+  font-family: Pretendard, sans-serif;
+}
+
+.profile-left {
+  width: 480px;
+  min-width: 320px;
+  background-color: var(--primary-300);
+}
+
+.profile-right {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-form {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 0 16px;
+}
+
+.profile-title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 16px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  background: #fafafa;
+}
+
+.profile-gender-group {
+  display: flex;
+  gap: 12px;
+}
+
+.profile-gender-btn {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  color: #888;
+  font-weight: 500;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.profile-gender-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border: 1px solid var(--primary);
+  font-weight: 700;
+}
+
+.profile-button {
+  width: 100%;
+  height: 52px;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  margin-top: 8px;
+  cursor: pointer;
+}

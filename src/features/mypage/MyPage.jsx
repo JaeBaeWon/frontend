@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import styles from "./MyPage.module.css";
+import styles from "./MyPage.css";
 import Sidebar from "../../components/navigation/Sidebar";
 
 function MyPage() {

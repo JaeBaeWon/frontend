@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import ShowGrid from "../../components/performance/ShowGrid";
-import Pagination from "../../components/performance/Pagination";
+import ShowGrid from "./components/ShowGrid";
+import Pagination from "./components/Pagination";
+import "./ShowList.css";
 
 function ShowList() {
   const location = useLocation();
@@ -50,39 +51,15 @@ function ShowList() {
   );
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "#faf9fb",
-        fontFamily: "Pretendard, sans-serif",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className="showlist-container">
       <Header />
-      <main style={{ flex: 1 }}>
-        <section
-          style={{
-            padding: "60px 40px 0 40px",
-            maxWidth: "1400px",
-            margin: "0 auto",
-          }}
-        >
-          <h2
-            style={{
-              fontSize: "24px",
-              fontWeight: "bold",
-              textAlign: "center",
-              marginBottom: "32px",
-              color: "#222",
-            }}
-          >
-            {displayGenre}
-          </h2>
+      <main className="showlist-main">
+        <section className="showlist-section">
+          <h2 className="showlist-title">{displayGenre}</h2>
           {loading ? (
-            <p style={{ textAlign: "center" }}>로딩 중...</p>
+            <p className="showlist-loading">로딩 중...</p>
           ) : events.length === 0 ? (
-            <p style={{ textAlign: "center" }}>공연이 없습니다.</p>
+            <p className="showlist-empty">공연이 없습니다.</p>
           ) : (
             <>
               <ShowGrid shows={currentShows} />

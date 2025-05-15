@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ShowCard from "../performance/ShowCard"; // 상대 경로는 위치에 따라 조정
+import ShowCard from "../../show/components/ShowCard";
 import { useNavigate } from "react-router-dom";
 
 const tabs = ["뮤지컬", "콘서트", "연극"];

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Header from "../../components/layout/Header";
-import Footer from "../../components/layout/Footer";
-import Sidebar from "../../components/navigation/Sidebar";
-import styles from "./ReservationList.module.css";
+import Header from "../../../components/layout/Header";
+import Footer from "../../../components/layout/Footer";
+import Sidebar from "../../../components/navigation/Sidebar";
+import styles from "./ReservationList.css";
 import { useNavigate } from "react-router-dom";
 
 // 더미 데이터 생성

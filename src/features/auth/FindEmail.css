@@ -1,0 +1,120 @@
+.findemail-container {
+  display: flex;
+  min-height: 100dvh;
+  width: 100vw;
+  font-family: Pretendard, sans-serif;
+}
+
+.findemail-left {
+  flex: 1;
+  background-color: var(--primary);
+}
+
+.findemail-right {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.findemail-form {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 0 16px;
+}
+
+.findemail-title {
+  font-weight: bold;
+  font-size: 2rem;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.findemail-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.findemail-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 2px;
+}
+
+.findemail-input {
+  width: 100%;
+  padding: 16px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  background: #fafafa;
+}
+
+.findemail-phone-row {
+  display: flex;
+  gap: 8px;
+}
+
+.findemail-phone-input {
+  flex: 1;
+  margin-top: 0;
+  height: 48px;
+}
+
+.findemail-button {
+  width: 100%;
+  height: 52px;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: none;
+  margin-top: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.findemail-verify-btn {
+  width: 120px;
+  height: 48px;
+  font-size: 1rem;
+  padding: 0;
+  margin-top: 0;
+  border-radius: 6px;
+  background-color: #e0e0e0;
+  color: #aaa;
+  cursor: not-allowed;
+  transition: background 0.2s, color 0.2s;
+}
+.findemail-verify-btn.active {
+  background-color: var(--primary);
+  color: #fff;
+  cursor: pointer;
+}
+
+.findemail-error {
+  color: #e53935;
+  font-size: 0.98rem;
+  margin-top: 6px;
+}
+
+.findemail-linkbtn {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  color: #888;
+  font-size: 1.05rem;
+  text-align: right;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 4px;
+}
