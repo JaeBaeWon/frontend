@@ -27,23 +27,33 @@ function ShowList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const eventsPerPage = 16;
+  const getApiUrl = (genreSlug, page) => {
+    if (genreSlug === "upcoming") {
+      return `http://localhost:8080/performance/search?status=UPCOMING&page=${page}`;
+    }
+    return `http://localhost:8080/performance/category?category=${genreSlug.toUpperCase()}&page=${page}`;
+  };
 
   useEffect(() => {
     setLoading(true);
 
+    const apiUrl = getApiUrl(genreSlug, currentPage - 1);
+
     axios
-      .get(`http://localhost:8080/performance/category?category=${genreSlug.toUpperCase()}&page=${currentPage - 1}`)
+      .get(apiUrl)
       .then((res) => {
         setEvents(res.data.content);
         setTotalPages(res.data.totalPages);
       })
       .catch((err) => console.error("공연 데이터 로딩 실패:", err))
       .finally(() => setLoading(false));
+
+    window.scrollTo(0, 0);
+
   }, [genreSlug, currentPage]);
 
   const mappedShows = events.map(item => ({
-    id: item.performId,
+    performId: item.performId,
     title: item.title,
     venue: item.location,
     period: `${item.performStartAt} ~ ${item.performEndAt}`,

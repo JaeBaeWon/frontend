@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function ShowCard({ title, venue, period, thumbnailUrl, extra }) {
+function ShowCard({ performId, title, venue, period, thumbnailUrl, extra }) {
   return (
     <div
       style={{
@@ -13,15 +14,15 @@ function ShowCard({ title, venue, period, thumbnailUrl, extra }) {
       }}
     >
       <img
-        src={thumbnailUrl}
+        src={process.env.PUBLIC_URL + thumbnailUrl}
         alt={title}
         style={{ width: "100%", height: "180px", objectFit: "cover" }}
       />
       <div style={{ padding: "16px" }}>
-        <div
-          style={{ fontSize: "16px", fontWeight: "600", marginBottom: "8px" }}
-        >
-          {title}
+        <div style={{ fontSize: "16px", fontWeight: "600", marginBottom: "8px" }}>
+          <Link to={`/show/${performId}`} style={{ color: "#222", textDecoration: "none" }}>
+            {title}
+          </Link>
         </div>
         {venue && (
           <div style={{ fontSize: "13px", color: "#666" }}>{venue}</div>

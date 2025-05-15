@@ -33,7 +33,7 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/resetcomplete" element={<ResetComplete />} />
         <Route path="/shows" element={<ShowList />} />
-        <Route path="/show/:id" element={<ShowDetail />} />
+        <Route path="/show/:performId" element={<ShowDetail />} />
         <Route path="/openalertcomplete" element={<OpenAlertComplete />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/reservations" element={<ReservationList />} />
