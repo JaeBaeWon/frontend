@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ShowInfo.css';
 
-const ShowInfo = () => { // performId를 props로 받지 않고, 하드코딩하여 사용
+const ShowInfo = ({ performId }) => {
   const [performance, setPerformance] = useState(null);
-
-  // performId를 하드코딩 (5로 설정)
-  const performId = 5;
 
   useEffect(() => {
     // API 호출하여 공연 정보 가져오기

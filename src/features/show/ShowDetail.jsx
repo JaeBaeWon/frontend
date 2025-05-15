@@ -15,18 +15,17 @@ function ShowDetail() {
   const [show, setShow] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showReservationUI, setShowReservationUI] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const navigate = useNavigate();
-
-  const startDate = parseISO(show.performStartAt);
-  const endDate = parseISO(show.performEndAt);
 
   useEffect(() => {
     axios
       .get(`http://localhost:8080/performance/${performId}`)
       .then((res) => {
         setShow(res.data);
+        const parsedStart = parseISO(res.data.performStartAt);
+        setSelectedDate(parsedStart);
         setLoading(false);
       })
       .catch((err) => {
@@ -34,6 +33,9 @@ function ShowDetail() {
         setLoading(false);
       });
   }, [performId]);
+
+  const startDate = show ? parseISO(show.performStartAt) : null;
+  const endDate = show ? parseISO(show.performEndAt) : null;
 
   if (loading)
     return (
@@ -109,7 +111,7 @@ function ShowDetail() {
             >
               <div style={{ textAlign: "center", width: "100%" }}>
                 <img
-                  src={process.env.PUBLIC_URL + show.performImg}
+                  src={show.performImg.startsWith('/') ? show.performImg : '/' + show.performImg}
                   alt={`${show.title} 포스터`}
                   style={{
                     width: "100%",
@@ -254,16 +256,17 @@ function ShowDetail() {
                       <DatePicker
                         selected={selectedDate}
                         onChange={(date) => setSelectedDate(date)}
-                        minDate={startDate}
+                        minDate={startDate > new Date() ? startDate : new Date()}
                         maxDate={endDate}
                         dateFormat="yyyy.MM.dd"
                         inline
                       />
                       <button
                         className="custom-button"
-                        onClick={() =>
-                          alert(`예매할 날짜: ${selectedDate.toLocaleDateString()}`)
-                        }
+                        onClick={() => {
+                          alert(`예매할 날짜: ${selectedDate.toLocaleDateString()}`);
+                          navigate('/reservation', { state: { performId } });
+                        }}
                       >
                         이 날짜로 예매하기
                       </button>

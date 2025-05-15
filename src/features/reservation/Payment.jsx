@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Payment.css';
 
-const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds }) => {
+const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId }) => {
     const [selectedMethod, setSelectedMethod] = useState('card');
     const [selectedPg, setSelectedPg] = useState('html5_inicis');
     const [agreeAll, setAgreeAll] = useState(false);
@@ -31,9 +31,7 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds }) => {
 
     // 1️⃣ 공연 정보 가져오기
     const [performanceData, setPerformanceData] = useState(null);
-    const [userId, setUserId] = useState(1);
-    const [performId, setPerformId] = useState(5);
-
+    const [userId, setUserId] = useState(1);        // !!!!하드코딩된 부분(로그인 이후 수정)
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {

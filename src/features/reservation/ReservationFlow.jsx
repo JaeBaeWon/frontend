@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Header from "../../components/layout/Header";
 import SequenceSelect from '../../components/reservation/SequenceSelect';
@@ -10,6 +11,11 @@ import ShowPayInfo from './ShowPayInfo';
 import './Reservation.css';
 
 const ReservationFlow = () => {
+  const location = useLocation();
+  const performId = location.state?.performId;
+
+  console.log("넘겨받은 performId:", performId);
+
   const [currentStep, setCurrentStep] = useState(1); // 1~4까지
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
@@ -41,7 +47,9 @@ const ReservationFlow = () => {
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
-        return <SelectSeat onSelectedSeatsChange={setSelectedSeatIds} />;
+        return <SelectSeat
+                    performanceId={performId}
+                    onSelectedSeatsChange={setSelectedSeatIds} />;
       case 2:
         return <CheckUserInfo />;
       case 3:
@@ -50,6 +58,7 @@ const ReservationFlow = () => {
             setCurrentStep={setCurrentStep}
             setReservationId={setReservationId}
             selectedSeatIds={selectedSeatIds}
+            performId={performId}
           />
         );
       case 4:
@@ -70,7 +79,7 @@ const ReservationFlow = () => {
         </div>
 
         <div className="right-section">
-          <ShowInfo />
+          <ShowInfo performId={performId} />
           <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
                       {currentStep > 1 && (
                         <button className="next-button" onClick={handlePrev}>이전</button>

@@ -48,7 +48,7 @@ function App() {
         <Route path="/mypage/manageaddress" element={<ManageAddress />} />
         <Route path="/show/ranking" element={<Ranking />} />
 
-        <Route path="/Reservation" element={<ReservationFlow />} />
+        <Route path="/reservation" element={<ReservationFlow />} />
 
 
       </Routes>

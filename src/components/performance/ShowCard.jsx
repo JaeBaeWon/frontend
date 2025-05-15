@@ -14,7 +14,7 @@ function ShowCard({ performId, title, venue, period, thumbnailUrl, extra }) {
       }}
     >
       <img
-        src={process.env.PUBLIC_URL + thumbnailUrl}
+        src={thumbnailUrl}
         alt={title}
         style={{ width: "100%", height: "180px", objectFit: "cover" }}
       />

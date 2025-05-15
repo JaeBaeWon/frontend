@@ -40,3 +40,8 @@
   cursor: pointer;
   border: none;
 }
+
+:root {
+  --primary: #7b61ff;
+  --primary-light: #a993ff;
+}
