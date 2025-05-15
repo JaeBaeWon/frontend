@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Sidebar.module.css";
+import styles from "./Sidebar.css";
 
 const menuList = [
   { label: "내 정보", icon: "👤", link: "/mypage" },
