@@ -4,13 +4,23 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { parseISO } from "date-fns";
+import "./ShowDetail.css";
+
 
 function ShowDetail() {
   const { performId } = useParams();
   const [show, setShow] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showReservationUI, setShowReservationUI] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const navigate = useNavigate();
+
+  const startDate = parseISO(show.performStartAt);
+  const endDate = parseISO(show.performEndAt);
 
   useEffect(() => {
     axios
@@ -210,22 +220,56 @@ function ShowDetail() {
               </div>
 
               {!isClosed && (
-                <button
-                  style={{
-                    backgroundColor: "var(--primary)",
-                    color: "#fff",
-                    padding: "12px 32px",
-                    borderRadius: "6px",
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    border: "none",
-                    marginTop: "12px",
-                    transition: "background 0.2s, color 0.2s",
-                  }}
-                >
-                  날짜 및 회차 선택
-                </button>
+                <>
+                  <button
+                    onClick={() => setShowReservationUI(true)}
+                    style={{
+                      backgroundColor: "var(--primary)",
+                      color: "#fff",
+                      padding: "12px 32px",
+                      borderRadius: "6px",
+                      fontSize: "16px",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      border: "none",
+                      marginTop: "12px",
+                      transition: "background 0.2s, color 0.2s",
+                    }}
+                  >
+                    날짜 선택
+                  </button>
+
+                  {showReservationUI && (
+                    <div className="custom-datepicker-wrapper">
+                      <h3
+                        style={{
+                          fontSize: "18px",
+                          fontWeight: "bold",
+                          marginBottom: "12px",
+                          marginTop: "24px",
+                        }}
+                      >
+                        날짜를 선택하세요
+                      </h3>
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={(date) => setSelectedDate(date)}
+                        minDate={startDate}
+                        maxDate={endDate}
+                        dateFormat="yyyy.MM.dd"
+                        inline
+                      />
+                      <button
+                        className="custom-button"
+                        onClick={() =>
+                          alert(`예매할 날짜: ${selectedDate.toLocaleDateString()}`)
+                        }
+                      >
+                        이 날짜로 예매하기
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </section>
