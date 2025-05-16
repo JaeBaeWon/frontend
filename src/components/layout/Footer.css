@@ -10,9 +10,15 @@
   font-size: 14px;
   margin-top: 48px;
 }
+.footerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
 .footerLinks {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 32px;
   flex-wrap: wrap;
   margin-bottom: 16px;
@@ -32,4 +38,5 @@
   color: #aaa;
   margin-top: 12px;
   line-height: 1.7;
+  text-align: left;
 }

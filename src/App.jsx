@@ -8,8 +8,11 @@ import ResetPassword from "./features/auth/ResetPassword";
 import ResetComplete from "./features/auth/ResetComplete";
 import ShowList from "./features/show/ShowList";
 import ShowDetail from "./features/show/ShowDetail";
+
+import OpenAlertComplete from "./features/show/OpenAlertComplete";
+
 import ReservationFlow from "./features/reservation/ReservationFlow";
-import ShowPayInfo from "./features/reservation/ShowPayInfo";
+
 import MyPage from "./features/mypage/MyPage";
 import ManageAddress from "./features/mypage/ManageAddress";
 import ReservationList from "./features/mypage/components/ReservationList";
@@ -29,9 +32,12 @@ function App() {
         <Route path="/resetpassword" element={<ResetPassword />} />
         <Route path="/resetcomplete" element={<ResetComplete />} />
         <Route path="/shows" element={<ShowList />} />
-        <Route path="/shows/:id" element={<ShowDetail />} />
+
         <Route path="/reservation" element={<ReservationFlow />} />
         <Route path="/reservation/payinfo" element={<ShowPayInfo />} />
+
+        <Route path="/show/:performId" element={<ShowDetail />} />
+
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/mypage/manageaddress" element={<ManageAddress />} />
         <Route path="/mypage/reservations" element={<ReservationList />} />
@@ -44,6 +50,8 @@ function App() {
           element={<RefundAlertComplete />}
         />
         <Route path="/show/ranking" element={<Ranking />} />
+
+
       </Routes>
     </BrowserRouter>
   );

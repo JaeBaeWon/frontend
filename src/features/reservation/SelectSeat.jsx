@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import Header from "../../components/layout/Header";
-import SequenceSelect from "../../components/reservation/SequenceSelect";
-import SeatGrid from "./SeatGrid";
-import ShowInfo from "../../components/reservation/ShowInfo";
-import "./Reservation.css";
+import React, { useState } from 'react';
+import SeatGrid from './SeatGrid';
 
-const SelectSeat = () => {
+const SelectSeat = ({ performanceId, onSelectedSeatsChange }) => {
+  const handleSeatSelect = (selectedSeats) => {
+    onSelectedSeatsChange(selectedSeats);
+  };
+
   return (
     <div>
-      <SeatGrid />
+      <SeatGrid performanceId={performanceId} onSeatSelect={handleSeatSelect} />
     </div>
   );
 };

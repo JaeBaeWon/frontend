@@ -15,7 +15,8 @@ function ShowGrid({ shows }) {
     >
       {shows.map((show) => (
         <ShowCard
-          key={show.id}
+          key={show.performId}
+          performId={show.performId}
           title={show.title}
           venue={show.venue}
           period={show.period}
