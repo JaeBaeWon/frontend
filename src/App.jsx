@@ -9,7 +9,7 @@ import ResetComplete from "./features/auth/ResetComplete";
 import ShowList from "./features/show/ShowList";
 import ShowDetail from "./features/show/ShowDetail";
 
-import OpenAlertComplete from "./features/show/OpenAlertComplete";
+import OpenAlertComplete from "./features/show/components/OpenAlertComplete";
 
 import ReservationFlow from "./features/reservation/ReservationFlow";
 
@@ -34,7 +34,6 @@ function App() {
         <Route path="/shows" element={<ShowList />} />
 
         <Route path="/reservation" element={<ReservationFlow />} />
-        <Route path="/reservation/payinfo" element={<ShowPayInfo />} />
 
         <Route path="/show/:performId" element={<ShowDetail />} />
 
@@ -50,6 +49,8 @@ function App() {
           element={<RefundAlertComplete />}
         />
         <Route path="/show/ranking" element={<Ranking />} />
+
+        <Route path="/openalertcomplete" element={<OpenAlertComplete />} />
 
 
       </Routes>

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import ShowGrid from "../../components/performance/ShowGrid";
-import Pagination from "../../components/performance/Pagination";
+import ShowGrid from "./components/ShowGrid";
+import Pagination from "./components/Pagination";
 import axios from "axios";
 import "./ShowList.css";
 
