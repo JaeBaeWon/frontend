@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import styles from "./MyPage.css";
+import "./MyPage.css";
 import Sidebar from "../../components/navigation/Sidebar";
 
 function MyPage() {
@@ -19,23 +19,23 @@ function MyPage() {
   }, []);
 
   return (
-    <div className={styles.mypageContainer}>
+    <div className="mypageContainer">
       <Header isLoggedIn={true} />
-      <div className={styles.mypageContent}>
+      <div className="mypageContent">
         <Sidebar active="내 정보" />
-        <main className={styles.main}>
-          <h2 className={styles.title}>내 정보</h2>
-          <div className={styles.infoCard}>
-            <p className={styles.infoLabel}>이름</p>
-            <p className={styles.infoValue}>{userInfo?.name}</p>
-            <p className={styles.infoLabel}>이메일</p>
-            <p className={styles.infoValue}>{userInfo?.email}</p>
-            <p className={styles.infoLabel}>휴대폰 번호</p>
-            <p className={styles.infoValue}>{userInfo?.phone}</p>
-            <p className={styles.infoLabel}>생년월일</p>
-            <p className={styles.infoValue}>{userInfo?.birth}</p>
-            <p className={styles.infoLabel}>성별</p>
-            <p className={styles.infoValue}>{userInfo?.gender}</p>
+        <main className="main">
+          <h2 className="title">내 정보</h2>
+          <div className="infoCard">
+            <p className="infoLabel">이름</p>
+            <p className="infoValue">{userInfo?.name}</p>
+            <p className="infoLabel">이메일</p>
+            <p className="infoValue">{userInfo?.email}</p>
+            <p className="infoLabel">휴대폰 번호</p>
+            <p className="infoValue">{userInfo?.phone}</p>
+            <p className="infoLabel">생년월일</p>
+            <p className="infoValue">{userInfo?.birth}</p>
+            <p className="infoLabel">성별</p>
+            <p className="infoValue">{userInfo?.gender}</p>
           </div>
         </main>
       </div>

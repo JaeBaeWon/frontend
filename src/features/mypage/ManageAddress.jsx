@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import Sidebar from "../../components/navigation/Sidebar";
-import styles from "./ManageAddress.css";
+import "./ManageAddress.css";
 
 const ManageAddress = () => {
   const [isEdit, setIsEdit] = useState(false);
@@ -11,73 +11,60 @@ const ManageAddress = () => {
   // const [form, setForm] = useState({ ... });
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Header />
-      <div className={styles.inner}>
+      <div className="inner">
         <Sidebar active="배송지 관리" />
-        <main className={styles.main}>
-          <h2 className={styles.title}>배송지 관리</h2>
+        <main className="main">
+          <h2 className="title">배송지 관리</h2>
           {!isEdit ? (
             <section>
-              <div className={styles.addressBox}>
-                <b className={styles.addressBoxName}>성명</b>
-                <span className={styles.addressBoxTag}>기본 배송지</span>
+              <div className="addressBox">
+                <b className="addressBoxName">성명</b>
+                <span className="addressBoxTag">기본 배송지</span>
                 <div>사랑시 고백구 행복동 소망아파트 101동 101호</div>
               </div>
-              <button
-                className={`${styles.btn} ${styles.btnMain}`}
-                onClick={() => setIsEdit(true)}
-              >
+              <button className="btn btnMain" onClick={() => setIsEdit(true)}>
                 배송지 수정
               </button>
             </section>
           ) : (
-            <form className={styles.addressForm}>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>주소</label>
-                <input
-                  className={styles.input}
-                  placeholder="우편번호 찾기"
-                  disabled
-                />
-                <button
-                  type="button"
-                  className={`${styles.btn} ${styles.btnMain}`}
-                >
+            <form className="addressForm">
+              <div className="formGroup">
+                <label className="label">주소</label>
+                <input className="input" placeholder="우편번호 찾기" disabled />
+                <button type="button" className="btn btnMain">
                   주소
                 </button>
               </div>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>배송지 명</label>
-                <input className={styles.input} placeholder="예시 : 집, 회사" />
+              <div className="formGroup">
+                <label className="label">배송지 명</label>
+                <input className="input" placeholder="예시 : 집, 회사" />
               </div>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>받는 분</label>
-                <input className={styles.input} />
+              <div className="formGroup">
+                <label className="label">받는 분</label>
+                <input className="input" />
               </div>
-              <div className={styles.formGroup}>
-                <label className={styles.label}>휴대폰 번호</label>
+              <div className="formGroup">
+                <label className="label">휴대폰 번호</label>
                 <input
-                  className={styles.input}
+                  className="input"
                   placeholder="휴대폰 번호 (- 없이 입력)"
                 />
               </div>
-              <div className={styles.formGroup}>
+              <div className="formGroup">
                 <input type="checkbox" id="default" />
                 <label htmlFor="default" style={{ marginLeft: 4 }}>
                   기본 배송지로
                 </label>
               </div>
-              <div className={styles.formActions}>
-                <button
-                  type="submit"
-                  className={`${styles.btn} ${styles.btnMain}`}
-                >
+              <div className="formActions">
+                <button type="submit" className="btn btnMain">
                   저장하기
                 </button>
                 <button
                   type="button"
-                  className={styles.btn}
+                  className="btn"
                   onClick={() => setIsEdit(false)}
                 >
                   취소

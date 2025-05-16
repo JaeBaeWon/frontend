@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
-import styles from "../Ranking.css";
+import "./Ranking.css";
 import ShowCard from "./ShowCard";
 
 // 더미 데이터 20개 (실제 API 연동 시 대체)
@@ -192,43 +192,43 @@ function Ranking() {
   const listData = ranking.slice(3, 3 + visibleCount);
 
   return (
-    <div className={styles.rankingContainer}>
+    <div className="rankingContainer">
       <Header />
-      <main className={styles.rankingMain}>
-        <h2 className={styles.rankingTitle}>실시간 랭킹</h2>
+      <main className="rankingMain">
+        <h2 className="rankingTitle">실시간 랭킹</h2>
         {loading ? (
-          <p className={styles.loadingText}>로딩 중...</p>
+          <p className="loadingText">로딩 중...</p>
         ) : (
           <>
             {/* 1~3위 카드 */}
-            <div className={styles.rankingGrid}>
+            <div className="rankingGrid">
               {ranking.slice(0, 3).map((show, idx) => (
-                <div key={show.id} className={styles.rankingCardWrap}>
-                  <div className={styles.rankBadge}>{idx + 1}</div>
+                <div key={show.id} className="rankingCardWrap">
+                  <div className="rankBadge">{idx + 1}</div>
                   <ShowCard {...show} />
                 </div>
               ))}
             </div>
             {/* 4~20위 리스트 */}
-            <ul className={styles.rankingList}>
+            <ul className="rankingList">
               {listData.map((show, idx) => (
-                <li key={show.id} className={styles.rankingListItem}>
-                  <span className={styles.listRank}>{idx + 4}</span>
+                <li key={show.id} className="rankingListItem">
+                  <span className="listRank">{idx + 4}</span>
                   <img
                     src={show.thumbnailUrl}
                     alt={show.title}
-                    className={styles.listThumb}
+                    className="listThumb"
                   />
-                  <div className={styles.listInfo}>
-                    <div className={styles.listTitle}>{show.title}</div>
-                    <div className={styles.listVenue}>{show.venue}</div>
-                    <div className={styles.listPeriod}>{show.period}</div>
+                  <div className="listInfo">
+                    <div className="listTitle">{show.title}</div>
+                    <div className="listVenue">{show.venue}</div>
+                    <div className="listPeriod">{show.period}</div>
                   </div>
                 </li>
               ))}
             </ul>
             {visibleCount < 17 && (
-              <div ref={loaderRef} className={styles.loadingText}>
+              <div ref={loaderRef} className="loadingText">
                 더 불러오는 중...
               </div>
             )}

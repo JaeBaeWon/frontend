@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
-import styles from "./ReservationDetail.css";
+import "./ReservationDetail.css";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../../components/navigation/Sidebar";
 
@@ -56,28 +56,26 @@ function ReservationDetail() {
   const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Header isLoggedIn={true} />
-      <div className={styles.inner}>
+      <div className="inner">
         <Sidebar active="예매 내역" />
         <div style={{ flex: 1 }}>
-          <div className={styles.title}>예매 상세 내역 확인/취소</div>
-          <div className={styles.breadcrumb}>
+          <div className="title">예매 상세 내역 확인/취소</div>
+          <div className="breadcrumb">
             &gt;{" "}
-            <span className={styles.productTitle}>
-              {reservationDetail.showTitle}
-            </span>
+            <span className="productTitle">{reservationDetail.showTitle}</span>
           </div>
           {/* 공연 정보 */}
-          <div className={styles.section}>
-            <div className={styles.flexRow}>
+          <div className="section">
+            <div className="flexRow">
               <img
                 src={reservationDetail.showImage}
                 alt="공연 포스터"
-                className={styles.thumbnail}
+                className="thumbnail"
                 onError={(e) => (e.target.style.display = "none")}
               />
-              <table className={styles.infoTable}>
+              <table className="infoTable">
                 <tbody>
                   <tr>
                     <th>예매자</th>
@@ -99,7 +97,7 @@ function ReservationDetail() {
                         href={reservationDetail.mapUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={styles.mapBtn}
+                        className="mapBtn"
                       >
                         지도보기
                       </a>
@@ -108,7 +106,7 @@ function ReservationDetail() {
                   <tr>
                     <th>티켓수령 방법</th>
                     <td>
-                      <span className={styles.ticketMethod}>
+                      <span className="ticketMethod">
                         {reservationDetail.ticketMethod}
                       </span>
                     </td>
@@ -116,7 +114,7 @@ function ReservationDetail() {
                   <tr>
                     <th></th>
                     <td>
-                      <div className={styles.noticeBox}>
+                      <div className="noticeBox">
                         {reservationDetail.notice}
                       </div>
                     </td>
@@ -126,9 +124,9 @@ function ReservationDetail() {
             </div>
           </div>
           {/* 결제내역 */}
-          <div className={styles.section}>
+          <div className="section">
             <div style={{ fontWeight: 600, marginBottom: 10 }}>결제내역</div>
-            <table className={styles.infoTable}>
+            <table className="infoTable">
               <tbody>
                 <tr>
                   <th>예매일</th>
@@ -144,7 +142,7 @@ function ReservationDetail() {
                 </tr>
               </tbody>
             </table>
-            <table className={styles.payTable} style={{ marginTop: 18 }}>
+            <table className="payTable" style={{ marginTop: 18 }}>
               <thead>
                 <tr>
                   <th>예매번호</th>
@@ -179,7 +177,7 @@ function ReservationDetail() {
                 ))}
               </tbody>
             </table>
-            <div className={styles.paySummary}>
+            <div className="paySummary">
               <div>
                 총 결제금액{" "}
                 <span>{reservationDetail.payAmount.toLocaleString()}원</span>
@@ -195,22 +193,22 @@ function ReservationDetail() {
             </div>
           </div>
           {/* 예매취소 유의사항 */}
-          <div className={styles.section}>
-            <div className={styles.cautionTitle}>예매취소 유의사항</div>
-            <div className={styles.cautionBox}>
+          <div className="section">
+            <div className="cautionTitle">예매취소 유의사항</div>
+            <div className="cautionBox">
               <b>취소 마감시간</b>{" "}
               <span style={{ color: "var(--color-point)", fontWeight: 600 }}>
                 {reservationDetail.cancelDeadline}
               </span>
             </div>
-            <div className={styles.cautionBox}>
+            <div className="cautionBox">
               <b>취소 수수료</b> <br />
               <span style={{ color: "var(--color-text-sub)" }}>
                 <b>취소일자에 따라 취소수수료가 달라집니다.</b>
                 <br />* 단, 예매당일 밤 12시 이전 취소시에는 취소수수료
                 없음(취소기한내에 한함)
               </span>
-              <table className={styles.cautionTable}>
+              <table className="cautionTable">
                 <thead>
                   <tr>
                     <th>내용</th>
@@ -223,7 +221,7 @@ function ReservationDetail() {
                     <tr key={idx}>
                       <td>{row.period}</td>
                       <td>{row.date}</td>
-                      <td className={styles[row.feeClass]}>{row.fee}</td>
+                      <td className={row.feeClass}>{row.fee}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -231,10 +229,10 @@ function ReservationDetail() {
             </div>
           </div>
           {/* 버튼 */}
-          <div className={styles.btnRow}>
-            <button className={styles.btn}>예매 내역 목록</button>
+          <div className="btnRow">
+            <button className="btn">예매 내역 목록</button>
             <button
-              className={`${styles.btn} ${styles.btnMain}`}
+              className="btn btnMain"
               onClick={() =>
                 navigate("/mypage/reservations/refundalertcomplete")
               }

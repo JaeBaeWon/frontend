@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
 import Sidebar from "../../../components/navigation/Sidebar";
-import styles from "./ReservationList.css";
+import "./ReservationList.css";
 import { useNavigate } from "react-router-dom";
 
 // 더미 데이터 생성
@@ -34,15 +34,15 @@ function ReservationList() {
   );
 
   return (
-    <div className={styles.container}>
+    <div className="container">
       <Header isLoggedIn={true} />
-      <div className={styles.inner}>
+      <div className="inner">
         {/* Sidebar */}
         <Sidebar active="예매 내역" />
         {/* Main Content */}
-        <main className={styles.main}>
-          <h2 className={styles.title}>예매 내역</h2>
-          <div className={styles.tableWrap}>
+        <main className="main">
+          <h2 className="title">예매 내역</h2>
+          <div className="tableWrap">
             <table>
               <thead>
                 <tr>
@@ -61,9 +61,7 @@ function ReservationList() {
                   <tr key={r.id}>
                     <td>{r.date}</td>
                     <td>
-                      <span className={styles.resNum}>
-                        {r.reservationNumber}
-                      </span>
+                      <span className="resNum">{r.reservationNumber}</span>
                     </td>
                     <td style={{ maxWidth: 180 }}>{r.showName}</td>
                     <td>{r.viewDate}</td>
@@ -71,7 +69,7 @@ function ReservationList() {
                     <td>{r.cancelableUntil}</td>
                     <td>
                       <button
-                        className={styles.btn}
+                        className="btn"
                         onClick={() => navigate("/mypage/reservations/details")}
                       >
                         상세
@@ -82,14 +80,12 @@ function ReservationList() {
               </tbody>
             </table>
             {/* 페이지네이션 */}
-            <div className={styles.pagination}>
+            <div className="pagination">
               {Array.from({ length: totalPages }).map((_, idx) => (
                 <button
                   key={idx + 1}
                   className={
-                    page === idx + 1
-                      ? `${styles.pageBtn} ${styles.pageBtnActive}`
-                      : styles.pageBtn
+                    page === idx + 1 ? "pageBtn pageBtnActive" : "pageBtn"
                   }
                   onClick={() => setPage(idx + 1)}
                 >
