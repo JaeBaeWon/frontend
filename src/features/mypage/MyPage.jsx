@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import styles from "./MyPage.module.css";
 import Sidebar from "../../components/navigation/Sidebar";
+import styles from "./MyPage.module.css";
+import axios from "axios";
 
 function MyPage() {
   const [userInfo, setUserInfo] = useState(null);
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const dummyUser = {
-      name: "홍길동",
-      email: "abc@example.com",
-      phone: "010-1234-5678",
-      birth: "1995-01-23",
-      gender: "남자",
-    };
-    setUserInfo(dummyUser);
+    axios
+      .get("/auth/info")
+      .then((res) => {
+        setUserInfo(res.data.member);
+        setOnboardingComplete(res.data.onboardingComplete);
+      })
+      .catch((err) => {
+        console.error("❌ 회원 정보 불러오기 실패", err);
+        setError("회원 정보를 불러오지 못했습니다.");
+      });
   }, []);
+
+  if (error) {
+    return <div className={styles.mypageContainer}>{error}</div>;
+  }
 
   return (
     <div className={styles.mypageContainer}>
@@ -26,16 +35,39 @@ function MyPage() {
         <main className={styles.main}>
           <h2 className={styles.title}>내 정보</h2>
           <div className={styles.infoCard}>
-            <p className={styles.infoLabel}>이름</p>
-            <p className={styles.infoValue}>{userInfo?.name}</p>
-            <p className={styles.infoLabel}>이메일</p>
-            <p className={styles.infoValue}>{userInfo?.email}</p>
-            <p className={styles.infoLabel}>휴대폰 번호</p>
-            <p className={styles.infoValue}>{userInfo?.phone}</p>
-            <p className={styles.infoLabel}>생년월일</p>
-            <p className={styles.infoValue}>{userInfo?.birth}</p>
-            <p className={styles.infoLabel}>성별</p>
-            <p className={styles.infoValue}>{userInfo?.gender}</p>
+            {userInfo ? (
+              <>
+                <p className={styles.infoLabel}>이름</p>
+                <p className={styles.infoValue}>{userInfo.user_name}</p>
+
+                <p className={styles.infoLabel}>이메일</p>
+                <p className={styles.infoValue}>{userInfo.email}</p>
+
+                {onboardingComplete ? (
+                  <>
+                    <p className={styles.infoLabel}>성별</p>
+                    <p className={styles.infoValue}>{userInfo.gender}</p>
+
+                    <p className={styles.infoLabel}>주소</p>
+                    <p className={styles.infoValue}>
+                      {userInfo.streetAdr} {userInfo.detailAdr}
+                    </p>
+
+                    <p className={styles.infoLabel}>전화번호</p>
+                    <p className={styles.infoValue}>{userInfo.phone}</p>
+
+                    <p className={styles.infoLabel}>생년월일</p>
+                    <p className={styles.infoValue}>{userInfo.birthday}</p>
+                  </>
+                ) : (
+                  <p style={{ fontSize: "1rem", color: "#888", marginTop: "16px" }}>
+                    아직 온보딩 정보가 입력되지 않았습니다. 마이페이지에서 추가 정보를 입력해주세요.
+                  </p>
+                )}
+              </>
+            ) : (
+              <p>불러오는 중...</p>
+            )}
           </div>
         </main>
       </div>

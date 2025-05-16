@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function ResetPassword() {
   const navigate = useNavigate();
-  const [currentPw, setCurrentPw] = useState("");
+
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [birthdate, setBirthdate] = useState("");
+  const [verifyCode, setVerifyCode] = useState("");
   const [newPw, setNewPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
 
-  // 비밀번호 규칙 체크
+  const [sentCode, setSentCode] = useState(false);
+
   const isLengthValid = newPw.length >= 8 && newPw.length <= 16;
   const hasUpper = /[A-Z]/.test(newPw);
   const hasLower = /[a-z]/.test(newPw);
@@ -22,16 +28,55 @@ function ResetPassword() {
     { label: "특수문자 포함", valid: hasSpecial },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSendCode = async (e) => {
     e.preventDefault();
+    if (!email || !phone || !birthdate) {
+      alert("아이디, 전화번호, 생년월일을 모두 입력해주세요.");
+      return;
+    }
+
+    try {
+      const formattedDate = `${birthdate.slice(0, 4)}-${birthdate.slice(4, 6)}-${birthdate.slice(6, 8)}`;
+      await axios.post("/auth/reset-password/send-code", {
+        email,
+        phone,
+        birthday: formattedDate,
+      });
+      alert("인증번호가 전송되었습니다.");
+      setSentCode(true);
+    } catch (err) {
+      console.error("인증번호 전송 실패", err.response?.data || err.message);
+      alert("인증번호 전송 실패: " + (err.response?.data || "서버 오류"));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!sentCode) {
+      alert("먼저 인증번호를 전송해주세요.");
+      return;
+    }
 
     if (newPw !== confirmPw) {
       alert("새 비밀번호가 일치하지 않습니다.");
       return;
     }
 
-    // TODO: 실제 비밀번호 변경 요청 API 연결
-    navigate("/resetcomplete");
+    try {
+      await axios.post("/auth/reset-password", {
+        email,
+        phone,
+        code: verifyCode,
+        newPassword: newPw,
+      });
+
+      alert("비밀번호가 성공적으로 변경되었습니다.");
+      navigate("/login");
+    } catch (err) {
+      console.error("비밀번호 변경 실패", err.response?.data || err.message);
+      alert("비밀번호 변경 실패: " + (err.response?.data || "서버 오류"));
+    }
   };
 
   return (
@@ -42,11 +87,51 @@ function ResetPassword() {
           <h2 style={titleStyle}>비밀번호 재설정</h2>
 
           <div style={fieldStyle}>
-            <label style={labelStyle}>현재 비밀번호</label>
+            <label style={labelStyle}>아이디</label>
             <input
-              type="password"
-              value={currentPw}
-              onChange={(e) => setCurrentPw(e.target.value)}
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={inputStyle}
+            />
+          </div>
+
+          <div style={fieldStyle}>
+            <label style={labelStyle}>전화번호</label>
+            <input
+              type="text"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              style={inputStyle}
+              placeholder="01012345678"
+            />
+          </div>
+
+          <div style={fieldStyle}>
+            <label style={labelStyle}>생년월일</label>
+            <input
+              type="text"
+              value={birthdate}
+              onChange={(e) => setBirthdate(e.target.value)}
+              style={inputStyle}
+              placeholder="YYYYMMDD"
+            />
+          </div>
+
+          <button
+            onClick={handleSendCode}
+            type="button"
+            style={{ ...buttonStyle, marginBottom: "8px" }}
+          >
+            인증번호 전송
+          </button>
+
+          <div style={fieldStyle}>
+            <label style={labelStyle}>인증번호</label>
+            <input
+              type="text"
+              value={verifyCode}
+              onChange={(e) => setVerifyCode(e.target.value)}
               style={inputStyle}
             />
           </div>
@@ -82,7 +167,7 @@ function ResetPassword() {
           </div>
 
           <div style={fieldStyle}>
-            <label style={labelStyle}>새 비밀번호 확인</label>
+            <label style={labelStyle}>비밀번호 확인</label>
             <input
               type="password"
               value={confirmPw}
@@ -94,12 +179,19 @@ function ResetPassword() {
           <p style={infoTextStyle}>
             8~16자의 영문 대/소문자, 숫자, 특수기호를 조합하여 사용해주세요.
             <br />
-            개인정보나 연속된 키보드 배열과 같은 쉬운 비밀번호는 보안에 취약하니
-            피해주세요.
+            개인정보나 쉬운 비밀번호는 피해주세요.
           </p>
 
           <button type="submit" style={buttonStyle}>
-            확인
+            비밀번호 변경
+          </button>
+
+          <button
+            type="button"
+            style={{ ...buttonStyle, backgroundColor: "#3f51b5" }}
+            onClick={() => navigate("/login")}
+          >
+            로그인 화면으로 이동
           </button>
         </form>
       </div>
@@ -107,7 +199,7 @@ function ResetPassword() {
   );
 }
 
-// 스타일 정의
+// CSS 스타일 유지
 const containerStyle = {
   display: "flex",
   minHeight: "100dvh",

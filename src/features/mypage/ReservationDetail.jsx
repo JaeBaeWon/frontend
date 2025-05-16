@@ -1,59 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import styles from "./ReservationDetail.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../../components/navigation/Sidebar";
-
-// 더미 데이터
-const reservationDetail = {
-  showTitle: "[ 알리버드 ] 위너 브롱크호스트: 은 세상이 캔버스",
-  showImage:
-    "https://static.musinsa.com/images/event/2025/werner_bronkhorst_poster.jpg", // 임시 이미지
-  reserver: "박진현",
-  reservationNumber: "T2668747460 (총 2매)",
-  useDate: "2025.03.21 ~ 2025.05.31",
-  place: "그라운드시소 서촌",
-  ticketMethod: "현장수령",
-  notice:
-    "공연당일 예매내역서(프린트)와 신분증을 지참하시고, 공연장 티켓교부처에서 티켓을 받으시면 됩니다.",
-  mapUrl: "https://map.naver.com/",
-  payDate: "2025.02.23",
-  payMethod: "신용카드",
-  payStatus: "결제",
-  payAmount: 9900,
-  cancelFee: 990,
-  refundAmount: 8910,
-  seatList: [
-    {
-      reservationNumber: "T2668747460",
-      seatGrade: "입장권",
-      priceGrade: "알리버드",
-      product: "상시상품",
-      price: 9900,
-      canceled: true,
-      cancelDate: "2025.03.18 13:23",
-    },
-  ],
-  cancelDeadline: "2025년 05월 30일 17시 00분까지",
-  cancelPolicy: [
-    {
-      period: "미부과기간",
-      date: "2025.02.23 ~ 2025.03.02",
-      fee: "없음",
-      feeClass: "cautionRed",
-    },
-    {
-      period: "취소기한까지",
-      date: "2025.03.03 ~ 2025.05.30",
-      fee: "티켓금액의 10%",
-      feeClass: "caution10",
-    },
-  ],
-};
+import axios from "axios";
 
 function ReservationDetail() {
   const navigate = useNavigate();
+  const { id } = useParams(); // URL의 reservation ID
+  const [reservationDetail, setReservationDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    axios
+      .get(`/auth/reservation/${id}`)
+      .then((res) => {
+        setReservationDetail(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError("예약 상세 정보를 불러오지 못했습니다.");
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div className={styles.container}>불러오는 중...</div>;
+  if (error || !reservationDetail) return <div className={styles.container}>{error}</div>;
 
   return (
     <div className={styles.container}>
@@ -68,6 +42,7 @@ function ReservationDetail() {
               {reservationDetail.showTitle}
             </span>
           </div>
+
           {/* 공연 정보 */}
           <div className={styles.section}>
             <div className={styles.flexRow}>
@@ -125,6 +100,7 @@ function ReservationDetail() {
               </table>
             </div>
           </div>
+
           {/* 결제내역 */}
           <div className={styles.section}>
             <div style={{ fontWeight: 600, marginBottom: 10 }}>결제내역</div>
@@ -134,7 +110,7 @@ function ReservationDetail() {
                   <th>예매일</th>
                   <td>{reservationDetail.payDate}</td>
                   <th>현재상태</th>
-                  <td>취소</td>
+                  <td>{reservationDetail.status}</td>
                 </tr>
                 <tr>
                   <th>결제수단</th>
@@ -144,6 +120,7 @@ function ReservationDetail() {
                 </tr>
               </tbody>
             </table>
+
             <table className={styles.payTable} style={{ marginTop: 18 }}>
               <thead>
                 <tr>
@@ -179,6 +156,7 @@ function ReservationDetail() {
                 ))}
               </tbody>
             </table>
+
             <div className={styles.paySummary}>
               <div>
                 총 결제금액{" "}
@@ -194,7 +172,8 @@ function ReservationDetail() {
               </div>
             </div>
           </div>
-          {/* 예매취소 유의사항 */}
+
+          {/* 유의사항 */}
           <div className={styles.section}>
             <div className={styles.cautionTitle}>예매취소 유의사항</div>
             <div className={styles.cautionBox}>
@@ -207,8 +186,7 @@ function ReservationDetail() {
               <b>취소 수수료</b> <br />
               <span style={{ color: "var(--color-text-sub)" }}>
                 <b>취소일자에 따라 취소수수료가 달라집니다.</b>
-                <br />* 단, 예매당일 밤 12시 이전 취소시에는 취소수수료
-                없음(취소기한내에 한함)
+                <br />* 단, 예매당일 밤 12시 이전 취소시에는 취소수수료 없음
               </span>
               <table className={styles.cautionTable}>
                 <thead>
@@ -230,14 +208,15 @@ function ReservationDetail() {
               </table>
             </div>
           </div>
+
           {/* 버튼 */}
           <div className={styles.btnRow}>
-            <button className={styles.btn}>예매 내역 목록</button>
+            <button className={styles.btn} onClick={() => navigate("/mypage/reservations")}>
+              예매 내역 목록
+            </button>
             <button
               className={`${styles.btn} ${styles.btnMain}`}
-              onClick={() =>
-                navigate("/mypage/reservations/refundalertcomplete")
-              }
+              onClick={() => navigate(`/mypage/reservations/${id}/cancel`)}
             >
               예매 취소하기
             </button>

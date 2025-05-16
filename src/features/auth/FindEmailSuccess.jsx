@@ -1,9 +1,10 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 function FindEmailSuccess() {
   const navigate = useNavigate();
-  const userEmail = "podopicker@gmail.com"; // 실제 데이터로 교체 예정
+  const location = useLocation();
+  const userEmail = location.state?.email || "unknown@example.com";
 
   return (
     <div style={containerStyle}>
@@ -32,7 +33,7 @@ function FindEmailSuccess() {
   );
 }
 
-// 스타일 정의
+// 💄 스타일 정의
 const containerStyle = {
   display: "flex",
   minHeight: "100dvh",

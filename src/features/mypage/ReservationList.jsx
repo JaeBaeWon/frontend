@@ -1,34 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import Sidebar from "../../components/navigation/Sidebar";
 import styles from "./ReservationList.module.css";
 import { useNavigate } from "react-router-dom";
-
-// 더미 데이터 생성
-const dummyReservations = Array.from({ length: 16 }).map((_, i) => ({
-  id: i + 1,
-  date: i % 2 === 0 ? "2025.02.23" : "2025.02.20",
-  reservationNumber: i % 2 === 0 ? "T2668747460" : "T2666419030",
-  showName:
-    i % 2 === 0
-      ? "NCT 127 : The 2nd World Tour 'Neo Zone' in Seoul"
-      : "NCT Dream : The Dream Show in Seoul",
-  viewDate: i % 2 === 0 ? "2025.05.30 | 17:00" : "2025.07.12 | 23:59",
-  ticketCount: 1,
-  cancelableUntil: i % 2 === 0 ? "2025.05.30 | 17:00" : "2025.07.12 | 23:59",
-  status: "예약완료",
-}));
+import axios from "axios";
 
 const PAGE_SIZE = 15;
 
 function ReservationList() {
-  // 실제 API 연동 시 useEffect/axios로 대체
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const totalCount = dummyReservations.length;
+  const [reservations, setReservations] = useState([]);
+
+  useEffect(() => {
+    const fetchReservations = async () => {
+      try {
+        const res = await axios.get("/auth/reservation", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setReservations(res.data);
+      } catch (error) {
+        console.error("❌ 예매 내역 불러오기 실패", error);
+      }
+    };
+
+    fetchReservations();
+  }, []);
+
+  const totalCount = reservations.length;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
-  const reservations = dummyReservations.slice(
+  const currentPageData = reservations.slice(
     (page - 1) * PAGE_SIZE,
     page * PAGE_SIZE
   );
@@ -37,9 +41,7 @@ function ReservationList() {
     <div className={styles.container}>
       <Header isLoggedIn={true} />
       <div className={styles.inner}>
-        {/* Sidebar */}
         <Sidebar active="예매 내역" />
-        {/* Main Content */}
         <main className={styles.main}>
           <h2 className={styles.title}>예매 내역</h2>
           <div className={styles.tableWrap}>
@@ -57,22 +59,21 @@ function ReservationList() {
                 </tr>
               </thead>
               <tbody>
-                {reservations.map((r) => (
+                {currentPageData.map((r) => (
                   <tr key={r.id}>
-                    <td>{r.date}</td>
+                    <td>{r.createdAt?.slice(0, 10) || "-"}</td>
                     <td>
-                      <span className={styles.resNum}>
-                        {r.reservationNumber}
-                      </span>
+                      <span className={styles.resNum}>{r.reservationNumber}</span>
                     </td>
                     <td style={{ maxWidth: 180 }}>{r.showName}</td>
                     <td>{r.viewDate}</td>
                     <td>{r.ticketCount}매</td>
                     <td>{r.cancelableUntil}</td>
+                    <td>{r.status}</td>
                     <td>
                       <button
                         className={styles.btn}
-                        onClick={() => navigate("/mypage/reservations/details")}
+                        onClick={() => navigate(`/mypage/reservations/${r.id}`)}
                       >
                         상세
                       </button>
@@ -81,7 +82,7 @@ function ReservationList() {
                 ))}
               </tbody>
             </table>
-            {/* 페이지네이션 */}
+
             <div className={styles.pagination}>
               {Array.from({ length: totalPages }).map((_, idx) => (
                 <button

@@ -1,10 +1,40 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSignup = async () => {
+    if (!email || !name || !password || !passwordCheck) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    try {
+      await axios.post("/auth/join", {
+        email,
+        user_name: name,
+        password,
+        passwordCheck,
+      });
+      alert("회원가입이 완료되었습니다.");
+      navigate("/login");
+    } catch (err) {
+      console.error("회원가입 실패", err.response?.data || err.message);
+      alert("회원가입 실패: " + (err.response?.data || "서버 오류"));
+    }
+  };
 
   return (
     <div
@@ -18,21 +48,6 @@ const Signup = () => {
         fontFamily: "Pretendard, sans-serif",
       }}
     >
-      {/* 상단 문구 - 카드 외부 */}
-      <h1
-        style={{
-          fontSize: "28px",
-          fontStyle: "italic",
-          position: "absolute",
-          top: "40px",
-          color: "#fff",
-          textAlign: "center",
-          width: "100%",
-          letterSpacing: "-0.5px",
-        }}
-      ></h1>
-
-      {/* 카드 */}
       <div
         style={{
           width: "440px",
@@ -40,7 +55,7 @@ const Signup = () => {
           borderRadius: "12px",
           background: "#fff",
           boxShadow: "0 2px 16px rgba(0,0,0,0.12)",
-          marginTop: "70px", // 간격 줄임
+          marginTop: "70px",
         }}
       >
         <h2
@@ -56,9 +71,7 @@ const Signup = () => {
 
         {/* 성명 */}
         <div style={{ marginBottom: "18px" }}>
-          <label
-            style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}
-          >
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
             성명
           </label>
           <input
@@ -71,36 +84,20 @@ const Signup = () => {
 
         {/* 이메일 */}
         <div style={{ marginBottom: "18px" }}>
-          <label
-            style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}
-          >
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
             이메일
           </label>
-          <div style={{ display: "flex", gap: "8px" }}>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{ ...inputStyle, flex: 1, fontSize: "16px" }}
-            />
-            <button
-              style={{
-                ...buttonStyle,
-                backgroundColor: "var(--primary)",
-                height: "48px",
-                fontWeight: "600",
-              }}
-            >
-              중복 확인
-            </button>
-          </div>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            style={{ ...inputStyle, width: "100%", fontSize: "16px" }}
+          />
         </div>
 
         {/* 비밀번호 */}
         <div style={{ marginBottom: "18px" }}>
-          <label
-            style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}
-          >
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
             비밀번호
           </label>
           <input
@@ -111,8 +108,22 @@ const Signup = () => {
           />
         </div>
 
+        {/* 비밀번호 확인 */}
+        <div style={{ marginBottom: "18px" }}>
+          <label style={{ display: "block", marginBottom: "6px", fontWeight: 500 }}>
+            비밀번호 확인
+          </label>
+          <input
+            type="password"
+            value={passwordCheck}
+            onChange={(e) => setPasswordCheck(e.target.value)}
+            style={{ ...inputStyle, fontSize: "16px" }}
+          />
+        </div>
+
         {/* 가입 버튼 */}
         <button
+          onClick={handleSignup}
           style={{
             ...buttonStyle,
             width: "100%",
@@ -126,7 +137,7 @@ const Signup = () => {
           가입 완료하기
         </button>
 
-        {/* 링크 문구 */}
+        {/* 안내 링크 */}
         <p
           style={{
             textAlign: "left",
@@ -137,14 +148,7 @@ const Signup = () => {
           }}
         >
           이미 계정이 있으신가요?{" "}
-          <Link
-            to="/login"
-            style={{
-              color: "#888",
-              textDecoration: "underline",
-              fontWeight: 500,
-            }}
-          >
+          <Link to="/login" style={linkStyle}>
             로그인
           </Link>
         </p>
@@ -158,36 +162,17 @@ const Signup = () => {
           }}
         >
           계정을 잊으셨나요?{" "}
-          <Link
-            to="/findemail"
-            style={{
-              color: "#888",
-              textDecoration: "underline",
-              fontWeight: 500,
-            }}
-          >
+          <Link to="/findemail" style={linkStyle}>
             이메일 찾기
           </Link>
         </p>
 
         <hr style={{ margin: "24px 0" }} />
-        <p
-          style={{
-            textAlign: "center",
-            marginBottom: "8px",
-            fontWeight: "600",
-          }}
-        >
+        <p style={{ textAlign: "center", marginBottom: "8px", fontWeight: "600" }}>
           간편 회원가입하기
         </p>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "8px",
-          }}
-        >
+        <div style={{ display: "flex", justifyContent: "space-between", gap: "8px" }}>
           <SocialButton label="구글" />
           <SocialButton label="카카오" />
           <SocialButton label="네이버" />
@@ -212,6 +197,12 @@ const buttonStyle = {
   border: "none",
   cursor: "pointer",
   fontSize: "16px",
+};
+
+const linkStyle = {
+  color: "#888",
+  textDecoration: "underline",
+  fontWeight: 500,
 };
 
 const SocialButton = ({ label }) => (

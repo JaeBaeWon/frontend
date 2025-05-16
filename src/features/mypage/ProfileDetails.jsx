@@ -1,23 +1,102 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function ProfileDetails() {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState("");
+  const [extraAddress, setExtraAddress] = useState("");
   const [birth, setBirth] = useState("");
 
+  // ✅ Daum 주소 API 스크립트 로딩
+  useEffect(() => {
+    if (!window.daum || !window.daum.Postcode) {
+      const script = document.createElement("script");
+      script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
   const handlePhoneChange = (e) => {
-    // 숫자만 입력
     const value = e.target.value.replace(/[^0-9]/g, "");
     setPhone(value);
+  };
+
+  const openDaumPostcode = () => {
+    if (!window.daum || !window.daum.Postcode) {
+      alert("카카오 주소 검색 로딩 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+
+    new window.daum.Postcode({
+      oncomplete: function (data) {
+        let addr = "";
+        let extraAddr = "";
+
+        addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+
+        if (data.userSelectedType === "R") {
+          if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+            extraAddr += data.bname;
+          }
+          if (data.buildingName !== "" && data.apartment === "Y") {
+            extraAddr += (extraAddr !== "" ? ", " + data.buildingName : data.buildingName);
+          }
+          if (extraAddr !== "") {
+            extraAddr = " (" + extraAddr + ")";
+          }
+        }
+
+        setZipCode(data.zonecode);
+        setStreetAddress(addr);
+        setExtraAddress(extraAddr);
+        document.getElementById("detailAddress")?.focus();
+      },
+    }).open();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const accessToken = localStorage.getItem("accessToken");
+
+    try {
+      await axios.post(
+        "/auth/onboarding",
+        {
+          gender: gender === "male" ? "MALE" : "FEMALE",
+          phone,
+          zipCode,
+          streetAdr: streetAddress,
+          detailAdr: detailAddress,
+          birthDate: birth.replaceAll("/", "-"),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          withCredentials: true,
+        }
+      );
+
+      alert("온보딩 정보가 저장되었습니다.");
+      window.location.href = "/mypage";
+    } catch (err) {
+      console.error("❌ 온보딩 제출 실패:", err.response?.data || err.message);
+      alert("제출에 실패했습니다. 정보를 다시 확인해주세요.");
+    }
   };
 
   return (
     <div style={containerStyle}>
       <div style={leftStyle}></div>
       <div style={rightStyle}>
-        <form style={formStyle}>
+        <form style={formStyle} onSubmit={handleSubmit}>
           <h2 style={titleStyle}>회원 정보 입력</h2>
+
           {/* 성별 */}
           <div style={fieldStyle}>
             <label style={labelStyle}>성별</label>
@@ -38,6 +117,7 @@ function ProfileDetails() {
               </button>
             </div>
           </div>
+
           {/* 전화번호 */}
           <div style={fieldStyle}>
             <label style={labelStyle}>전화번호</label>
@@ -50,17 +130,34 @@ function ProfileDetails() {
               maxLength={11}
             />
           </div>
+
           {/* 주소 */}
           <div style={fieldStyle}>
             <label style={labelStyle}>주소</label>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <input
+                type="text"
+                placeholder="우편번호"
+                value={zipCode}
+                style={{ ...inputStyle, flex: 1 }}
+                readOnly
+              />
+              <button type="button" onClick={openDaumPostcode} style={{ ...buttonStyle, width: "120px" }}>
+                주소 찾기
+              </button>
+            </div>
+            <input type="text" placeholder="도로명 주소" value={streetAddress} style={inputStyle} readOnly />
             <input
               type="text"
-              placeholder="주소를 입력하세요"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              id="detailAddress"
+              placeholder="상세 주소"
+              value={detailAddress}
+              onChange={(e) => setDetailAddress(e.target.value)}
               style={inputStyle}
             />
+            <input type="text" placeholder="참고 항목" value={extraAddress} style={inputStyle} readOnly />
           </div>
+
           {/* 생년월일 */}
           <div style={fieldStyle}>
             <label style={labelStyle}>생년월일</label>
@@ -73,15 +170,15 @@ function ProfileDetails() {
               maxLength={10}
             />
           </div>
-          <button type="submit" style={buttonStyle}>
-            저장
-          </button>
+
+          <button type="submit" style={buttonStyle}>저장</button>
         </form>
       </div>
     </div>
   );
 }
 
+// 스타일 정의
 const containerStyle = {
   display: "flex",
   minHeight: "100dvh",
@@ -156,7 +253,6 @@ const genderButton = {
   fontWeight: 500,
   fontSize: "1.1rem",
   cursor: "pointer",
-  transition: "all 0.2s",
 };
 
 const genderButtonActive = {
@@ -168,15 +264,13 @@ const genderButtonActive = {
 };
 
 const buttonStyle = {
-  width: "100%",
-  height: "52px",
+  height: "48px",
   backgroundColor: "var(--primary)",
   color: "#fff",
   fontWeight: "bold",
-  fontSize: "1.1rem",
-  borderRadius: "8px",
+  fontSize: "1rem",
+  borderRadius: "6px",
   border: "none",
-  marginTop: "8px",
   cursor: "pointer",
 };
 
