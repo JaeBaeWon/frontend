@@ -17,23 +17,23 @@ export default function InteractiveGrid() {
       }}
     >
       {/* 텍스트 */}
-      <div style={{ textAlign: "center", marginBottom: 24 }}>
+      <div style={{ textAlign: "left", marginBottom: 32 }}>
         <h1
           style={{
-            fontSize: 28,
+            fontSize: 48,
             fontWeight: 800,
             color: "#3f00bf",
-            marginBottom: 8,
+            marginBottom: 0,
           }}
         >
           소중한 포도알
         </h1>
         <h2
           style={{
-            fontSize: 28,
+            fontSize: 48,
             fontWeight: 700,
             color: "#000000",
-            marginBottom: 6,
+            marginBottom: 8,
           }}
         >
           놓치지 않을 거예요

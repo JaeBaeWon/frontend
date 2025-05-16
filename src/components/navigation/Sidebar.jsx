@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./Sidebar.module.css";
+import "./Sidebar.css";
 
 const menuList = [
   { label: "내 정보", icon: "👤", link: "/mypage" },
@@ -12,20 +12,18 @@ function Sidebar({ active }) {
   const navigate = useNavigate();
 
   return (
-    <aside className={styles.sidebar}>
-      <div className={styles.profile}>
-        <div className={styles.profileImg} />
-        <p className={styles.profileName}>재배원 님</p>
+    <aside className="sidebar">
+      <div className="profile">
+        <div className="profileImg" />
+        <p className="profileName">재배원 님</p>
       </div>
       <nav>
-        <ul className={styles.menu}>
+        <ul className="menu">
           {menuList.map((item) => (
             <li
               key={item.label}
               className={
-                item.label === active
-                  ? `${styles.menuItem} ${styles.menuItemActive}`
-                  : styles.menuItem
+                item.label === active ? "menuItem menuItemActive" : "menuItem"
               }
               onClick={() => navigate(item.link)}
               style={{ cursor: "pointer" }}

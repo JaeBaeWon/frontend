@@ -1,0 +1,46 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 24px;
+}
+
+.textArea {
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.title1 {
+  font-size: 48px;
+  font-weight: 800;
+  color: #3f00bf;
+  margin-bottom: 0;
+}
+
+.title2 {
+  font-size: 48px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.desc {
+  font-size: 14px;
+  color: #888;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.grape {
+  width: 80px;
+  height: 80px;
+  border-radius: 24px;
+  cursor: pointer;
+}

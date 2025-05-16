@@ -1,16 +1,16 @@
 import React from "react";
-import styles from "./Footer.module.css";
+import "./Footer.css";
 
 function Footer() {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.footerLinks}>
-        <div className={styles.footerLink}>이용약관</div>
-        <div className={styles.footerLink}>개인정보 처리방침</div>
-        <div className={styles.footerLink}>디지털인증센터</div>
-        <div className={styles.footerLink}>공지사항</div>
+    <footer className="footer">
+      <div className="footerLinks">
+        <div className="footerLink">이용약관</div>
+        <div className="footerLink">개인정보 처리방침</div>
+        <div className="footerLink">디지털인증센터</div>
+        <div className="footerLink">공지사항</div>
       </div>
-      <div className={styles.footerInfo}>
+      <div className="footerInfo">
         (주)재배원은 상품 거래를 중개하는 플랫폼 사업자이며, 상품과 관련된 모든
         책임은 판매자에게 있습니다.
         <br />

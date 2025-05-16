@@ -1,0 +1,182 @@
+@import "../../styles/colors.module.css";
+
+.header {
+  /* background: var(--primary); */
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  border-bottom: 1px solid #eee;
+  padding: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  padding: 0 32px;
+}
+
+.leftArea {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.centerArea {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.rightArea {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.logo img {
+  height: 36px;
+}
+
+.logo {
+  margin-right: 8px;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navLink {
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 8px;
+  transition: color 0.2s, background 0.2s, border-bottom 0.2s, transform 0.15s;
+}
+
+.navLink:hover,
+.navLink:active {
+  color: #fff;
+  transform: scale(1.08);
+  font-weight: bold;
+  border-bottom: 2px solid var(--primary-200);
+}
+
+.activeLink {
+  font-weight: bold;
+  color: #fff;
+}
+
+.accountArea {
+  position: relative;
+}
+
+.dropdownTrigger {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+/* 유저 아이콘 추가 */
+.dropdownTrigger::before {
+  content: "👤";
+  margin-right: 6px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+.dropdownTrigger:hover {
+  background: #f0f0f0;
+}
+
+.dropdownMenu {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+  animation: fadeIn 0.2s ease;
+}
+
+.dropdownItem {
+  padding: 12px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dropdownItem:hover {
+  background-color: #f9f9f9;
+}
+
+.authLinks {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.authLink {
+  background: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  border: none;
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.authLink:hover {
+  color: var(--primary-100);
+  text-decoration: underline;
+}
+
+.authAreaBg {
+  background: none;
+  position: static;
+  height: auto;
+  width: auto;
+  clip-path: none;
+  padding: 0;
+  z-index: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notoSansKR {
+  font-family: "Noto Sans KR", "Noto Sans", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+}

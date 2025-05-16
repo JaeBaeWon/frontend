@@ -1,105 +1,105 @@
-import React, { useEffect, useState } from "react";
+"use client";
 
-const bannerImages = [
-  "https://via.placeholder.com/1200x300?text=Banner+1",
-  "https://via.placeholder.com/1200x300?text=Banner+2",
-  "https://via.placeholder.com/1200x300?text=Banner+3",
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { BsChevronCompactRight } from "react-icons/bs";
+import "./Banner.css";
+
+const banners = [
+  {
+    title: "배너 이미지 #1",
+    link: "#",
+    color: "linear-gradient(to right, #041A1C, #1239E0)",
+  },
+  {
+    title: "배너 이미지 #2",
+    link: "#",
+    color: "linear-gradient(to right, #1A0C29, #4C0F8B)",
+  },
+  {
+    title: "배너 이미지 #3",
+    link: "#",
+    color: "linear-gradient(to right, #0C291A, #0F8B4C)",
+  },
+  {
+    title: "배너 이미지 #4",
+    link: "#",
+    color: "linear-gradient(to right, #0C291A, #0F8B4C)",
+  },
 ];
 
-function Banner() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const variants = {
+  enter: (direction) => ({
+    x: direction > 0 ? 300 : -300,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => ({
+    x: direction < 0 ? 300 : -300,
+    opacity: 0,
+  }),
+};
 
-  // 자동 슬라이드
-  useEffect(() => {
-    const interval = setInterval(() => {
-      goToNext();
-    }, 10000); // 10초마다 전환
-    return () => clearInterval(interval);
-  }, [currentIndex]);
+export default function Banner() {
+  const [[page, direction], setPage] = useState([0, 0]);
 
-  const goToPrev = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? bannerImages.length - 1 : prevIndex - 1
-    );
+  const paginate = (newDirection) => {
+    setPage([page + newDirection, newDirection]);
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % bannerImages.length);
-  };
-
-  const goToIndex = (index) => {
-    setCurrentIndex(index);
-  };
-
-  const bannerStyle = {
-    width: "100%",
-    height: "300px",
-    backgroundImage: `url(${bannerImages[currentIndex]})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#fff",
-    fontSize: "32px",
-    fontWeight: "bold",
-  };
-
-  const buttonStyle = {
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    fontSize: "2rem",
-    backgroundColor: "transparent",
-    color: "var(--primary)",
-    border: "none",
-    padding: "0 12px",
-    cursor: "pointer",
-    zIndex: 1,
-  };
-
-  const indicatorStyle = {
-    position: "absolute",
-    bottom: "12px",
-    display: "flex",
-    gap: "8px",
-  };
-
-  // 인디케이터 스타일
-  const dotStyle = (index) => ({
-    width: "10px",
-    height: "10px",
-    borderRadius: "50%",
-    backgroundColor:
-      currentIndex === index ? "var(--primary)" : "var(--primary-100)",
-    cursor: "pointer",
-  });
+  const swipeConfidenceThreshold = 10000;
+  const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
+  const bannerIndex =
+    ((page % banners.length) + banners.length) % banners.length;
 
   return (
-    <div style={bannerStyle}>
-      {/* 왼쪽 버튼 */}
-      <button style={{ ...buttonStyle, left: "10px" }} onClick={goToPrev}>
-        &#8249;
+    <div className="slider-container">
+      {/* 왼쪽(이전) 버튼 */}
+      <button
+        className="carousel-btn left"
+        onClick={() => paginate(-1)}
+        aria-label="이전 배너"
+      >
+        <BsChevronCompactRight
+          style={{ transform: "rotate(180deg)", fontSize: 32 }}
+        />
       </button>
-
-      {/* 오른쪽 버튼 */}
-      <button style={{ ...buttonStyle, right: "10px" }} onClick={goToNext}>
-        &#8250;
+      {/* 오른쪽(다음) 버튼 */}
+      <button
+        className="carousel-btn right"
+        onClick={() => paginate(1)}
+        aria-label="다음 배너"
+      >
+        <BsChevronCompactRight style={{ fontSize: 32 }} />
       </button>
-
-      {/* 인디케이터 */}
-      <div style={indicatorStyle}>
-        {bannerImages.map((_, index) => (
-          <div
-            key={index}
-            style={dotStyle(index)}
-            onClick={() => goToIndex(index)}
-          />
-        ))}
-      </div>
+      <AnimatePresence initial={false} custom={direction}>
+        <motion.div
+          key={page}
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.5 }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={1}
+          onDragEnd={(e, { offset, velocity }) => {
+            const swipe = swipePower(offset.x, velocity.x);
+            if (swipe < -swipeConfidenceThreshold) paginate(1);
+            else if (swipe > swipeConfidenceThreshold) paginate(-1);
+          }}
+          className="slide-banner"
+          style={{ background: banners[bannerIndex].color }}
+        >
+          <div className="banner-content">
+            <h2>{banners[bannerIndex].title}</h2>
+          </div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 }
-
-export default Banner;
