@@ -7,6 +7,10 @@ import Pagination from "./components/Pagination";
 import axios from "axios";
 import "./ShowList.css";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
+console.log("✅ VITE_TEST_URL:", import.meta.env.VITE_TEST_URL);
+
 function ShowList() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -28,9 +32,9 @@ function ShowList() {
 
   const getApiUrl = (genreSlug, page) => {
     if (genreSlug === "upcoming") {
-      return `http://localhost:8080/performance/search?status=UPCOMING&page=${page}`;
+      return `${API_BASE_URL}/performance/search?status=UPCOMING&page=${page}`;
     }
-    return `http://localhost:8080/performance/category?category=${genreSlug.toUpperCase()}&page=${page}`;
+    return `${API_BASE_URL}/performance/category?category=${genreSlug.toUpperCase()}&page=${page}`;
   };
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 .grid-wrapper {
   display: grid;
-  grid-template-columns: repeat(3, auto); /* 가로 3개 */
+  grid-template-columns: repeat(3, auto);
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
@@ -20,12 +20,38 @@
 .seat {
   width: 10px;
   height: 10px;
-  background-color: #8e44ad;
-  border: 1px solid #5c2a83;
+  background-color: #c16ae6;
+  border: 1px solid #ffffff;
   cursor: pointer;
   padding: 0;
 }
 
 .seat.selected {
   background-color: #2ecc71;
+}
+
+.seat.booked {
+  background-color: #e74c3c;
+  cursor: not-allowed;
+}
+
+.seat.hold {
+  background-color: #677273;
+  cursor: not-allowed;
+}
+
+.seat.empty {
+  background-color: transparent;
+  border: 1px dashed #ccc;
+  cursor: not-allowed; /* 마우스 커서 변경을 비활성화 */
+}
+
+.seat.booked:hover,
+.seat.hold:hover {
+  background-color: inherit; /* 색상 유지 */
+  cursor: not-allowed;       /* 클릭 불가 표시 */
+}
+
+.seat.empty:hover {
+  background-color: transparent; /* hover 상태에서 스타일 변경 안되도록 */
 }
