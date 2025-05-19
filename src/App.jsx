@@ -63,7 +63,7 @@ function AppContent() {
       {/* 공연 */}
       <Route path="/shows" element={<ShowList />} />
       <Route path="/shows/search" element={<SearchResult />} />
-      <Route path="/shows/:id" element={<ShowDetail />} />
+      <Route path="/show/:performId" element={<ShowDetail />} />
       <Route path="/show/ranking" element={<Ranking />} />
       <Route path="/show/openalertcomplete" element={<OpenAlertComplete />} />
       {/* 예매 */}
