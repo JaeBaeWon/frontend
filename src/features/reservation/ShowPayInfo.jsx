@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ShowPayInfo.css';
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const ShowPayInfo = ({ reservationId }) => {
   const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ const ShowPayInfo = ({ reservationId }) => {
       return;
     }
 
-    axios.get(`http://localhost:8080/payment/info/${reservationId}`)
+    axios.get(`${API_BASE_URL}/payment/info/${reservationId}`)
       .then((res) => {
         setPaymentInfo(res.data);
       })

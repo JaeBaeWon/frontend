@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SeatGrid.css';
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const SeatGrid = ({ performanceId, onSeatSelect }) => {
   const [seats, setSeats] = useState([]);
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/seats/status/${performanceId}`)
+    axios.get(`${API_BASE_URL}/seats/status/${performanceId}`)
       .then((res) => {
         setSeats(res.data);
       })

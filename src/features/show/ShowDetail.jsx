@@ -9,6 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { parseISO } from "date-fns";
 import "./ShowDetail.css";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 
 function ShowDetail() {
   const { performId } = useParams();
@@ -21,7 +23,7 @@ function ShowDetail() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/performance/${performId}`)
+      .get(`${API_BASE_URL}/performance/${performId}`)
       .then((res) => {
         setShow(res.data);
         const parsedStart = parseISO(res.data.performStartAt);

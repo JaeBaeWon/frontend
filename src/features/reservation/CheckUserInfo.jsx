@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './CheckUserInfo.css';
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const CheckUserInfo = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     const userId = 1;
 
-    fetch(`http://localhost:8080/reservation/check/user/${userId}`)
+    fetch(`${API_BASE_URL}/reservation/check/user/${userId}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('사용자 정보를 불러오지 못했습니다.');

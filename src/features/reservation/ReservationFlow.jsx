@@ -10,6 +10,8 @@ import Payment from './Payment';
 import ShowPayInfo from './ShowPayInfo';
 import './Reservation.css';
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const ReservationFlow = () => {
   const location = useLocation();
   const performId = location.state?.performId;
@@ -23,7 +25,7 @@ const ReservationFlow = () => {
       if (currentStep === 1) {
         try {
           for (const seatId of selectedSeatIds) {
-            const res = await axios.post(`http://localhost:8080/seats/try/${seatId}`);
+            const res = await axios.post(`${API_BASE_URL}/seats/try/${seatId}`);
             console.log(`좌석 ${seatId} 선점 성공:`, res.data);
           }
 

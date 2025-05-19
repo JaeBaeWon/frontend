@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Payment.css';
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId }) => {
     const [selectedMethod, setSelectedMethod] = useState('card');
     const [selectedPg, setSelectedPg] = useState('html5_inicis');
@@ -36,7 +38,7 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
 
     useEffect(() => {
       if (userId) {
-        fetch(`http://localhost:8080/reservation/check/user/${userId}`)
+        fetch(`${API_BASE_URL}/reservation/check/user/${userId}`)
           .then((res) => {
             if (!res.ok) throw new Error("사용자 정보 로드 실패");
             return res.json();
@@ -52,7 +54,7 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
       useEffect(() => {
         if (performId) {
           axios
-            .get(`http://localhost:8080/performance/${performId}`)
+            .get(`${API_BASE_URL}/performance/${performId}`)
             .then((response) => {
               setPerformanceData(response.data); // 공연 정보 상태에 저장
             })
@@ -105,7 +107,7 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
 
               // 3️⃣ 서버에 결제 검증
               try {
-                const verifyResponse = await fetch("http://localhost:8080/payment/verify", {
+                const verifyResponse = await fetch("${API_BASE_URL}/payment/verify", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
