@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
+// import MypageLayout from "./MypageLayout";
 
-function OpenAlertComplete() {
+function WithdrawComplete() {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
 
@@ -30,12 +31,11 @@ function OpenAlertComplete() {
         }}
       >
         <h2 style={{ fontSize: "32px", fontWeight: "bold", color: "#1c1f26" }}>
-          오픈 예정 알림 신청이 완료되었습니다.
+          회원 탈퇴가 완료되었습니다.
         </h2>
         <p style={{ fontSize: "18px", marginTop: "16px" }}>
-          고객님께 오픈 예정 알림 신청 확인 메일이 발송되었습니다.
-          <br />
-          메일 내용을 확인해 주시기 바랍니다.
+          그동안 포도피커를 이용해주셔서 감사합니다.
+          <br />더 나은 서비스로 다시 만날 수 있길 바랍니다.
         </p>
         <button
           onClick={() => navigate("/")}
@@ -78,4 +78,4 @@ function OpenAlertComplete() {
   );
 }
 
-export default OpenAlertComplete;
+export default WithdrawComplete;

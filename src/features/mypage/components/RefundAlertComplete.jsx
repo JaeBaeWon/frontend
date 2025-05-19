@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MypageLayout from "./MypageLayout";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
 
@@ -13,8 +14,7 @@ function RefundAlertComplete() {
   }, []);
 
   return (
-    <>
-      <Header />
+    <MypageLayout activeMenu="예매 내역">
       <div
         style={{
           minHeight: "80vh",
@@ -45,17 +45,36 @@ function RefundAlertComplete() {
             fontSize: "16px",
             backgroundColor: "var(--primary)",
             color: "#fff",
-            border: "none",
+            border: "2px solid var(--primary)",
             borderRadius: "8px",
             cursor: "pointer",
-            boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            boxShadow: visible
+              ? "0px 4px 16px 2px rgba(80, 0, 120, 0.15)"
+              : "0px 4px 6px rgba(0, 0, 0, 0.1)",
+            transition:
+              "box-shadow 0.3s, background 0.3s, border 0.3s, opacity 0.8s, transform 0.8s",
+            outline: "none",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "var(--secondary)";
+            e.currentTarget.style.color = "#fff";
+            e.currentTarget.style.boxShadow =
+              "0px 8px 32px 4px rgba(80, 0, 120, 0.25)";
+            e.currentTarget.style.border = "none";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "var(--primary)";
+            e.currentTarget.style.color = "#fff";
+            e.currentTarget.style.boxShadow =
+              "0px 4px 16px 2px rgba(80, 0, 120, 0.15)";
+            e.currentTarget.style.border = "2px solid var(--primary)";
           }}
         >
           메인으로 가기
         </button>
       </div>
       <Footer />
-    </>
+    </MypageLayout>
   );
 }
 

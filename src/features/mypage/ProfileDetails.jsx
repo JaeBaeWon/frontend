@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ProfileDetails.css";
+import MypageLayout from "./components/MypageLayout";
 
 function ProfileDetails() {
   const [gender, setGender] = useState("");
@@ -14,11 +15,10 @@ function ProfileDetails() {
   };
 
   return (
-    <div className="profile-container">
-      <div className="profile-left"></div>
-      <div className="profile-right">
+    <MypageLayout activeMenu="내 정보">
+      <h2 className="title">회원 정보 수정</h2>
+      <div className="infoCard">
         <form className="profile-form">
-          <h2 className="profile-title">회원 정보 입력</h2>
           {/* 성별 */}
           <div className="profile-field">
             <label className="profile-label">성별</label>
@@ -87,7 +87,7 @@ function ProfileDetails() {
           </button>
         </form>
       </div>
-    </div>
+    </MypageLayout>
   );
 }
 

@@ -1,7 +1,6 @@
 @import "../../styles/colors.module.css";
 
 .header {
-  /* background: var(--primary); */
   background: linear-gradient(to right, var(--primary), var(--secondary));
   border-bottom: 1px solid #eee;
   padding: 0;

@@ -1,4 +1,4 @@
-@import "../../../styles/colors.module.css";
+@import "/src/styles/colors.module.css";
 
 .container {
   background: var(--color-bg);

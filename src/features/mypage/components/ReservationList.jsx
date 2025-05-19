@@ -4,6 +4,7 @@ import Footer from "../../../components/layout/Footer";
 import Sidebar from "../../../components/navigation/Sidebar";
 import "./ReservationList.css";
 import { useNavigate } from "react-router-dom";
+import MypageLayout from "./MypageLayout";
 
 // 더미 데이터 생성
 const dummyReservations = Array.from({ length: 16 }).map((_, i) => ({
@@ -34,70 +35,59 @@ function ReservationList() {
   );
 
   return (
-    <div className="container">
-      <Header isLoggedIn={true} />
-      <div className="inner">
-        {/* Sidebar */}
-        <Sidebar active="예매 내역" />
-        {/* Main Content */}
-        <main className="main">
-          <h2 className="title">예매 내역</h2>
-          <div className="tableWrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>예매일</th>
-                  <th>예약번호</th>
-                  <th>공연명</th>
-                  <th>관람일</th>
-                  <th>매수</th>
-                  <th>취소가능일</th>
-                  <th>상태</th>
-                  <th> </th>
-                </tr>
-              </thead>
-              <tbody>
-                {reservations.map((r) => (
-                  <tr key={r.id}>
-                    <td>{r.date}</td>
-                    <td>
-                      <span className="resNum">{r.reservationNumber}</span>
-                    </td>
-                    <td style={{ maxWidth: 180 }}>{r.showName}</td>
-                    <td>{r.viewDate}</td>
-                    <td>{r.ticketCount}매</td>
-                    <td>{r.cancelableUntil}</td>
-                    <td>
-                      <button
-                        className="btn"
-                        onClick={() => navigate("/mypage/reservations/details")}
-                      >
-                        상세
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {/* 페이지네이션 */}
-            <div className="pagination">
-              {Array.from({ length: totalPages }).map((_, idx) => (
-                <button
-                  key={idx + 1}
-                  className={
-                    page === idx + 1 ? "pageBtn pageBtnActive" : "pageBtn"
-                  }
-                  onClick={() => setPage(idx + 1)}
-                >
-                  {idx + 1}
-                </button>
-              ))}
-            </div>
-          </div>
-        </main>
+    <MypageLayout activeMenu="예매 내역">
+      <h2 className="title">예매 내역</h2>
+      <div className="tableWrap">
+        <table>
+          <thead>
+            <tr>
+              <th>예매일</th>
+              <th>예약번호</th>
+              <th>공연명</th>
+              <th>관람일</th>
+              <th>매수</th>
+              <th>취소가능일</th>
+              <th>상태</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {reservations.map((r) => (
+              <tr key={r.id}>
+                <td>{r.date}</td>
+                <td>
+                  <span className="resNum">{r.reservationNumber}</span>
+                </td>
+                <td style={{ maxWidth: 180 }}>{r.showName}</td>
+                <td>{r.viewDate}</td>
+                <td>{r.ticketCount}매</td>
+                <td>{r.cancelableUntil}</td>
+                <td>
+                  <button
+                    className="btn"
+                    onClick={() => navigate("/mypage/reservations/details")}
+                  >
+                    상세
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {/* 페이지네이션 */}
+        <div className="pagination">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={idx + 1}
+              className={page === idx + 1 ? "pageBtn pageBtnActive" : "pageBtn"}
+              onClick={() => setPage(idx + 1)}
+            >
+              {idx + 1}
+            </button>
+          ))}
+        </div>
       </div>
-      <Footer />
-    </div>
+    </MypageLayout>
   );
 }
 

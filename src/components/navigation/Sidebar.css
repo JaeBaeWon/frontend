@@ -2,7 +2,7 @@
 
 .sidebar {
   width: 200px;
-  background: var(--background-light);
+  background: var(--primary-100);
   border-radius: 16px;
   padding: 32px 16px;
   font-family: inherit;
@@ -20,7 +20,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: #e0d6f7;
+  background: var(--primary-100);
   margin: 0 auto 12px;
 }
 .profileName {
@@ -43,16 +43,17 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text);
+  color: var(--primary-900);
   background: none;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  border: none;
 }
 .menuItemActive {
-  background: var(--primary);
-  color: #fff;
+  background: var(--primary-300);
+  color: var(--primary-900);
 }
 .menuItem:hover:not(.menuItemActive) {
-  background: var(--background-light);
-  color: var(--primary);
+  background: var(--primary-300);
+  color: var(--primary-900);
 }

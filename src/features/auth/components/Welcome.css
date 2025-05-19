@@ -1,0 +1,39 @@
+.welcome-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to bottom right,
+    var(--primary),
+    var(--secondary-300)
+  );
+  color: #fff;
+  font-family: "Noto Sans KR", sans-serif;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.welcome-message h1 {
+  font-size: 36px;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+.welcome-message p {
+  font-size: 20px;
+  opacity: 0.85;
+  animation: fadeInUp 1.2s ease-in-out;
+}
+
+/* 텍스트 부드럽게 등장 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
