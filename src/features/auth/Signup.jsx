@@ -28,6 +28,7 @@ const Signup = () => {
     try {
       const res = await axios.get(`${API_BASE_URL}/auth/check-duplicate`, {
         params: { email },
+        withCredentials: true,      // 로봇검증
       });
 
       if (res.data.available) {
@@ -61,14 +62,27 @@ const Signup = () => {
       }
 
       try {
+        // 1. 회원가입 요청
         await axios.post(`${API_BASE_URL}/auth/join`, {
           email,
           user_name: name,
           password,
           passwordCheck,
         });
-        alert("회원가입이 완료되었습니다.");
-        navigate("/login");
+
+        // 2. 로그인 요청
+        const loginRes = await axios.post(`${API_BASE_URL}/auth/login`, {
+          email,
+          password,
+          recaptchaToken: "test", // 로컬 개발용
+        }, { withCredentials: true });
+
+        // 3. 토큰 저장
+        localStorage.setItem("accessToken", loginRes.data.accessToken);
+
+        // 4. 다음 페이지 이동
+        navigate("/signup/welcome");
+
       } catch (err) {
         console.error("회원가입 실패", err.response?.data || err.message);
         alert("회원가입 실패: " + (err.response?.data || "서버 오류"));

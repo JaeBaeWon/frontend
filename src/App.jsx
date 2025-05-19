@@ -74,7 +74,7 @@ function AppContent() {
       <Route path="/mypage/manageaddress" element={<ManageAddress />} />
       <Route path="/mypage/reservations" element={<ReservationList />} />
       <Route
-        path="/mypage/reservations/details"
+        path="/mypage/reservations/:performanceId"
         element={<ReservationDetail />}
       />
       <Route path="/mypage/refundcomplete" element={<RefundAlertComplete />} />

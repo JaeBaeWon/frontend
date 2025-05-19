@@ -48,11 +48,22 @@
   color: var(--text);
   font-size: 17px;
 }
+
 .editProfileBtn {
-  border: none !important;
-  font-size: 17px !important;
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
   transition: background 0.2s;
 }
+
 .editProfileBtn:hover {
   background: var(--primary-300) !important;
   color: #fff !important;

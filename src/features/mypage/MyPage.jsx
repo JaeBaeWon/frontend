@@ -7,72 +7,96 @@ import {
   BsDoorClosedFill,
 } from "react-icons/bs";
 import "./MyPage.css";
+import Header from "../../components/layout/Header";
 import MypageLayout from "./components/MypageLayout";
-
-const menuList = [
-  { name: "내 정보", path: "/mypage", icon: () => <BsFilePerson /> },
-  { name: "예매 내역", path: "/mypage/reservations", icon: () => <BsList /> },
-  {
-    name: "배송지 관리",
-    path: "/mypage/manageaddress",
-    icon: () => <BsFillGeoAltFill />,
-  },
-  {
-    name: "탈퇴하기",
-    path: "/mypage/withdraw",
-    icon: () => <BsDoorClosedFill />,
-  },
-];
+import axios from "axios";
 
 function MyPage() {
   const [userInfo, setUserInfo] = useState(null);
-  const navigate = useNavigate();
+  const [onboardingComplete, setOnboardingComplete] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate(); // ✅ 누락 방지
 
   useEffect(() => {
-    const dummyUser = {
-      name: "정재현",
-      email: "nct127@example.com",
-      phone: "010-1997-0214",
-      birth: "1997-02-14",
-      gender: "남자",
-    };
-    setUserInfo(dummyUser);
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      window.location.href = "/login";
+      return;
+    }
+
+    axios
+      .get("/user/info", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUserInfo(res.data.member);
+        setOnboardingComplete(res.data.onboardingComplete);
+      })
+      .catch((err) => {
+        console.error("❌ 회원 정보 불러오기 실패", err);
+        if (err.response?.status === 401 || err.response?.status === 403) {
+          window.location.href = "/login";
+        } else {
+          setError("회원 정보를 불러오지 못했습니다.");
+        }
+      })
+      .finally(() => setLoading(false));
   }, []);
 
+  if (loading) return <p style={{ padding: "2rem" }}>로딩 중...</p>;
+  if (error) return <p style={{ padding: "2rem", color: "red" }}>{error}</p>;
+
   return (
-    <MypageLayout activeMenu="내 정보">
-      <h2 className="title">내 정보</h2>
-      <div className="infoCard">
-        <p className="infoLabel">이름</p>
-        <p className="infoValue">{userInfo?.name}</p>
-        <p className="infoLabel">이메일</p>
-        <p className="infoValue">{userInfo?.email}</p>
-        <p className="infoLabel">휴대폰 번호</p>
-        <p className="infoValue">{userInfo?.phone}</p>
-        <p className="infoLabel">생년월일</p>
-        <p className="infoValue">{userInfo?.birth}</p>
-        <p className="infoLabel">성별</p>
-        <p className="infoValue">{userInfo?.gender}</p>
-      </div>
-      <button
-        className="editProfileBtn"
-        style={{
-          marginTop: "20px",
-          padding: "12px 0",
-          width: "100%",
-          background: "var(--primary)",
-          color: "#fff",
-          border: "none",
-          borderRadius: "8px",
-          fontWeight: "bold",
-          fontSize: "1.1rem",
-          cursor: "pointer",
-        }}
-        onClick={() => navigate("/mypage/profiledetails")}
-      >
-        내 정보 수정하기
-      </button>
-    </MypageLayout>
+    <>
+      <MypageLayout activeMenu="내 정보">
+        <h2 className="title">내 정보</h2>
+        <div className="infoCard">
+{/*           <p className="infoLabel">이메일</p> */}
+{/*           <p className="infoValue">{userInfo?.email || "미입력"}</p> */}
+
+          {onboardingComplete ? (
+            <>
+              <p className="infoLabel">성별</p>
+              <p className="infoValue">{userInfo?.gender || "미입력"}</p>
+
+              <p className="infoLabel">주소</p>
+              <p className="infoValue">
+                {(userInfo?.streetAdr || "") + " " + (userInfo?.detailAdr || "")}
+              </p>
+
+              <p className="infoLabel">전화번호</p>
+              <p className="infoValue">{userInfo?.phone || "미입력"}</p>
+
+              <p className="infoLabel">생년월일</p>
+              <p className="infoValue">
+                {userInfo?.birthDate?.replaceAll("-", "/") || "미입력"}
+              </p>
+            </>
+          ) : (
+            <p
+              style={{
+                fontSize: "1rem",
+                color: "#888",
+                marginTop: "16px",
+              }}
+            >
+              아직 온보딩 정보가 입력되지 않았습니다. 마이페이지에서 추가 정보를 입력해주세요.
+            </p>
+          )}
+
+          <button
+            className="editProfileBtn"
+            onClick={() => navigate("/mypage/profiledetails")}
+          >
+            내 정보 수정하기
+          </button>
+        </div>
+      </MypageLayout>
+    </>
   );
 }
 

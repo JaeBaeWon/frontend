@@ -83,3 +83,9 @@
   background: var(--primary-00);
   color: #fff;
 }
+
+.address-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}

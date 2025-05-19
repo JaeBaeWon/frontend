@@ -7,8 +7,8 @@ const Welcome = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/signup/onboarding"); // ✅ 2초 후 온보딩 페이지로 이동
-    }, 2000);
+      navigate("/signup/onboarding"); // ✅ 4초 후 온보딩 페이지로 이동
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, [navigate]);
