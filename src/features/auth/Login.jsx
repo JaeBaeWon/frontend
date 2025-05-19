@@ -1,19 +1,25 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import InteractiveGrid from "./components/InteractiveGrid";
 import "./Login.css";
 import googleIcon from "./images/google_logo.png";
 import kakaoIcon from "./images/kakao_logo.png";
 import naverIcon from "./images/naver_logo.png";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+
+    // 입력값 유효성 검사 하는 부분
     let hasError = false;
     if (!email) {
       setEmailError(true);
@@ -28,7 +34,34 @@ const Login = () => {
       setPasswordError(false);
     }
     if (hasError) return;
-    // 실제 로그인 로직...
+
+    // 실제 로그인 로직
+    try {
+          const res = await axios.post(
+            `${API_BASE_URL}/auth/login`,
+            {
+                email,
+                password,
+                recaptchaToken: "test"          // 로봇 검증하는 부분
+            },
+            { withCredentials: true }
+          );
+
+          const accessToken = res.data.accessToken;
+          const onboardingDone = res.data.onboardingComplete;
+
+          localStorage.setItem("accessToken", accessToken);
+
+          // onboarding 여부에 따라 라우팅
+          if (!onboardingDone) {
+            navigate("/mypage/profiledetails");
+          } else {
+            navigate("/mypage");
+          }
+        } catch (err) {
+          console.error("❌ 로그인 실패:", err.response?.data || err.message);
+          alert("로그인에 실패했습니다.");
+       }
   };
 
   return (
@@ -106,11 +139,17 @@ const Login = () => {
   );
 };
 
-const SocialButton = ({ icon, alt }) => (
-  <button className="login-social-btn login-social-icon-btn">
-    <img src={icon} alt={alt} className="login-social-icon-only" />
-    <span className="login-social-label">{alt}</span>
-  </button>
-);
+const SocialButton = ({ icon, alt, provider }) => {
+  const handleSocialLogin = () => {
+    window.location.href = `${API_BASE_URL}/oauth2/authorization/${provider}`;
+  };
+
+  return (
+    <button className="login-social-btn login-social-icon-btn" onClick={handleSocialLogin}>
+      <img src={icon} alt={alt} className="login-social-icon-only" />
+      <span className="login-social-label">{alt}</span>
+    </button>
+  );
+};
 
 export default Login;

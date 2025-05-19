@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 import Logo from "./Logo";
 
 function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    () => localStorage.getItem("isLoggedIn") === "true"
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(() => !!localStorage.getItem("accessToken"));
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const genres = [
     { label: "뮤지컬", value: "musical" },
@@ -32,11 +31,11 @@ function Header() {
   }, []);
 
   const handleLogout = () => {
-    alert("로그아웃 되었습니다.");
-    setIsLoggedIn(false);
-    localStorage.setItem("isLoggedIn", "false");
-    setDropdownOpen(false);
-  };
+      localStorage.removeItem("accessToken");
+      alert("로그아웃 되었습니다.");
+      setIsLoggedIn(false);
+      navigate("/");
+    };
 
   return (
     <header className="header notoSansKR">
@@ -63,12 +62,25 @@ function Header() {
         <div className="rightArea">
           <div className="authAreaBg"></div>
           <div className="authLinks">
-            <Link to="/login" className="authLink">
-              로그인
-            </Link>
-            <Link to="/signup" className="authLink">
-              회원가입
-            </Link>
+            {isLoggedIn ? (
+              <>
+                <Link to="/mypage" className="authLink">
+                  마이페이지
+                </Link>
+                <button onClick={handleLogout} className="authLink logoutBtn">
+                  로그아웃
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="authLink">
+                  로그인
+                </Link>
+                <Link to="/signup" className="authLink">
+                  회원가입
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>
