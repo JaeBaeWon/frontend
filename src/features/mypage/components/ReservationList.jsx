@@ -53,7 +53,6 @@ function ReservationList() {
         <table>
           <thead>
             <tr>
-              <th>예매일</th>
               <th>예약번호</th>
               <th>공연명</th>
               <th>관람일</th>
@@ -64,27 +63,39 @@ function ReservationList() {
             </tr>
           </thead>
           <tbody>
-              {currentPageData.map((r) => (
-                  <tr key={r.ticketId}>
-                      <td>{r.reservationDay?.slice(0, 10) || "-"}</td>
-                      <td>
-                        <span className="resNum">{r.ticketId}</span>
-                      </td>
-                      <td style={{ maxWidth: 180 }}>{r.title}</td>
-                      <td>{r.performanceStartAt?.slice(0, 10) || "-"}</td>
-                      <td>{r.ticketCount ?? "1"}매</td>
-                      <td>{r.cancelableUntil?.slice(0, 10) || "-"}</td>
-                      <td>{r.performanceStatus || "-"}</td>
-                      <td>
-                        <button
-                          className="btn"
-                          onClick={() => navigate(`/mypage/reservations/${r.performanceId}`)}
-                        >
-                          상세
-                        </button>
-                      </td>
-                  </tr>
-              ))}
+            {currentPageData.map((r) => {
+                console.log("🔍 예약 객체:", r);
+              const performanceDate = new Date(r.performanceStartAt);
+              const cancelableDate = new Date(performanceDate);
+              cancelableDate.setDate(performanceDate.getDate() - 7);
+
+              const format = (date) =>
+                date instanceof Date && !isNaN(date) ? date.toISOString().slice(0, 10) : "-";
+
+              return (
+                <tr key={r.ticketId}>
+                  {/* <td>{r.reservationDay?.slice(0, 10) || "-"}</td> 예매일 제거 */}
+                  <td>
+                    <span className="resNum">{r.ticketId}</span>
+                  </td>
+                  <td style={{ maxWidth: 180 }}>{r.title}</td>
+                  <td>{format(performanceDate)}</td>
+                  <td>{r.ticketCount ?? "1"}매</td>
+                  <td>{format(cancelableDate)}</td>
+                  <td>{r.performanceStatus || "-"}</td>
+                  <td>
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        navigate(`/mypage/reservations/${r.reservationId}`)
+                      }
+                    >
+                      상세
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
 

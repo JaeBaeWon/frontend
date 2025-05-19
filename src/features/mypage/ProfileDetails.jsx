@@ -3,6 +3,8 @@ import axios from "axios";
 import "./ProfileDetails.css";
 import MypageLayout from "./components/MypageLayout";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 function ProfileDetails() {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
@@ -89,18 +91,18 @@ function ProfileDetails() {
       };
 
       try {
-        await axios.post("/auth/onboarding", payload, {
+        await axios.post(`${API_BASE_URL}/auth/onboarding`, payload, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
           withCredentials: true,
         });
 
-        alert("온보딩 정보가 저장되었습니다.");
+        alert("사용자 정보가 수정되었습니다.");
         window.location.href = "/mypage";
       } catch (err) {
-        console.error("❌ 온보딩 제출 실패:", err.response?.data || err.message);
-        alert("제출에 실패했습니다. 정보를 다시 확인해주세요.");
+        console.error("❌ 사용자 정보 수정 실패:", err.response?.data || err.message);
+        alert("수정에 실패했습니다. 정보를 다시 확인해주세요.");
       }
     };
 
