@@ -1,38 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import ShowGrid from "./components/ShowGrid";
+import axios from "axios";
+import "./ShowList.css";
 
-// 더미 데이터 (실제 API 연동 시 대체)
-const dummyEvents = [
-  {
-    id: 1,
-    title: "알라딘 (ALADDIN)",
-    venue: "부산 드림씨어터",
-    period: "2025.7.11 ~ 9.28",
-    thumbnailUrl: "/images/aladdin.jpg",
-  },
-  {
-    id: 2,
-    title: "팬텀 (PHANTOM)",
-    venue: "세종문화회관 대극장",
-    period: "2025.5.31 ~ 8.11",
-    thumbnailUrl: "/images/phantom.jpg",
-  },
-  {
-    id: 3,
-    title: "도리안 그레이",
-    venue: "홍익대 대학로 아트센터 대극장",
-    period: "2025.3.30 ~ 6.8",
-    thumbnailUrl: "/images/dorian.jpg",
-  },
-  // ... 필요시 추가
-];
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
 function useQuery() {
   const { search } = useLocation();
-  return React.useMemo(() => new URLSearchParams(search), [search]);
+  return useMemo(() => new URLSearchParams(search), [search]);
 }
 
 export default function SearchResult() {
@@ -42,21 +20,38 @@ export default function SearchResult() {
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    setLoading(true);
-    // 실제 API 연동 시 fetch로 대체
-    setTimeout(() => {
       if (!keyword) {
         setResults([]);
         setLoading(false);
         return;
       }
-      const filtered = dummyEvents.filter(
-        (e) => e.title.includes(keyword) || e.venue.includes(keyword)
-      );
-      setResults(filtered);
-      setLoading(false);
-    }, 400);
-  }, [keyword]);
+
+      const fetchSearchResults = async () => {
+        setLoading(true);
+        try {
+          const res = await axios.get(
+            `${API_BASE_URL}/performance/search?keyword=${encodeURIComponent(keyword)}&page=0`
+          );
+          const mapped = res.data.content.map((item) => ({
+            performId: item.performId,
+            title: item.title,
+            venue: item.location,
+            period: `${item.performStartAt} ~ ${item.performEndAt}`,
+            thumbnailUrl: item.performImg.startsWith("/")
+              ? item.performImg
+              : "/" + item.performImg,
+          }));
+          setResults(mapped);
+        } catch (error) {
+          console.error("검색 결과 가져오기 실패:", error);
+          setResults([]);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchSearchResults();
+    }, [keyword]);
 
   return (
     <div className="showlist-container">
