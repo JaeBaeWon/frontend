@@ -1,64 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
 import "./ReservationDetail.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../../../components/navigation/Sidebar";
 import MypageLayout from "./MypageLayout";
-
-// 더미 데이터
-const reservationDetail = {
-  showTitle: "[ 알리버드 ] 위너 브롱크호스트: 은 세상이 캔버스",
-  showImage:
-    "https://static.musinsa.com/images/event/2025/werner_bronkhorst_poster.jpg", // 임시 이미지
-  reserver: "박진현",
-  reservationNumber: "T2668747460 (총 2매)",
-  useDate: "2025.03.21 ~ 2025.05.31",
-  place: "그라운드시소 서촌",
-  ticketMethod: "현장수령",
-  notice:
-    "공연당일 예매내역서(프린트)와 신분증을 지참하시고, 공연장 티켓교부처에서 티켓을 받으시면 됩니다.",
-  mapUrl: "https://map.naver.com/",
-  payDate: "2025.02.23",
-  payMethod: "신용카드",
-  payStatus: "결제",
-  payAmount: 9900,
-  cancelFee: 990,
-  refundAmount: 8910,
-  seatList: [
-    {
-      reservationNumber: "T2668747460",
-      seatGrade: "입장권",
-      priceGrade: "알리버드",
-      product: "상시상품",
-      price: 9900,
-      canceled: true,
-      cancelDate: "2025.03.18 13:23",
-    },
-  ],
-  cancelDeadline: "2025년 05월 30일 17시 00분까지",
-  cancelPolicy: [
-    {
-      period: "미부과기간",
-      date: "2025.02.23 ~ 2025.03.02",
-      fee: "없음",
-      feeClass: "cautionRed",
-    },
-    {
-      period: "취소기한까지",
-      date: "2025.03.03 ~ 2025.05.30",
-      fee: "티켓금액의 10%",
-      feeClass: "caution10",
-    },
-  ],
-};
+import axios from "axios";
 
 function ReservationDetail() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const [reservationDetail, setReservationDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    axios
+      .get(`/user/reservation/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setReservationDetail(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError("예약 상세 정보를 불러오지 못했습니다.");
+        setLoading(false);
+      });
+  }, [id]);
+
+  if (loading) return <div className={styles.container}>불러오는 중...</div>;
+  if (error || !reservationDetail) return <div className={styles.container}>{error}</div>;
 
   return (
     <MypageLayout activeMenu="예매 내역">
       <div style={{ flex: 1 }}>
+        <Header isLoggedIn={true} />
         <div className="title">예매 상세 내역 확인/취소</div>
         <div className="breadcrumb">
           &gt;{" "}
@@ -77,20 +58,20 @@ function ReservationDetail() {
               <tbody>
                 <tr>
                   <th>예매자</th>
-                  <td>{reservationDetail.reserver}</td>
+                  <td>{reservationDetail.userName}</td>
                 </tr>
                 <tr>
                   <th>예약번호</th>
-                  <td>{reservationDetail.reservationNumber}</td>
+                  <td>{reservationDetail.ticketId}</td>
                 </tr>
                 <tr>
                   <th>이용일</th>
-                  <td>{reservationDetail.useDate}</td>
+                  <td>{reservationDetail.performanceStartAt?.slice(0, 10)}</td>
                 </tr>
                 <tr>
                   <th>장소</th>
                   <td>
-                    {reservationDetail.place}
+                    {reservationDetail.location}
                     <a
                       href={reservationDetail.mapUrl}
                       target="_blank"
@@ -102,12 +83,6 @@ function ReservationDetail() {
                   </td>
                 </tr>
                 <tr>
-                  <th>티켓수령 방법</th>
-                  <td>
-                    <span className="ticketMethod">
-                      {reservationDetail.ticketMethod}
-                    </span>
-                  </td>
                 </tr>
                 <tr>
                   <th></th>
@@ -126,15 +101,16 @@ function ReservationDetail() {
             <tbody>
               <tr>
                 <th>예매일</th>
-                <td>{reservationDetail.payDate}</td>
+                <td>{reservationDetail.reservationDay?.slice(0, 10)}</td>
                 <th>현재상태</th>
+                <td>{reservationDetail.performanceStatus}</td>
                 <td>취소</td>
               </tr>
               <tr>
                 <th>결제수단</th>
-                <td>{reservationDetail.payMethod}</td>
+                <td>{reservationDetail.payType}</td>
                 <th>결제상태</th>
-                <td>{reservationDetail.payStatus}</td>
+                <td>{reservationDetail.paymentStatus}</td>
               </tr>
             </tbody>
           </table>
@@ -176,15 +152,11 @@ function ReservationDetail() {
           <div className="paySummary">
             <div>
               총 결제금액{" "}
-              <span>{reservationDetail.payAmount.toLocaleString()}원</span>
-            </div>
-            <div>
-              취소수수료{" "}
-              <span>{reservationDetail.cancelFee.toLocaleString()}원</span>
+              <span>{reservationDetail.paymentAmount?.toLocaleString()}원</span>
             </div>
             <div>
               환불 금액{" "}
-              <span>{reservationDetail.refundAmount.toLocaleString()}원</span>
+              <span>{reservationDetail.refundAmount?.toLocaleString()}원</span>
             </div>
           </div>
         </div>
@@ -224,9 +196,15 @@ function ReservationDetail() {
             </table>
           </div>
         </div>
+
         {/* 버튼 */}
         <div className="btnRow">
-          <button className="btn">예매 내역 목록</button>
+          <button
+            className="btn"
+            onClick={() => navigate("/mypage/reservations")}
+          >
+          예매 내역 목록
+          </button>
           <button
             className="btn btnMain"
             onClick={() => navigate("/mypage/reservations/refundalertcomplete")}
