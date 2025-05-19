@@ -2,11 +2,46 @@ import React, { useState } from "react";
 import MypageLayout from "./components/MypageLayout";
 import "./ManageAddress.css";
 
-const ManageAddress = () => {
-  const [isEdit, setIsEdit] = useState(false);
 
-  // 폼 상태 등은 필요에 따라 추가
-  // const [form, setForm] = useState({ ... });
+const ManageAddress = () => {
+  const [zipCode, setZipCode] = useState("");
+  const [streetAdr, setStreetAdr] = useState("");
+  const [detailAdr, setDetailAdr] = useState("");
+  const [recipient, setRecipient] = useState("");
+  const [phone, setPhone] = useState("");
+  const [label, setLabel] = useState("집");
+  const [isDefault, setIsDefault] = useState(false);
+
+  const openDaumPostcode = () => {
+    new window.daum.Postcode({
+      oncomplete: (data) => {
+        const addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+        setZipCode(data.zonecode);
+        setStreetAdr(addr);
+        document.getElementById("detailAdr")?.focus();
+      },
+    }).open();
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("accessToken");
+    const payload = {
+      zipCode,
+      streetAdr,
+      detailAdr,
+      recipient,
+      phone,
+      label,
+      isDefault,
+    };
+    await axios.post(`${API_BASE_URL}/user/address`, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+      withCredentials: true,
+    });
+    alert("배송지가 저장되었습니다.");
+    setIsEdit(false);
+  };
 
   return (
     <MypageLayout activeMenu="배송지 관리">

@@ -25,26 +25,36 @@ function MyPage() {
       return;
     }
 
-    axios
-      .get("/user/info", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUserInfo(res.data.member);
-        setOnboardingComplete(res.data.onboardingComplete);
-      })
-      .catch((err) => {
+    const fetchInfo = async () => {
+      try {
+        const infoRes = await axios.get("/user/info", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        const profileRes = await axios.get("/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+
+        // member + profile 정보를 합쳐서 상태에 저장
+        setUserInfo({
+          ...infoRes.data.member,
+          ...profileRes.data,
+        });
+        setOnboardingComplete(infoRes.data.onboardingComplete);
+      } catch (err) {
         console.error("❌ 회원 정보 불러오기 실패", err);
         if (err.response?.status === 401 || err.response?.status === 403) {
           window.location.href = "/login";
         } else {
           setError("회원 정보를 불러오지 못했습니다.");
         }
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInfo();
   }, []);
 
   if (loading) return <p style={{ padding: "2rem" }}>로딩 중...</p>;
