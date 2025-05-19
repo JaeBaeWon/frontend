@@ -1,0 +1,21 @@
+.mypage-layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background-light);
+}
+.mypage-layout-content {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+.mypage-layout-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}

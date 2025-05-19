@@ -1,0 +1,100 @@
+@import "../../styles/colors.module.css";
+
+.withdraw-wrapper {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--gray-100, #f4f4f6);
+}
+
+.withdraw-container {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 0 16px 40px 16px;
+  font-family: "Pretendard", sans-serif;
+  width: 100%;
+}
+
+.withdraw-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 32px;
+  color: var(--primary);
+}
+
+.withdraw-box {
+  background: var(--gray-100, #f4f4f6);
+  border-radius: 12px;
+  padding: 28px 24px 20px 24px;
+  margin-bottom: 32px;
+}
+
+.withdraw-box-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--gray-900, #222);
+}
+
+.withdraw-list {
+  list-style: disc inside;
+  color: var(--gray-800, #333);
+  font-size: 1rem;
+  line-height: 1.7;
+  padding-left: 0;
+}
+
+.withdraw-check-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  color: var(--gray-700, #555);
+  font-size: 1rem;
+}
+
+.withdraw-check-row input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  accent-color: var(--primary);
+}
+
+.withdraw-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+.withdraw-back-btn {
+  background: #fff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.withdraw-back-btn:hover {
+  background: var(--primary-100, #f3e6ff);
+}
+
+.withdraw-btn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.withdraw-btn:disabled {
+  background: var(--gray-300, #ddd);
+  color: var(--gray-600, #aaa);
+  cursor: not-allowed;
+}

@@ -1,0 +1,94 @@
+.onboarding-title {
+  font-weight: 700;
+  font-size: 28px;
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.onboarding-gender-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.onboarding-gender-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  color: #222;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 2px 10px;
+  font-size: 16px;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+}
+.onboarding-gender-label.active {
+  background: #3f00bf;
+  color: #fff;
+}
+.onboarding-gender-checkbox {
+  width: 20px;
+  height: 20px;
+  accent-color: #3f00bf;
+}
+
+.onboarding-input {
+  border: none;
+  border-bottom: 2px solid #ddd;
+  border-radius: 0;
+  font-size: 18px;
+  margin-bottom: 32px;
+  width: 100%;
+  padding: 8px 0;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.onboarding-input:focus {
+  border-bottom: 2px solid #3f00bf;
+}
+
+.onboarding-submit-btn {
+  width: 100%;
+  background: #ccc;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  border-radius: 12px;
+  margin-top: 32px;
+  padding: 16px 0;
+  border: none;
+  cursor: not-allowed;
+}
+
+.onboarding-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+  color: #222;
+}
+
+.onboarding-radio {
+  accent-color: #3f00bf;
+  width: 20px;
+  height: 20px;
+}
+
+.onboarding-error {
+  color: #e53935;
+  font-size: 14px;
+  margin-top: 6px;
+  margin-left: 2px;
+}
+
+.onboarding-input-error {
+  border: 1.5px solid #e53935 !important;
+  background: #fff6f6;
+}

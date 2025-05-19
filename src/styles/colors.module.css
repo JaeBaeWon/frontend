@@ -1,11 +1,12 @@
 :root {
-  /* 서비스 키 컬러 */
+  /* 서비스 프라이머리 컬러 */
   --primary-100: #ddd6ff;
   --primary-300: #a288ff;
   --primary: #3f00bf;
   --primary-700: #2d008f;
   --primary-900: #1a0066;
 
+  /* 서비스 세컨더리리 컬러 */
   --secondary: #9933ff;
   --secondary-100: #ead6ff;
   --secondary-300: #c488ff;

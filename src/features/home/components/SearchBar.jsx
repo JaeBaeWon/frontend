@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import "./SearchBar.css";
+import { useNavigate } from "react-router-dom";
 
 const placeholders = [
   "봄날의 설렘을 담은 공연을 찾아볼까요?🌸",
@@ -12,11 +13,23 @@ const placeholders = [
 
 export default function SearchBar() {
   const [placeholder, setPlaceholder] = useState(placeholders[0]);
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const idx = Math.floor(Math.random() * placeholders.length);
     setPlaceholder(placeholders[idx]);
   }, []);
+
+  const handleSearch = () => {
+    navigate(`/shows/search?keyword=${encodeURIComponent(keyword)}`);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="search-bar-wrapper">
@@ -25,8 +38,15 @@ export default function SearchBar() {
           type="text"
           placeholder={placeholder}
           className="search-input-icon"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
-        <BsSearch className="search-icon" />
+        <BsSearch
+          className="search-icon"
+          style={{ pointerEvents: "auto", cursor: "pointer" }}
+          onClick={handleSearch}
+        />
       </div>
     </div>
   );

@@ -1,13 +1,33 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function Logo() {
+export default function Logo({ static: isStatic = false, size = 120 }) {
   const [hovered, setHovered] = useState(false);
 
   const pathVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0 },
   };
+
+  if (isStatic) {
+    return (
+      <div
+        style={{
+          width: size,
+          height: size * 0.34,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: size * 0.18,
+          fontWeight: "bold",
+          color: "#3f00bf",
+          fontFamily: '"Noto Sans KR", sans-serif',
+        }}
+      >
+        포도피커
+      </div>
+    );
+  }
 
   return (
     <div
@@ -17,8 +37,8 @@ export default function Logo() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: 40,
-        width: 120,
+        height: size * 0.34,
+        width: size,
         position: "relative",
         cursor: "pointer",
       }}

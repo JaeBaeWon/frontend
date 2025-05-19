@@ -16,61 +16,6 @@
   padding: 48px 24px;
   gap: 32px;
 }
-.sidebar {
-  width: 240px;
-  background: var(--background-light);
-  border-radius: 16px;
-  padding: 32px 16px;
-  font-family: inherit;
-  box-shadow: 0 2px 12px rgba(102, 51, 255, 0.04);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.profile {
-  text-align: center;
-  margin-bottom: 28px;
-}
-.profileImg {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: #e0d6f7;
-  margin: 0 auto 12px;
-}
-.profileName {
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--primary);
-}
-.menu {
-  list-style: none;
-  padding: 0;
-  font-size: 16px;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.menuItem {
-  padding: 12px 14px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text);
-  background: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.menuItemActive {
-  background: var(--primary);
-  color: #fff;
-}
-.menuItem:hover:not(.menuItemActive) {
-  background: var(--background-light);
-  color: var(--primary);
-}
 .main {
   flex: 1;
   font-family: inherit;
@@ -78,7 +23,7 @@
   flex-direction: column;
 }
 .title {
-  font-size: 26px;
+  font-size: 17px;
   font-weight: bold;
   color: var(--primary);
   margin-bottom: 28px;
@@ -96,8 +41,19 @@
   font-weight: 600;
   margin-bottom: 8px;
   color: var(--text-secondary);
+  font-size: 17px;
 }
 .infoValue {
   margin-bottom: 18px;
   color: var(--text);
+  font-size: 17px;
+}
+.editProfileBtn {
+  border: none !important;
+  font-size: 17px !important;
+  transition: background 0.2s;
+}
+.editProfileBtn:hover {
+  background: var(--primary-300) !important;
+  color: #fff !important;
 }

@@ -1,11 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  BsFilePerson,
+  BsList,
+  BsFillGeoAltFill,
+  BsDoorClosedFill,
+} from "react-icons/bs";
 import "./Sidebar.css";
 
 const menuList = [
-  { label: "내 정보", icon: "👤", link: "/mypage" },
-  { label: "예매 내역", icon: "🎫", link: "/mypage/reservations" },
-  { label: "배송지 관리", icon: "📦", link: "/mypage/manageaddress" },
+  { name: "내 정보", path: "/mypage", icon: () => <BsFilePerson /> },
+  { name: "예매 내역", path: "/mypage/reservations", icon: () => <BsList /> },
+  {
+    name: "배송지 관리",
+    path: "/mypage/manageaddress",
+    icon: () => <BsFillGeoAltFill />,
+  },
+  {
+    name: "탈퇴하기",
+    path: "/mypage/withdraw",
+    icon: () => <BsDoorClosedFill />,
+  },
 ];
 
 function Sidebar({ active }) {
@@ -20,18 +35,23 @@ function Sidebar({ active }) {
       <nav>
         <ul className="menu">
           {menuList.map((item) => (
-            <li
-              key={item.label}
-              className={
-                item.label === active ? "menuItem menuItemActive" : "menuItem"
-              }
-              onClick={() => navigate(item.link)}
-              style={{ cursor: "pointer" }}
-            >
-              <span role="img" aria-label={item.label}>
-                {item.icon}
-              </span>{" "}
-              {item.label}
+            <li key={item.name}>
+              <button
+                type="button"
+                className={
+                  item.name === active ? "menuItem menuItemActive" : "menuItem"
+                }
+                onClick={() => navigate(item.path)}
+              >
+                <span
+                  role="img"
+                  aria-label={item.name}
+                  style={{ marginRight: 8 }}
+                >
+                  {item.icon()}
+                </span>
+                {item.name}
+              </button>
             </li>
           ))}
         </ul>

@@ -33,8 +33,8 @@ function ShowDetail() {
       date: "2025.05.20 - 2025.05.30",
       startDate: "2025-05-20",
       endDate: "2025-05-30",
-      ticketOpenDate: "2025-05-15",
-      ticketCloseDate: "2025-05-20",
+      ticketOpenDate: "2025-06-30",
+      ticketCloseDate: "2025-06-31",
       time: "오후 3시 ~ 오후 7시",
       price: 150000,
       views: 127,
@@ -85,7 +85,7 @@ function ShowDetail() {
               {beforeTicketOpen && (
                 <button
                   className="showdetail-alert-btn"
-                  onClick={() => navigate("/openalertcomplete")}
+                  onClick={() => navigate("/show/openalertcomplete")}
                 >
                   티켓 오픈 알림 받기
                 </button>
