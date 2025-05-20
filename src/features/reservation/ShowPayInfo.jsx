@@ -17,7 +17,12 @@ const ShowPayInfo = ({ reservationId }) => {
       return;
     }
 
-    axios.get(`${API_BASE_URL}/payment/info/${reservationId}`)
+    axios.get(`${API_BASE_URL}/payment/info/${reservationId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+      },
+      withCredentials: true // ✅ 필요한 경우
+    })
       .then((res) => {
         setPaymentInfo(res.data);
       })

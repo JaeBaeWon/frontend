@@ -5,6 +5,8 @@ import Header from "../../../components/layout/Header";
 import MypageLayout from "./MypageLayout";
 import "./ReservationDetail.css";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 function ReservationDetail() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -184,12 +186,38 @@ function ReservationDetail() {
           <button className="btn" onClick={() => navigate("/mypage/reservations")}>
             예매 내역 목록
           </button>
-          <button
-            className="btn btnMain"
-            onClick={() => navigate("/mypage/reservations/refundalertcomplete")}
-          >
-            예매 취소하기
-          </button>
+          {reservationDetail.paymentStatus !== "CANCELED" && (
+            <button
+              className="btn btnMain"
+              onClick={async () => {
+                const confirm = window.confirm("정말 예매를 취소하시겠습니까?");
+                if (!confirm) return;
+
+                const token = localStorage.getItem("accessToken");
+
+                try {
+                  const res = await axios.post(
+                    `${API_BASE_URL}/refund/${reservationDetail.paymentId}?reason=사용자요청`,
+                    null,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                      withCredentials: true,
+                    }
+                  );
+
+                  alert("✅ 환불 성공");
+                  navigate("/mypage/refundcomplete");
+                } catch (error) {
+                  console.error("❌ 환불 실패:", error);
+                  alert("환불 처리에 실패했습니다.");
+                }
+              }}
+            >
+              예매 취소하기
+            </button>
+          )}
         </div>
       </div>
     </MypageLayout>

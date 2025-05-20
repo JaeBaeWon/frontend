@@ -5,7 +5,7 @@ import './Payment.css';
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
-const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId }) => {
+const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId, user }) => {
     const [selectedMethod, setSelectedMethod] = useState('card');
     const [selectedPg, setSelectedPg] = useState('html5_inicis');
     const [agreeAll, setAgreeAll] = useState(false);
@@ -69,6 +69,8 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
         });
       };
 
+  const userId = user?.id;
+
   const toggleAgreement = (key) => {
     setAgreements({ ...agreements, [key]: !agreements[key] });
   };
@@ -125,7 +127,6 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
                   body: JSON.stringify({
                     impUid: rsp.imp_uid,
                     merchantUid: rsp.merchant_uid,
-                    userId: userId,
                     performanceId: performId,
                     seatId: selectedSeatIds[0]
                   }),
@@ -134,15 +135,32 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
                 if (!verifyResponse.ok) throw new Error("검증 실패");
 
                 const resJson = await verifyResponse.json();
-                alert("🎉 결제 및 예매 완료!");
 
-                // 4️⃣ 다음 화면으로 reservationId 전달
-                setReservationId(resJson.reservationId);
-                setCurrentStep(4); // ShowPayInfo로 이동
+             // 🎯 1️⃣ ticketId 받아오기
+                const ticketId = resJson.ticketId;
+
+                // 🎯 2️⃣ reservationId 조회 요청 (딜레이 포함)
+                setTimeout(async () => {
+                  try {
+                    const res = await fetch(`${API_BASE_URL}/reservation/by-ticket/${ticketId}`, {
+                      headers: { Authorization: `Bearer ${token}` }
+                    });
+                    const data = await res.json();
+
+                    // 3️⃣ reservationId 저장 후 다음 단계 이동
+                    setReservationId(data.reservationId);
+                    alert("🎉 결제 및 예매 완료!");
+                    setCurrentStep(4); // ShowPayInfo 화면으로
+
+                  } catch (error) {
+                    console.error("❌ 예약 ID 조회 실패", error);
+                    alert("예약 정보 확인 중 오류가 발생했습니다.");
+                  }
+                }, 2000); // ⏱ 1.5초 대기 후
 
               } catch (error) {
-                console.error("결제 검증 실패:", error);
-                alert("❗ 결제는 되었지만 서버 저장 실패");
+                console.error("❌ 결제 검증 실패:", error);
+                alert("결제는 성공했지만 서버에 저장되지 않았습니다.");
               }
             } else {
               alert(`❌ 결제 실패: ${rsp.error_msg}`);

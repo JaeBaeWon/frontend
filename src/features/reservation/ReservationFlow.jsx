@@ -47,23 +47,28 @@ const ReservationFlow = () => {
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
   const handleNext = async () => {
-      if (currentStep === 1) {
-        try {
-          for (const seatId of selectedSeatIds) {
-            const res = await axios.post(`${API_BASE_URL}/seat/try/${seatId}`);
-            console.log(`좌석 ${seatId} 선점 성공:`, res.data);
-          }
-
-          setCurrentStep(currentStep + 1);
-        } catch (err) {
-          console.error("좌석 선점 실패:", err.response?.data || err.message);
-          alert("선택하신 좌석이 이미 선점되었습니다. 다시 선택해주세요.");
-          return;
+    if (currentStep === 1) {
+      const token = localStorage.getItem("accessToken");
+      try {
+        for (const seatId of selectedSeatIds) {
+          const res = await axios.post(`${API_BASE_URL}/seat/try/${seatId}`, null, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
+          });
+          console.log(`좌석 ${seatId} 선점 성공:`, res.data);
         }
-      } else {
-        if (currentStep < 4) setCurrentStep(currentStep + 1);
+
+        setCurrentStep(currentStep + 1);
+      } catch (err) {
+        console.error("좌석 선점 실패:", err.response?.data || err.message);
+        alert("선택하신 좌석이 이미 선점되었습니다. 다시 선택해주세요.");
       }
-    };
+    } else {
+      if (currentStep < 4) setCurrentStep(currentStep + 1);
+    }
+  };
 
   const handlePrev = () => {
     if (currentStep > 1) setCurrentStep(currentStep - 1);

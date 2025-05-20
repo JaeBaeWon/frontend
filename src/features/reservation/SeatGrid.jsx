@@ -9,7 +9,14 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/seat/status/${performanceId}`)
+    const token = localStorage.getItem("accessToken");
+
+    axios.get(`${API_BASE_URL}/seat/status/${performanceId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    })
       .then((res) => {
         setSeats(res.data);
       })

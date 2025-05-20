@@ -41,7 +41,12 @@ function UpcomingEvents() {
         <h2 className="showlist-title">오픈 예정</h2>
         <div className="upcoming-grid">
           {events.map((event) => (
-            <div className="show-card" key={event.id}>
+            <div
+              className="show-card"
+              key={event.id}
+              onClick={() => navigate(`/show/${event.id}`)}  // ✅ 상세 페이지로 이동
+              style={{ cursor: "pointer" }}                 // UX 개선
+            >
               <div className="show-card-image">
                 <img src={event.thumbnailUrl} alt={event.title} />
               </div>
