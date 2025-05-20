@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ResetPassword.css";
+import { BsCheckLg, BsXLg } from "react-icons/bs";
+import GridFloat from "./components/GridFloat";
 
 function ResetPassword() {
   const navigate = useNavigate();
@@ -36,68 +38,85 @@ function ResetPassword() {
   };
 
   return (
-    <div className="resetpw-container">
-      <div className="resetpw-left"></div>
-      <div className="resetpw-right">
-        <form onSubmit={handleSubmit} className="resetpw-form">
-          <h2 className="resetpw-title">비밀번호 재설정</h2>
+    <div className="resetpw-outer">
+      <GridFloat />
+      <div className="login-bg-overlay"></div>
+      <button
+        className="back-btn"
+        onClick={() => navigate("/login")}
+        type="button"
+      >
+        ← 돌아가기
+      </button>
+      <div className="resetpw-container">
+        <div className="resetpw-left"></div>
+        <div className="resetpw-right">
+          <div className="resetpw-card">
+            <form onSubmit={handleSubmit} className="resetpw-form">
+              <h2 className="resetpw-title">비밀번호 재설정</h2>
 
-          <div className="resetpw-field">
-            <label className="resetpw-label">현재 비밀번호</label>
-            <input
-              type="password"
-              value={currentPw}
-              onChange={(e) => setCurrentPw(e.target.value)}
-              className="resetpw-input"
-            />
+              <div className="resetpw-field">
+                <label className="resetpw-label">현재 비밀번호</label>
+                <input
+                  type="password"
+                  value={currentPw}
+                  onChange={(e) => setCurrentPw(e.target.value)}
+                  className="resetpw-input"
+                />
+              </div>
+
+              <div className="resetpw-field">
+                <label className="resetpw-label">새 비밀번호</label>
+                <input
+                  type="password"
+                  value={newPw}
+                  onChange={(e) => setNewPw(e.target.value)}
+                  className="resetpw-input"
+                />
+                <ul className="resetpw-pwrule-list">
+                  {pwRules.map((rule, idx) => (
+                    <li
+                      key={idx}
+                      className={
+                        rule.valid ? "resetpw-pwrule valid" : "resetpw-pwrule"
+                      }
+                    >
+                      <span className="resetpw-pwrule-icon">
+                        {rule.valid ? (
+                          <BsCheckLg style={{ color: "#22c55e" }} />
+                        ) : (
+                          <BsXLg style={{ color: "#ef4444" }} />
+                        )}
+                      </span>
+                      {rule.label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="resetpw-field">
+                <label className="resetpw-label">새 비밀번호 확인</label>
+                <input
+                  type="password"
+                  value={confirmPw}
+                  onChange={(e) => setConfirmPw(e.target.value)}
+                  className="resetpw-input"
+                />
+              </div>
+
+              <p className="resetpw-info-text">
+                8~16자의 영문 대/소문자, 숫자, 특수기호를 조합하여 사용해주세요.
+                <br />
+                개인정보나 연속된 키보드 배열과 같은 쉬운 비밀번호는 보안에
+                취약하니 피해주세요.
+              </p>
+
+              <button type="submit" className="resetpw-button">
+                확인
+              </button>
+            </form>
           </div>
-
-          <div className="resetpw-field">
-            <label className="resetpw-label">새 비밀번호</label>
-            <input
-              type="password"
-              value={newPw}
-              onChange={(e) => setNewPw(e.target.value)}
-              className="resetpw-input"
-            />
-            <ul className="resetpw-pwrule-list">
-              {pwRules.map((rule, idx) => (
-                <li
-                  key={idx}
-                  className={
-                    rule.valid ? "resetpw-pwrule valid" : "resetpw-pwrule"
-                  }
-                >
-                  <span className="resetpw-pwrule-icon">
-                    {rule.valid ? "✔️" : "❌"}
-                  </span>
-                  {rule.label}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="resetpw-field">
-            <label className="resetpw-label">새 비밀번호 확인</label>
-            <input
-              type="password"
-              value={confirmPw}
-              onChange={(e) => setConfirmPw(e.target.value)}
-              className="resetpw-input"
-            />
-          </div>
-
-          <p className="resetpw-info-text">
-            8~16자의 영문 대/소문자, 숫자, 특수기호를 조합하여 사용해주세요.
-            <br />
-            개인정보나 연속된 키보드 배열과 같은 쉬운 비밀번호는 보안에 취약하니
-            피해주세요.
-          </p>
-
-          <button type="submit" className="resetpw-button">
-            확인
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );

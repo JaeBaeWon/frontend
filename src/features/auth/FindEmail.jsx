@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./FindEmail.css";
+import GridFloat from "./components/GridFloat";
 
 function FindEmailPage() {
   const [birthdate, setBirthdate] = useState("");
@@ -36,70 +37,77 @@ function FindEmailPage() {
   };
 
   return (
-    <div className="findemail-container">
-      {/* 왼쪽 보라색 영역 */}
-      <div className="findemail-left"></div>
-      {/* 오른쪽 카드 영역 */}
-      <div className="findemail-right">
-        <form onSubmit={handleSubmit} className="findemail-form">
-          <h2 className="findemail-title">아이디 찾기</h2>
-          <div className="findemail-field">
-            <label className="findemail-label">생년월일</label>
-            <input
-              type="text"
-              placeholder="생년월일 8자리 [YYYYMMDD]"
-              value={birthdate}
-              onChange={(e) => setBirthdate(e.target.value)}
-              className="findemail-input"
-            />
-          </div>
-          <div className="findemail-field">
-            <label className="findemail-label">
-              가입 시 인증한 휴대폰 번호 입력
-            </label>
-            <div className="findemail-phone-row">
-              <input
-                type="text"
-                placeholder="휴대폰 번호 입력( - 없이 입력)"
-                value={phoneNumber}
-                onChange={(e) => {
-                  setPhoneNumber(e.target.value);
-                  if (phoneError) setPhoneError("");
-                }}
-                className="findemail-input findemail-phone-input"
-              />
-              <button
-                className={`findemail-button findemail-verify-btn${
-                  phoneNumber ? " active" : ""
-                }`}
-                onClick={handleSendVerify}
-                type="button"
-                disabled={!phoneNumber}
-              >
-                인증
-              </button>
-            </div>
-            {phoneError && <div className="findemail-error">{phoneError}</div>}
-          </div>
-          {showVerifyInput && (
+    <div className="findemail-outer">
+      <GridFloat />
+      <div className="login-bg-overlay"></div>
+      <button
+        className="back-btn"
+        onClick={() => navigate("/login")}
+        type="button"
+      >
+        ← 돌아가기
+      </button>
+      <div className="findemail-container">
+        <div className="findemail-card">
+          <form onSubmit={handleSubmit}>
+            <h2 className="findemail-title">아이디 찾기</h2>
             <div className="findemail-field">
-              <label className="findemail-label">인증번호 입력</label>
+              <label className="findemail-label">생년월일</label>
               <input
                 type="text"
-                placeholder="인증번호 입력"
-                value={verifyCode}
-                onChange={(e) => setVerifyCode(e.target.value)}
+                placeholder="생년월일 8자리 [YYYYMMDD]"
+                value={birthdate}
+                onChange={(e) => setBirthdate(e.target.value)}
                 className="findemail-input"
               />
             </div>
-          )}
-          <button type="submit" className="findemail-button">
-            확인
-          </button>
-          <Link to="/login" className="findemail-linkbtn">
-            로그인 하기
-          </Link>
-        </form>
+            <div className="findemail-field">
+              <label className="findemail-label">
+                가입 시 인증한 휴대폰 번호 입력
+              </label>
+              <div className="findemail-phone-row">
+                <input
+                  type="text"
+                  placeholder="휴대폰 번호 입력( - 없이 입력)"
+                  value={phoneNumber}
+                  onChange={(e) => {
+                    setPhoneNumber(e.target.value);
+                    if (phoneError) setPhoneError("");
+                  }}
+                  className="findemail-input findemail-phone-input"
+                />
+                <button
+                  className={`findemail-button findemail-verify-btn${
+                    phoneNumber ? " active" : ""
+                  }`}
+                  onClick={handleSendVerify}
+                  type="button"
+                  disabled={!phoneNumber}
+                >
+                  인증
+                </button>
+              </div>
+              {phoneError && (
+                <div className="findemail-error">{phoneError}</div>
+              )}
+            </div>
+            {showVerifyInput && (
+              <div className="findemail-field">
+                <label className="findemail-label">인증번호 입력</label>
+                <input
+                  type="text"
+                  placeholder="인증번호 입력"
+                  value={verifyCode}
+                  onChange={(e) => setVerifyCode(e.target.value)}
+                  className="findemail-input"
+                />
+              </div>
+            )}
+            <button type="submit" className="findemail-button">
+              확인
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -12,6 +12,7 @@ const dummyRanking = [
     venue: "부산 드림씨어터",
     period: "2025.7.11 ~ 9.28",
     thumbnailUrl: "/images/aladdin.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 2,
@@ -19,6 +20,7 @@ const dummyRanking = [
     venue: "세종문화회관 대극장",
     period: "2025.5.31 ~ 8.11",
     thumbnailUrl: "/images/phantom.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 3,
@@ -26,6 +28,7 @@ const dummyRanking = [
     venue: "홍익대 대학로 아트센터 대극장",
     period: "2025.3.30 ~ 6.8",
     thumbnailUrl: "/images/dorian.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ const dummyRanking = [
     venue: "충무아트센터 대극장",
     period: "2025.6.17 ~ 9.21",
     thumbnailUrl: "/images/memphis.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 5,
@@ -40,6 +44,7 @@ const dummyRanking = [
     venue: "샤롯데씨어터",
     period: "2024.11.22 ~ 2025.6.22",
     thumbnailUrl: "/images/aladdin2.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 6,
@@ -47,6 +52,7 @@ const dummyRanking = [
     venue: "블루스퀘어 신한카드홀",
     period: "2024.11.29 ~ 2025.5.18",
     thumbnailUrl: "/images/jekyll.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 7,
@@ -54,6 +60,7 @@ const dummyRanking = [
     venue: "두산아트센터 연강홀",
     period: "2025.3.14 ~ 5.18",
     thumbnailUrl: "/images/laika.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 8,
@@ -61,6 +68,7 @@ const dummyRanking = [
     venue: "NOL 서경스퀘어 스콘 2관",
     period: "2025.3.12 ~ 5.25",
     thumbnailUrl: "/images/night.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 9,
@@ -68,6 +76,7 @@ const dummyRanking = [
     venue: "신세계 센텀시티 내 빅탑",
     period: "2025.8.21 ~ 9.28",
     thumbnailUrl: "/images/koza.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 10,
@@ -75,6 +84,7 @@ const dummyRanking = [
     venue: "예술의전당 오페라극장",
     period: "2025.4.1 ~ 6.30",
     thumbnailUrl: "/images/lesmis.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 11,
@@ -82,6 +92,7 @@ const dummyRanking = [
     venue: "블루스퀘어 인터파크홀",
     period: "2025.5.1 ~ 7.31",
     thumbnailUrl: "/images/wicked.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 12,
@@ -89,6 +100,7 @@ const dummyRanking = [
     venue: "세종문화회관 대극장",
     period: "2025.6.1 ~ 8.15",
     thumbnailUrl: "/images/notre.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 13,
@@ -96,6 +108,7 @@ const dummyRanking = [
     venue: "샤롯데씨어터",
     period: "2025.7.1 ~ 9.15",
     thumbnailUrl: "/images/cats.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 14,
@@ -103,6 +116,7 @@ const dummyRanking = [
     venue: "디큐브아트센터",
     period: "2025.8.1 ~ 10.10",
     thumbnailUrl: "/images/chicago.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 15,
@@ -110,6 +124,7 @@ const dummyRanking = [
     venue: "예술의전당 오페라극장",
     period: "2025.9.1 ~ 11.30",
     thumbnailUrl: "/images/phantom2.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 16,
@@ -117,6 +132,7 @@ const dummyRanking = [
     venue: "충무아트센터 대극장",
     period: "2025.10.1 ~ 12.31",
     thumbnailUrl: "/images/kinky.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 17,
@@ -124,6 +140,7 @@ const dummyRanking = [
     venue: "블루스퀘어 신한카드홀",
     period: "2025.11.1 ~ 12.31",
     thumbnailUrl: "/images/dracula.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 18,
@@ -131,6 +148,7 @@ const dummyRanking = [
     venue: "예술의전당 오페라극장",
     period: "2025.12.1 ~ 2026.2.28",
     thumbnailUrl: "/images/elisabeth.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 19,
@@ -138,6 +156,7 @@ const dummyRanking = [
     venue: "샤롯데씨어터",
     period: "2026.1.1 ~ 3.31",
     thumbnailUrl: "/images/matilda.jpg",
+    genre: "뮤지컬",
   },
   {
     id: 20,
@@ -145,6 +164,7 @@ const dummyRanking = [
     venue: "디큐브아트센터",
     period: "2026.2.1 ~ 4.30",
     thumbnailUrl: "/images/billy.jpg",
+    genre: "뮤지컬",
   },
 ];
 
@@ -178,7 +198,7 @@ function Ranking() {
           loadMore();
         }
       },
-      { threshold: 1 }
+      { threshold: 1 },
     );
     if (loaderRef.current) {
       observer.observe(loaderRef.current);
@@ -191,6 +211,17 @@ function Ranking() {
   // 4~20위 리스트 데이터
   const listData = ranking.slice(3, 3 + visibleCount);
 
+  // 장르별로 그룹화하는 함수
+  const groupByGenre = (shows) => {
+    return shows.reduce((acc, show) => {
+      acc[show.genre] = acc[show.genre] || [];
+      acc[show.genre].push(show);
+      return acc;
+    }, {});
+  };
+
+  const genreGroups = groupByGenre(ranking);
+
   return (
     <div className="rankingContainer">
       <Header />
@@ -199,40 +230,43 @@ function Ranking() {
         {loading ? (
           <p className="loadingText">로딩 중...</p>
         ) : (
-          <>
-            {/* 1~3위 카드 */}
-            <div className="rankingGrid">
-              {ranking.slice(0, 3).map((show, idx) => (
-                <div key={show.id} className="rankingCardWrap">
-                  <div className="rankBadge">{idx + 1}</div>
-                  <ShowCard {...show} />
-                </div>
-              ))}
-            </div>
-            {/* 4~20위 리스트 */}
-            <ul className="rankingList">
-              {listData.map((show, idx) => (
-                <li key={show.id} className="rankingListItem">
-                  <span className="listRank">{idx + 4}</span>
-                  <img
-                    src={show.thumbnailUrl}
-                    alt={show.title}
-                    className="listThumb"
-                  />
-                  <div className="listInfo">
-                    <div className="listTitle">{show.title}</div>
-                    <div className="listVenue">{show.venue}</div>
-                    <div className="listPeriod">{show.period}</div>
+          Object.entries(genreGroups).map(([genre, shows]) => (
+            <section key={genre} className="genreSection">
+              <h3 className="genreTitle">{genre}</h3>
+              {/* 1~3위 카드 */}
+              <div className="rankingGrid">
+                {shows.slice(0, 3).map((show, idx) => (
+                  <div key={show.id} className="rankingCardWrap">
+                    <div className="rankBadge">{idx + 1}</div>
+                    <ShowCard {...show} />
                   </div>
-                </li>
-              ))}
-            </ul>
-            {visibleCount < 17 && (
-              <div ref={loaderRef} className="loadingText">
-                더 불러오는 중...
+                ))}
               </div>
-            )}
-          </>
+              {/* 4~20위 리스트 */}
+              <ul className="rankingList">
+                {listData.map((show, idx) => (
+                  <li key={show.id} className="rankingListItem">
+                    <span className="listRank">{idx + 4}</span>
+                    <img
+                      src={show.thumbnailUrl}
+                      alt={show.title}
+                      className="listThumb"
+                    />
+                    <div className="listInfo">
+                      <div className="listTitle">{show.title}</div>
+                      <div className="listVenue">{show.venue}</div>
+                      <div className="listPeriod">{show.period}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              {visibleCount < 17 && (
+                <div ref={loaderRef} className="loadingText">
+                  더 불러오는 중...
+                </div>
+              )}
+            </section>
+          ))
         )}
       </main>
       <Footer />

@@ -18,7 +18,7 @@ function ResetComplete() {
       <div className="resetc-left"></div>
       <div className="resetc-right">
         <div className="resetc-content">
-          <h2 className="resetc-title">비밀번호 재설정</h2>
+          <h2 className="resetc-title">비밀번호 변경 완료</h2>
           <div className="resetc-icon-circle">
             <span className="resetc-check-icon">✓</span>
           </div>

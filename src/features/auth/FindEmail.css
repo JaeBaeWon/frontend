@@ -1,70 +1,95 @@
-.findemail-container {
-  display: flex;
-  min-height: 100dvh;
+.findemail-outer {
+  position: relative;
+  min-height: 100vh;
   width: 100vw;
-  font-family: Pretendard, sans-serif;
+  background: #f7f7fa;
 }
 
-.findemail-left {
-  flex: 1;
-  background-color: var(--primary);
+.back-btn {
+  position: fixed;
+  top: 32px;
+  left: 48px;
+  z-index: 10;
+  font-size: 16px;
+  color: #3f00bf;
+  font-weight: 600;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 18px 6px 12px;
+  border-radius: 20px;
+  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.3);
+  transition: background 0.15s;
+}
+.back-btn:hover {
+  background: #f3eaff;
+  color: #6600bf;
 }
 
-.findemail-right {
-  flex: 1;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.findemail-form {
-  width: 100%;
-  max-width: 480px;
+.findemail-container {
+  min-height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding: 0 16px;
+  align-items: center;
+  justify-content: center;
+  background: #f7f7fa;
+  font-family:
+    Noto Sans KR,
+    Noto Sans,
+    sans-serif;
+  font-size: 17px;
+}
+
+.findemail-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  background-color: #fff;
+  padding: 48px 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  align-items: stretch;
 }
 
 .findemail-title {
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: 8px;
-  text-align: left;
+  font-weight: 600;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 .findemail-field {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  width: 100%;
+  margin-bottom: 28px;
 }
 
 .findemail-label {
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 2px;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 16px;
 }
 
-.findemail-input {
-  width: 100%;
-  padding: 16px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1.1rem;
-  box-sizing: border-box;
-  background: #fafafa;
-}
-
-.findemail-phone-row {
-  display: flex;
-  gap: 8px;
-}
-
+.findemail-input,
 .findemail-phone-input {
-  flex: 1;
-  margin-top: 0;
-  height: 48px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 17px;
+  background-color: #fff;
+  box-sizing: border-box;
+  height: 52px;
+}
+
+.findemail-input:focus,
+.findemail-phone-input:focus {
+  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.3);
+  outline: none;
 }
 
 .findemail-button {
@@ -73,26 +98,44 @@
   background-color: var(--primary);
   color: #fff;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 16px;
   border-radius: 8px;
   border: none;
   margin-top: 8px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+}
+
+.findemail-button:hover,
+.findemail-button:focus {
+  background-color: var(--secondary);
+  color: #fff;
+  outline: none;
+}
+
+.findemail-phone-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.findemail-phone-input {
+  flex: 1;
+  height: 52px;
 }
 
 .findemail-verify-btn {
-  width: 120px;
-  height: 48px;
-  font-size: 1rem;
-  padding: 0;
+  width: 80px;
+  height: 52px;
+  background-color: var(--primary);
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
   margin-top: 0;
-  border-radius: 6px;
-  background-color: #e0e0e0;
-  color: #aaa;
-  cursor: not-allowed;
-  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
 }
+
 .findemail-verify-btn.active {
   background-color: var(--primary);
   color: #fff;
@@ -105,16 +148,9 @@
   margin-top: 6px;
 }
 
-.findemail-linkbtn {
-  display: block;
+.findemail-back-row {
   width: 100%;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  color: #888;
-  font-size: 1.05rem;
-  text-align: right;
-  cursor: pointer;
-  text-decoration: underline;
-  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 }

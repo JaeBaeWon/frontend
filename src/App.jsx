@@ -29,6 +29,7 @@ import Withdraw from "./features/mypage/Withdraw";
 import WithdrawComplete from "./features/mypage/components/WithdrawComplete";
 import ProfileDetails from "./features/mypage/ProfileDetails";
 import SearchResult from "./features/show/SearchResult";
+import GridFloat from "./features/auth/components/GridFloat";
 
 function AppContent() {
   const { startLoading, stopLoading } = useContext(LoadingContext);
@@ -39,13 +40,13 @@ function AppContent() {
     작업 완료 시 stopLoading()
     필요하면 setLoadingMessage()로 메시지 변경
   */
-  useEffect(() => {
-    startLoading({ message: "테스트 로딩 중입니다!" });
-    const timer = setTimeout(() => {
-      stopLoading();
-    }, 6000);
-    return () => clearTimeout(timer);
-  }, []);
+  // useEffect(() => {
+  //   startLoading({ message: "테스트 로딩 중입니다!" });
+  //   const timer = setTimeout(() => {
+  //     stopLoading();
+  //   }, 6000);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   return (
     <Routes>
@@ -60,6 +61,7 @@ function AppContent() {
       <Route path="/resetcomplete" element={<ResetComplete />} />
       <Route path="/signup/onboarding" element={<Onboarding />} />
       <Route path="/signup/welcome" element={<Welcome />} />
+      <Route path="/login/gridfloat" element={<GridFloat />} />
       {/* 공연 */}
       <Route path="/shows" element={<ShowList />} />
       <Route path="/shows/search" element={<SearchResult />} />

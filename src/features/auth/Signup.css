@@ -1,11 +1,4 @@
-/* @font-face {
-  font-family: "Mungyeong-Gamhong-Apple";
-  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2410-2@1.0/Mungyeong-Gamhong-Apple.woff2")
-    format("woff2");
-  font-weight: normal;
-  font-style: normal;
-} */
-
+/* 회원가입 페이지 */
 .signup-container {
   min-height: 100vh;
   display: flex;
@@ -18,6 +11,7 @@
   padding: 0;
 }
 
+/* 회원가입 페이지 상단 타이틀 */
 .signup-top-title {
   font-size: 24px;
   font-style: italic;
@@ -31,12 +25,15 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* 회원가입 페이지 카드 */
 .signup-card {
   width: 500px;
   padding: 16px 48px 32px 48px;
   border-radius: 12px;
   background: #fff;
-  box-shadow: 0 4px 24px rgba(63, 0, 191, 0.1), 0 1.5px 6px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 4px 24px rgba(63, 0, 191, 0.1),
+    0 1.5px 6px rgba(0, 0, 0, 0.08);
   margin-top: -40px;
 }
 
@@ -83,6 +80,7 @@
   width: 100%;
 }
 
+/* 회원가입 페이지 입력 필드 */
 .signup-input,
 .signup-email-input {
   height: 52px;
@@ -90,7 +88,7 @@
   border-radius: 6px;
   border: 1.5px solid #ccc;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: 16px;
   width: 100%;
   transition: all 0.2s ease;
 }
@@ -98,8 +96,7 @@
 .signup-input:focus,
 .signup-email-input:focus {
   outline: none;
-  border-color: var(--primary-300);
-  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.3);
 }
 
 .signup-email-row {
@@ -110,6 +107,7 @@
   max-width: 520px; /* 여기서 통일 */
 }
 
+/* 회원가입 페이지 버튼 양식*/
 .signup-button {
   padding: 0 16px;
   border-radius: 6px;
@@ -120,6 +118,7 @@
   transition: all 0.2s ease;
 }
 
+/* 회원가입 페이지 중복 확인 버튼 */
 .signup-dup-btn {
   height: 52px;
   padding: 0 16px;
@@ -132,6 +131,7 @@
   white-space: nowrap;
 }
 
+/* 회원가입 페이지 가입 버튼 */
 .signup-submit-btn {
   width: 100%;
   background-color: var(--primary);
@@ -172,89 +172,30 @@
   gap: 8px;
 }
 
+/* 소셜 로그인 버튼 (중복 통합) */
 .signup-social-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  flex: 1;
   border: 1px solid #ccc;
   border-radius: 6px;
   height: 52px;
-  font-size: 18px;
+  font-size: 16px;
   background: #fff;
   cursor: pointer;
   transition: all 0.2s ease;
+  width: 100%;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 .signup-social-btn:focus {
   outline: none;
-  border-color: var(--primary-300);
-  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.3);
 }
 
-.signup-left-text {
-  width: 520px;
-  max-width: 520px;
-  padding: 56px 48px;
-  color: #fff;
-  margin-right: 40px;
-  font-family: "Mungyeong-Gamhong-Apple", "Noto Sans KR", sans-serif;
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  height: auto;
-}
-
-.signup-left-text p {
-  font-size: 80px; /*글자 크기*/
-  line-height: 1.2; /*글자 간격*/
-  font-weight: 800; /*글자 두께*/
-}
-
-.signup-tooltip {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  left: 50%;
-  bottom: 110%;
-  transform: translateX(-50%);
-  background: #222;
-  color: #fff;
-  padding: 6px 14px;
-  border-radius: 8px;
-  font-size: 16px;
-  white-space: nowrap;
-  pointer-events: none;
-  transition: opacity 0.2s;
-  z-index: 10;
-}
-.signup-left-text span:hover .signup-tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.signup-social-icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  height: 52px;
-  width: 100%;
-  min-width: 44px;
-  min-height: 44px;
-  box-sizing: border-box;
-}
-
+/* 아이콘, 라벨 스타일은 그대로 유지 */
 .signup-social-icon-only {
   width: 28px;
   height: 28px;
@@ -265,7 +206,7 @@
 }
 
 .signup-social-label {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   line-height: 1;
   display: block;
@@ -290,14 +231,18 @@
   border: none;
   outline: none;
   box-shadow: none;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .signup-dup-btn:active,
 .signup-submit-btn:active {
   transform: scale(0.97);
   filter: brightness(0.92);
-  transition: transform 0.08s, filter 0.08s;
+  transition:
+    transform 0.08s,
+    filter 0.08s;
 }
 
 .signup-logo-fixed {
@@ -312,17 +257,39 @@
   top: 32px;
   left: 48px;
   z-index: 10;
-  font-size: 18px;
+  font-size: 16px;
   color: #3f00bf;
   font-weight: 600;
   text-decoration: none;
   background: rgba(255, 255, 255, 0.85);
   padding: 6px 18px 6px 12px;
   border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(63, 0, 191, 0.06);
+  box-shadow: 0 0 0 3px rgba(162, 136, 255, 0.3);
   transition: background 0.15s;
 }
 .signup-home-link:hover {
   background: #f3eaff;
   color: #6600bf;
+}
+
+.signup-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 110%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 16px;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.signup-left-text span:hover .signup-tooltip {
+  visibility: visible;
+  opacity: 1;
 }
