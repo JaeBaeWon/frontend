@@ -1,81 +1,91 @@
 .fes-container {
+  min-height: 80vh;
   display: flex;
-  min-height: 100dvh;
-  width: 100vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-family: Pretendard, sans-serif;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .fes-left {
-  width: 480px;
-  min-width: 320px;
-  background-color: var(--primary);
+  display: none;
 }
 
 .fes-right {
-  flex: 1;
-  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  background: none;
   padding: 0;
 }
 
 .fes-content {
   width: 100%;
-  max-width: 400px;
+  max-width: 480px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  gap: 18px;
-  padding: 0 16px;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .fes-title {
-  font-weight: bold;
   font-size: 2rem;
-  align-self: flex-start;
-  margin-bottom: 8px;
+  font-weight: bold;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+  align-self: center;
 }
 
 .fes-icon-circle {
-  width: 64px;
-  height: 64px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background-color: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
+  font-size: 2.5rem;
   font-weight: bold;
   margin: 0 auto 8px auto;
+  box-shadow: 0px 4px 16px 2px rgba(80, 0, 120, 0.15);
+  filter: drop-shadow(0 4px 12px rgba(80, 0, 120, 0.2));
 }
 
 .fes-check-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
   color: #fff;
 }
 
 .fes-description {
-  margin-top: 0;
-  padding: 0 8px;
+  font-size: 1.05rem;
+  color: #4a4a4a;
   line-height: 1.6;
-}
-
-.fes-text {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 8px;
+  text-align: center;
+  padding: 0 8px;
+  max-width: 320px;
+  margin: 0 auto;
 }
 
 .fes-email {
   font-size: 1.1rem;
   font-weight: bold;
   color: #222;
-  background-color: var(--primary);
   padding: 10px 16px;
   border-radius: 6px;
   margin-bottom: 12px;
+  color: #2b2b2b;
 }
 
 .fes-button {
@@ -84,21 +94,36 @@
   background-color: var(--primary);
   color: #fff;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border-radius: 8px;
-  border: none;
+  border: 2px solid var(--primary);
   cursor: pointer;
+  align-items: center;
+  box-shadow: 0px 4px 16px 2px rgba(80, 0, 120, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  outline: none;
   margin-bottom: 8px;
+}
+
+.fes-button:hover,
+.fes-button:focus {
+  background-color: var(--secondary);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0px 8px 32px 4px rgba(80, 0, 120, 0.25);
+  border: none;
 }
 
 .fes-text-link-wrapper {
   width: 100%;
-  text-align: right;
+  text-align: center;
 }
 
 .fes-text-link {
-  font-size: 1rem;
-  color: #666;
+  font-size: 0.95rem;
+  color: #999;
   text-decoration: underline;
   cursor: pointer;
+  text-align: center;
 }

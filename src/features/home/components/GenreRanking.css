@@ -1,41 +1,63 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 .genre-section {
-  max-width: 1440px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 0 48px;
   border-radius: 28px;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(124, 77, 255, 0.07);
 }
 
 .genre-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 24px;
+  color: var(--primary);
+  letter-spacing: -0.5px;
 }
 
 .genre-tab-buttons {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 16px;
   margin-bottom: 32px;
-  background: #f7f7fa;
+  background: var(--brand-sub);
   border-radius: 16px;
   padding: 8px;
   border: none;
+  box-shadow: 0 2px 8px rgba(124, 77, 255, 0.04);
 }
 
 .genre-tab-button {
-  padding: 8px 28px;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s, font-weight 0.3s;
+  position: relative;
+  background: transparent;
+  border: none;
+  color: #888;
+  font-weight: 400;
+  padding: 8px 28px 12px 28px;
+  transition: color 0.3s;
 }
 
 .genre-tab-button.active {
-  font-weight: 700;
-  background-color: var(--primary-100);
-  color: var(--primary-300);
-  box-shadow: 0 2px 8px rgba(162, 136, 255, 0.08);
+  color: var(--brand-main);
+  font-weight: 800;
+}
+
+.genre-tab-button.active::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  bottom: 0;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--primary);
 }
 
 .genre-tab-button.inactive {
@@ -46,7 +68,17 @@
 }
 
 .genre-tab-button.inactive:hover {
-  background-color: #eee;
+  background: #ede7f6;
+  color: var(--brand-main);
+  box-shadow: 0 2px 8px rgba(162, 136, 255, 0.08);
+  transform: scale(1.04);
+}
+
+.genre-tab-button:hover {
+  background: #f3eaff;
+  color: var(--brand-main);
+  box-shadow: 0 2px 8px rgba(124, 77, 255, 0.1);
+  transform: scale(1.04);
 }
 
 .genre-grid {
@@ -61,10 +93,22 @@
   margin-left: auto;
   margin-right: auto;
   padding: 10px 20px;
-  background-color: var(--primary);
+  background: var(--primary);
   color: #fff;
   border: none;
   border-radius: 4px;
   font-size: 14px;
   cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(124, 77, 255, 0.1);
+  transition:
+    background 0.3s,
+    box-shadow 0.3s,
+    transform 0.2s;
+}
+
+.genre-more-btn:hover {
+  background: var(--secondary);
+  box-shadow: 0 4px 16px rgba(124, 77, 255, 0.18);
+  transform: scale(1.04);
 }
