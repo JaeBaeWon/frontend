@@ -44,8 +44,8 @@ const CheckUserInfo = () => {
       <div className="check-info-container">
         <div className="order-info">
           <h3>주문자 정보</h3>
-          <p><strong>이름</strong> {user.username}</p>
-          <p><strong>연락처</strong> {user.phone}</p>
+          <p><strong>이름</strong> {user.userName}</p>
+          <p><strong>연락처</strong> {user.phone ?? "-"}</p>
           <p><strong>이메일</strong> {user.email}</p>
 
           <h3>배송지 정보</h3>
