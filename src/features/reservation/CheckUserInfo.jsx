@@ -7,16 +7,29 @@ const CheckUserInfo = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userId = 1;
+    const token = localStorage.getItem("accessToken");
 
-    fetch(`${API_BASE_URL}/reservation/check/user/${userId}`)
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    fetch("/user/info", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      credentials: "include"
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error('사용자 정보를 불러오지 못했습니다.');
         }
         return response.json();
       })
-      .then(data => setUser(data))
+      .then(data => {
+        console.log("✅ 유저 정보:", data);
+        setUser(data.member); // ✅ member 필드에 유저 정보 있음
+      })
       .catch(error => {
         console.error('Error:', error);
         alert('사용자 정보를 불러오는 중 오류가 발생했습니다.');
@@ -36,7 +49,10 @@ const CheckUserInfo = () => {
           <p><strong>이메일</strong> {user.email}</p>
 
           <h3>배송지 정보</h3>
-          <p> {user.address}<br />무슨아파트 1동 101호</p>
+          <p>
+            {user.zipCode} {user.streetAdr} <br />
+            {user.detailAdr}
+          </p>
 
           <div className="notice-box">
             <h4>주의사항</h4>

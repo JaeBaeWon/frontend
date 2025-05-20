@@ -56,7 +56,7 @@ const Login = () => {
           if (!onboardingDone) {
             navigate("/mypage/profiledetails");
           } else {
-            navigate("/mypage");
+            navigate("/");
           }
         } catch (err) {
           console.error("❌ 로그인 실패:", err.response?.data || err.message);
