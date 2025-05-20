@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Header from "../../components/layout/Header";
@@ -18,6 +18,31 @@ const ReservationFlow = () => {
 
   console.log("넘겨받은 performId:", performId);
 
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) return;
+
+      try {
+        const res = await axios.get("/user/info", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
+
+        console.log("✅ 사용자 정보:", res.data.member);
+        setUser(res.data.member);
+      } catch (err) {
+        console.error("❌ 사용자 정보 가져오기 실패", err);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const [currentStep, setCurrentStep] = useState(1); // 1~4까지
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
@@ -25,7 +50,7 @@ const ReservationFlow = () => {
       if (currentStep === 1) {
         try {
           for (const seatId of selectedSeatIds) {
-            const res = await axios.post(`${API_BASE_URL}/seats/try/${seatId}`);
+            const res = await axios.post(`${API_BASE_URL}/seat/try/${seatId}`);
             console.log(`좌석 ${seatId} 선점 성공:`, res.data);
           }
 
@@ -61,6 +86,7 @@ const ReservationFlow = () => {
             setReservationId={setReservationId}
             selectedSeatIds={selectedSeatIds}
             performId={performId}
+            user={user}
           />
         );
       case 4:

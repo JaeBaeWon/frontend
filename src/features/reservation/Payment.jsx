@@ -15,40 +15,29 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
     thirdParty: false,
   });
 
-    const getRefundDeadline = () => {
-      if (!performanceData?.performStartAt) return '';
 
-      const date = new Date(performanceData.performStartAt);
-      date.setDate(date.getDate() - 1); // 하루 전
-      date.setHours(17, 0, 0); // 17:00 고정
-
-      return date.toLocaleString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-      });
-    };
 
     // 1️⃣ 공연 정보 가져오기
     const [performanceData, setPerformanceData] = useState(null);
-    const [userId, setUserId] = useState(1);        // !!!!하드코딩된 부분(로그인 이후 수정)
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
-      if (userId) {
-        fetch(`${API_BASE_URL}/reservation/check/user/${userId}`)
-          .then((res) => {
-            if (!res.ok) throw new Error("사용자 정보 로드 실패");
-            return res.json();
+        // 사용자 정보 불러오기 (토큰 기반)
+        const token = localStorage.getItem("accessToken");
+        if (!token) return;
+
+        fetch(`/user/info`, {
+          headers: { Authorization: `Bearer ${token}` },
+          credentials: 'include',
+        })
+          .then(res => res.json())
+          .then(data => {
+            setUserData(data.member);
           })
-          .then((data) => setUserData(data))
-          .catch((err) => {
-            console.error("사용자 정보 오류:", err);
+          .catch(err => {
+            console.error("사용자 정보 로드 실패:", err);
           });
-      }
-    }, [userId]);
+      }, []);
 
       // 공연 정보 가져오기 (performId 기반)
       useEffect(() => {
@@ -63,6 +52,22 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
             });
         }
       }, [performId]);
+
+  const getRefundDeadline = () => {
+        if (!performanceData?.performStartAt) return '';
+
+        const date = new Date(performanceData.performStartAt);
+        date.setDate(date.getDate() - 1); // 하루 전
+        date.setHours(17, 0, 0); // 17:00 고정
+
+        return date.toLocaleString('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        });
+      };
 
   const toggleAgreement = (key) => {
     setAgreements({ ...agreements, [key]: !agreements[key] });
@@ -79,7 +84,11 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
   };
 
   const onClickPayment = async (pg, method) => {
-      if (!window.IMP) return;
+      if (!window.IMP || !userData || !performanceData) {
+         alert('필수 정보가 누락되었습니다.');
+         return;
+      }
+
       const IMP = window.IMP;
       IMP.init("imp00577760");
 
@@ -100,17 +109,18 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
             buyer_email: userData.email,
             buyer_name: userData.username,
             buyer_tel: userData.phone
-          },
-          async function (rsp) {
-            if (rsp.success) {
-              alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
+          },async (rsp) => {
+              if (rsp.success) {
+                alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
 
               // 3️⃣ 서버에 결제 검증
               try {
-                const verifyResponse = await fetch("${API_BASE_URL}/payment/verify", {
+                const token = localStorage.getItem("accessToken");
+                const verifyResponse = await fetch(`${API_BASE_URL}/payment/verify`, {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
                   },
                   body: JSON.stringify({
                     impUid: rsp.imp_uid,
@@ -129,7 +139,6 @@ const Payment = ({ setCurrentStep, setReservationId, selectedSeatIds, performId 
                 // 4️⃣ 다음 화면으로 reservationId 전달
                 setReservationId(resJson.reservationId);
                 setCurrentStep(4); // ShowPayInfo로 이동
-
 
               } catch (error) {
                 console.error("결제 검증 실패:", error);
