@@ -20,7 +20,8 @@ export default function Onboarding() {
   useEffect(() => {
     if (!window.daum || !window.daum.Postcode) {
       const script = document.createElement("script");
-      script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+      script.src =
+        "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
       script.async = true;
       document.body.appendChild(script);
     }
@@ -34,7 +35,8 @@ export default function Onboarding() {
 
     new window.daum.Postcode({
       oncomplete: function (data) {
-        let addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+        let addr =
+          data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
         setZipCode(data.zonecode);
         setStreetAddress(addr);
         document.getElementById("detailAddress")?.focus();
@@ -49,7 +51,15 @@ export default function Onboarding() {
     const formattedBirth = birth.trim().replaceAll("/", "-");
     const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(formattedBirth);
 
-    if (!gender || !phone || !streetAddress || !detailAddress || !zipCode || !birth) return;
+    if (
+      !gender ||
+      !phone ||
+      !streetAddress ||
+      !detailAddress ||
+      !zipCode ||
+      !birth
+    )
+      return;
     if (!isValidDate) {
       alert("생년월일을 YYYY-MM-DD 형식으로 입력해주세요.");
       return;
@@ -87,7 +97,7 @@ export default function Onboarding() {
       <BackgroundBlob />
       <div className="signup-card-wrapper">
         <div className="signup-card">
-          <h2 className="signup-title">추가 정보 입력</h2>
+          <h2 className="signup-title">추가 정보를 입력해 주세요</h2>
           <form onSubmit={handleSubmit}>
             {/* 성별 */}
             <div className="signup-field" style={{ marginBottom: 24 }}>
@@ -114,39 +124,51 @@ export default function Onboarding() {
                   여성
                 </label>
               </div>
-              {submitted && !gender && <div className="onboarding-error">성별을 선택해 주세요.</div>}
+              {submitted && !gender && (
+                <div className="onboarding-error">성별을 선택해 주세요.</div>
+              )}
             </div>
 
             {/* 전화번호 */}
             <div className="signup-field">
               <label className="signup-label">전화번호</label>
               <input
-                className={`signup-input${submitted && !phone ? " onboarding-input-error" : ""}`}
+                className={`onboarding-input${submitted && !phone ? " error" : ""}`}
                 type="text"
                 value={phone}
-                onChange={(e) => setPhone(e.target.value.replace(/[^0-9]/g, ""))}
+                onChange={(e) =>
+                  setPhone(e.target.value.replace(/[^0-9]/g, ""))
+                }
               />
-              {submitted && !phone && <div className="onboarding-error">전화번호를 입력해 주세요.</div>}
+              {submitted && !phone && (
+                <div className="onboarding-error">
+                  전화번호를 입력해 주세요.
+                </div>
+              )}
             </div>
 
             {/* 주소 */}
             <div className="signup-field">
               <label className="signup-label">주소</label>
-              <div className="address-row" style={{ display: "flex", gap: "8px" }}>
+              <div className="address-row address-input-row">
                 <input
                   type="text"
-                  className="signup-input"
+                  className="onboarding-input zipcode-input"
                   placeholder="우편번호"
                   value={zipCode}
                   readOnly
                 />
-                <button type="button" className="signup-button" onClick={openDaumPostcode}>
+                <button
+                  type="button"
+                  className="address-search-btn"
+                  onClick={openDaumPostcode}
+                >
                   주소 찾기
                 </button>
               </div>
               <input
                 type="text"
-                className="signup-input"
+                className="onboarding-input address-input-row"
                 placeholder="도로명 주소"
                 value={streetAddress}
                 readOnly
@@ -154,13 +176,15 @@ export default function Onboarding() {
               <input
                 type="text"
                 id="detailAddress"
-                className="signup-input"
+                className="onboarding-input"
                 placeholder="상세 주소"
                 value={detailAddress}
                 onChange={(e) => setDetailAddress(e.target.value)}
               />
               {submitted && (!zipCode || !streetAddress || !detailAddress) && (
-                <div className="onboarding-error">주소를 모두 입력해 주세요.</div>
+                <div className="onboarding-error">
+                  주소를 모두 입력해 주세요.
+                </div>
               )}
             </div>
 
@@ -168,19 +192,32 @@ export default function Onboarding() {
             <div className="signup-field">
               <label className="signup-label">생년월일</label>
               <input
-                className={`signup-input${submitted && !birth ? " onboarding-input-error" : ""}`}
+                className={`onboarding-input${submitted && !birth ? " error" : ""}`}
                 type="text"
                 placeholder="YYYY-MM-DD"
                 value={birth}
                 onChange={(e) => setBirth(e.target.value)}
               />
-              {submitted && !birth && <div className="onboarding-error">생년월일을 입력해 주세요.</div>}
+              {submitted && !birth && (
+                <div className="onboarding-error">
+                  생년월일을 입력해 주세요.
+                </div>
+              )}
             </div>
 
             <button
               type="submit"
               className="signup-button signup-submit-btn"
-              disabled={!(gender && phone && zipCode && streetAddress && detailAddress && birth)}
+              disabled={
+                !(
+                  gender &&
+                  phone &&
+                  zipCode &&
+                  streetAddress &&
+                  detailAddress &&
+                  birth
+                )
+              }
               style={{ marginTop: 16 }}
             >
               제출하기

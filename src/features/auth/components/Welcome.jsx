@@ -16,8 +16,11 @@ const Welcome = () => {
   return (
     <div className="welcome-container">
       <div className="welcome-message">
-        <h1>포도피커에 오신 것을 환영합니다 🍇</h1>
-        <p>우리, 조금 더 친해져볼까요?</p>
+        <h1>
+          포도피커에 오신 것을 환영합니다. 마음에 드는 공연을 쉽고 빠르게
+          예매하세요!
+        </h1>
+        <p>원활한 예매를 위해 추가 정보를 입력해 주세요.</p>
       </div>
     </div>
   );

@@ -78,7 +78,7 @@
 
 .rankingList {
   margin: 48px auto 0 auto;
-  max-width: 900px;
+  max-width: 1200px;
   width: 100%;
   list-style: none;
   padding: 0;
@@ -137,4 +137,14 @@
 .listPeriod {
   font-size: 0.95rem;
   color: #888;
+}
+
+.genreSection {
+  margin-bottom: 60px;
+}
+.genreTitle {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: var(--primary-700);
 }
