@@ -42,9 +42,9 @@ function ReservationList() {
   const totalCount = reservations.length;
   const totalPages = Math.ceil(totalCount / PAGE_SIZE);
   const currentPageData = reservations.slice(
-      (page - 1) * PAGE_SIZE,
-      page * PAGE_SIZE
-    );
+    (page - 1) * PAGE_SIZE,
+    page * PAGE_SIZE,
+  );
 
   return (
     <MypageLayout activeMenu="예매 내역">
@@ -53,7 +53,7 @@ function ReservationList() {
         <table>
           <thead>
             <tr>
-              <th>예매일</th>
+              <th>번호</th>
               <th>예약번호</th>
               <th>공연명</th>
               <th>관람일</th>
@@ -64,27 +64,54 @@ function ReservationList() {
             </tr>
           </thead>
           <tbody>
-              {currentPageData.map((r) => (
-                  <tr key={r.ticketId}>
-                      <td>{r.reservationDay?.slice(0, 10) || "-"}</td>
-                      <td>
-                        <span className="resNum">{r.ticketId}</span>
-                      </td>
-                      <td style={{ maxWidth: 180 }}>{r.title}</td>
-                      <td>{r.performanceStartAt?.slice(0, 10) || "-"}</td>
-                      <td>{r.ticketCount ?? "1"}매</td>
-                      <td>{r.cancelableUntil?.slice(0, 10) || "-"}</td>
-                      <td>{r.performanceStatus || "-"}</td>
-                      <td>
-                        <button
-                          className="btn"
-                          onClick={() => navigate(`/mypage/reservations/${r.performanceId}`)}
-                        >
-                          상세
-                        </button>
-                      </td>
-                  </tr>
-              ))}
+            {currentPageData.map((r, idx) => {
+              const performanceDate = new Date(r.performanceStartAt);
+              const cancelableDate = new Date(performanceDate);
+              cancelableDate.setDate(performanceDate.getDate() - 7);
+
+              const format = (date) =>
+                date instanceof Date && !isNaN(date)
+                  ? date.toISOString().slice(0, 10)
+                  : "-";
+
+              return (
+                <tr key={r.ticketId}>
+                  <td
+                    className={
+                      r.reservationStatus === "CANCELED"
+                        ? "status-canceled"
+                        : ""
+                    }
+                  >
+                    {(page - 1) * PAGE_SIZE + idx + 1}
+                  </td>
+                  <td
+                    className={
+                      r.reservationStatus === "CANCELED"
+                        ? "status-canceled"
+                        : ""
+                    }
+                  >
+                    <span className="resNum">{r.ticketId}</span>
+                  </td>
+                  <td style={{ maxWidth: 180 }}>{r.title}</td>
+                  <td>{format(performanceDate)}</td>
+                  <td>{r.ticketCount ?? "1"}매</td>
+                  <td>{format(cancelableDate)}</td>
+                  <td>{r.performanceStatus || "-"}</td>
+                  <td>
+                    <button
+                      className="btn"
+                      onClick={() =>
+                        navigate(`/mypage/reservations/${r.reservationId}`)
+                      }
+                    >
+                      상세
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
 

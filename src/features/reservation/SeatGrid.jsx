@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './SeatGrid.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./SeatGrid.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
@@ -9,7 +9,15 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/seats/status/${performanceId}`)
+    const token = localStorage.getItem("accessToken");
+
+    axios
+      .get(`${API_BASE_URL}/seat/status/${performanceId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      })
       .then((res) => {
         setSeats(res.data);
       })
@@ -19,53 +27,58 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
   }, [performanceId]);
 
   // ✅ 상태가 바뀔 때만 부모에게 전달
-    useEffect(() => {
-      onSeatSelect(selectedSeatIds);
-    }, [selectedSeatIds, onSeatSelect]);
+  useEffect(() => {
+    onSeatSelect(selectedSeatIds);
+  }, [selectedSeatIds, onSeatSelect]);
 
-    const handleSeatClick = (seatId) => {
-      setSelectedSeatIds(prev =>
-        prev.includes(seatId) ? [] : [seatId]
-      );
-    };
+  const handleSeatClick = (seatId) => {
+    setSelectedSeatIds((prev) => (prev.includes(seatId) ? [] : [seatId]));
+  };
 
-    const handleClick = (seatId, seatStatus) => {
-      if (seatStatus !== 'AVAILABLE') return;
-      handleSeatClick(seatId);
-    };
+  const handleClick = (seatId, seatStatus) => {
+    if (seatStatus !== "AVAILABLE") return;
+    handleSeatClick(seatId);
+  };
 
-
-  const sections = ['A', 'B', 'C', 'D', 'E', 'F'];
+  const sections = ["A", "B", "C", "D", "E", "F"];
 
   return (
     <div className="grid-wrapper">
-      {sections.map(section => {
-        const blockSeats = seats.filter(seat => seat.seatSection === section);
+      {sections.map((section) => {
+        const blockSeats = seats.filter((seat) => seat.seatSection === section);
         return (
           <div key={section} className="seat-block">
             {[...Array(10)].map((_, rowIndex) => (
               <div key={rowIndex} className="seat-row">
                 {[...Array(10)].map((_, colIndex) => {
-
                   const seatNumber = rowIndex * 10 + colIndex + 1;
-                  const seat = blockSeats.find(s => parseInt(s.seatNum) === seatNumber);
-                  if (!seat) return <button key={rowIndex*10+colIndex} className="seat empty" />;
+                  const seat = blockSeats.find(
+                    (s) => parseInt(s.seatNum) === seatNumber,
+                  );
+                  if (!seat)
+                    return (
+                      <button
+                        key={rowIndex * 10 + colIndex}
+                        className="seat empty"
+                      />
+                    );
 
                   const isSelected = selectedSeatIds.includes(seat.seatId);
                   const seatStatus = seat.seatStatus;
 
                   return (
                     <button
-                        key={seat.seatId}
-                        className={`seat
-                            ${isSelected ? 'selected' : ''}
-                            ${seatStatus === 'BOOKED' ? 'booked' : ''}
-                            ${seatStatus === 'HOLD' ? 'hold' : ''}
+                      key={seat.seatId}
+                      className={`seat
+                            ${isSelected ? "selected" : ""}
+                            ${seatStatus === "BOOKED" ? "booked" : ""}
+                            ${seatStatus === "HOLD" ? "hold" : ""}
                         `}
-                        onClick={() => handleClick(seat.seatId, seatStatus)}
-                   >
-                        {seat.seatSection}{seat.seatNum}
-                   </button>
+                      onClick={() => handleClick(seat.seatId, seatStatus)}
+                    >
+                      {seat.seatSection}
+                      {seat.seatNum}
+                    </button>
                   );
                 })}
               </div>

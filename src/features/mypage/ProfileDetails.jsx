@@ -3,6 +3,8 @@ import axios from "axios";
 import "./ProfileDetails.css";
 import MypageLayout from "./components/MypageLayout";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 function ProfileDetails() {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
@@ -15,7 +17,8 @@ function ProfileDetails() {
   useEffect(() => {
     if (!window.daum || !window.daum.Postcode) {
       const script = document.createElement("script");
-      script.src = "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
+      script.src =
+        "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
       script.async = true;
       document.body.appendChild(script);
     }
@@ -38,14 +41,16 @@ function ProfileDetails() {
         let addr = "";
         let extraAddr = "";
 
-        addr = data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
+        addr =
+          data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
 
         if (data.userSelectedType === "R") {
           if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
             extraAddr += data.bname;
           }
           if (data.buildingName !== "" && data.apartment === "Y") {
-            extraAddr += (extraAddr !== "" ? ", " + data.buildingName : data.buildingName);
+            extraAddr +=
+              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
           }
           if (extraAddr !== "") {
             extraAddr = " (" + extraAddr + ")";
@@ -61,48 +66,51 @@ function ProfileDetails() {
   };
 
   const handleSubmit = async (e) => {
-      e.preventDefault();
+    e.preventDefault();
 
-      const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem("accessToken");
 
-      // 🔐 성별 체크
-      if (!gender) {
-        alert("성별을 선택해주세요.");
-        return;
-      }
+    // 🔐 성별 체크
+    if (!gender) {
+      alert("성별을 선택해주세요.");
+      return;
+    }
 
-      // 🎂 생일 체크
-      const formattedBirth = birth.replaceAll("/", "-").trim();
-      const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(formattedBirth);
-      if (!isValidDate) {
-        alert("생년월일을 YYYY/MM/DD 또는 YYYY-MM-DD 형식으로 입력해주세요.");
-        return;
-      }
+    // 🎂 생일 체크
+    const formattedBirth = birth.replaceAll("/", "-").trim();
+    const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(formattedBirth);
+    if (!isValidDate) {
+      alert("생년월일을 YYYY/MM/DD 또는 YYYY-MM-DD 형식으로 입력해주세요.");
+      return;
+    }
 
-      const payload = {
-        gender: gender === "male" ? "MALE" : "FEMALE",
-        phone,
-        zipCode,
-        streetAdr: streetAddress,
-        detailAdr: detailAddress,
-        birthDate: formattedBirth,
-      };
-
-      try {
-        await axios.post("/auth/onboarding", payload, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          withCredentials: true,
-        });
-
-        alert("온보딩 정보가 저장되었습니다.");
-        window.location.href = "/mypage";
-      } catch (err) {
-        console.error("❌ 온보딩 제출 실패:", err.response?.data || err.message);
-        alert("제출에 실패했습니다. 정보를 다시 확인해주세요.");
-      }
+    const payload = {
+      gender: gender === "male" ? "MALE" : "FEMALE",
+      phone,
+      zipCode,
+      streetAdr: streetAddress,
+      detailAdr: detailAddress,
+      birthDate: formattedBirth,
     };
+
+    try {
+      await axios.post(`${API_BASE_URL}/auth/onboarding`, payload, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        withCredentials: true,
+      });
+
+      alert("사용자 정보가 수정되었습니다.");
+      window.location.href = "/mypage";
+    } catch (err) {
+      console.error(
+        "❌ 사용자 정보 수정 실패:",
+        err.response?.data || err.message,
+      );
+      alert("수정에 실패했습니다. 정보를 다시 확인해주세요.");
+    }
+  };
 
   return (
     <MypageLayout activeMenu="내 정보">
@@ -154,7 +162,11 @@ function ProfileDetails() {
                 value={zipCode}
                 readOnly
               />
-              <button type="button" className="profile-button" onClick={openDaumPostcode}>
+              <button
+                type="button"
+                className="profile-button"
+                onClick={openDaumPostcode}
+              >
                 주소 찾기
               </button>
             </div>

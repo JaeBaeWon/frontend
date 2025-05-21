@@ -25,26 +25,36 @@ function MyPage() {
       return;
     }
 
-    axios
-      .get("/user/info", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      })
-      .then((res) => {
-        setUserInfo(res.data.member);
-        setOnboardingComplete(res.data.onboardingComplete);
-      })
-      .catch((err) => {
+    const fetchInfo = async () => {
+      try {
+        const infoRes = await axios.get("/user/info", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+        const profileRes = await axios.get("/user/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        });
+
+        // member + profile 정보를 합쳐서 상태에 저장
+        setUserInfo({
+          ...infoRes.data.member,
+          ...profileRes.data,
+        });
+        setOnboardingComplete(infoRes.data.onboardingComplete);
+      } catch (err) {
         console.error("❌ 회원 정보 불러오기 실패", err);
         if (err.response?.status === 401 || err.response?.status === 403) {
           window.location.href = "/login";
         } else {
           setError("회원 정보를 불러오지 못했습니다.");
         }
-      })
-      .finally(() => setLoading(false));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInfo();
   }, []);
 
   if (loading) return <p style={{ padding: "2rem" }}>로딩 중...</p>;
@@ -55,8 +65,8 @@ function MyPage() {
       <MypageLayout activeMenu="내 정보">
         <h2 className="title">내 정보</h2>
         <div className="infoCard">
-{/*           <p className="infoLabel">이메일</p> */}
-{/*           <p className="infoValue">{userInfo?.email || "미입력"}</p> */}
+          {/*           <p className="infoLabel">이메일</p> */}
+          {/*           <p className="infoValue">{userInfo?.email || "미입력"}</p> */}
 
           {onboardingComplete ? (
             <>
@@ -65,7 +75,9 @@ function MyPage() {
 
               <p className="infoLabel">주소</p>
               <p className="infoValue">
-                {(userInfo?.streetAdr || "") + " " + (userInfo?.detailAdr || "")}
+                {(userInfo?.streetAdr || "") +
+                  " " +
+                  (userInfo?.detailAdr || "")}
               </p>
 
               <p className="infoLabel">전화번호</p>
@@ -84,7 +96,8 @@ function MyPage() {
                 marginTop: "16px",
               }}
             >
-              아직 온보딩 정보가 입력되지 않았습니다. 마이페이지에서 추가 정보를 입력해주세요.
+              아직 온보딩 정보가 입력되지 않았습니다. 마이페이지에서 추가 정보를
+              입력해주세요.
             </p>
           )}
 

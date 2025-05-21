@@ -75,10 +75,7 @@ function AppContent() {
       <Route path="/mypage" element={<MyPage />} />
       <Route path="/mypage/manageaddress" element={<ManageAddress />} />
       <Route path="/mypage/reservations" element={<ReservationList />} />
-      <Route
-        path="/mypage/reservations/:performanceId"
-        element={<ReservationDetail />}
-      />
+      <Route path="/mypage/reservations/:id" element={<ReservationDetail />} />
       <Route path="/mypage/refundcomplete" element={<RefundAlertComplete />} />
       <Route path="/mypage/withdraw" element={<Withdraw />} />
       <Route path="/mypage/withdrawcomplete" element={<WithdrawComplete />} />

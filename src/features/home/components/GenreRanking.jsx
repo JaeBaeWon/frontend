@@ -18,29 +18,29 @@ function GenreRanking() {
   const navigate = useNavigate();
 
   useEffect(() => {
-      const fetchEvents = async () => {
-        try {
-          const response = await axios.get(
-            `${API_BASE_URL}/performance/category?category=${selectedTab}&page=0`
-          );
-          const shows = response.data.content.map((item) => ({
-            id: item.performId,
-            title: item.title,
-            venue: item.location,
-            period: `${item.performStartAt} ~ ${item.performEndAt}`,
-            thumbnailUrl: item.performImg.startsWith("/")
-              ? item.performImg
-              : "/" + item.performImg,
-          }));
-          setEvents(shows);
-        } catch (error) {
-          console.error("공연 데이터 가져오기 실패:", error);
-          setEvents([]);
-        }
-      };
+    const fetchEvents = async () => {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/performance/category?category=${selectedTab}&page=0`,
+        );
+        const shows = response.data.content.map((item) => ({
+          id: item.performId,
+          title: item.title,
+          venue: item.location,
+          period: `${item.performStartAt} ~ ${item.performEndAt}`,
+          thumbnailUrl: item.performImg.startsWith("/")
+            ? item.performImg
+            : "/" + item.performImg,
+        }));
+        setEvents(shows);
+      } catch (error) {
+        console.error("공연 데이터 가져오기 실패:", error);
+        setEvents([]);
+      }
+    };
 
-      fetchEvents();
-    }, [selectedTab]);
+    fetchEvents();
+  }, [selectedTab]);
 
   return (
     <section className="genre-section">
@@ -51,7 +51,7 @@ function GenreRanking() {
           <div
             key={tab.value}
             className={`genre-tab-button ${
-                selectedTab === tab.value ? "active" : "inactive"
+              selectedTab === tab.value ? "active" : "inactive"
             }`}
             onClick={() => setSelectedTab(tab.value)}
           >
@@ -62,7 +62,12 @@ function GenreRanking() {
 
       <div className="genre-grid">
         {events.map((event) => (
-          <div className="show-card" key={event.id}>
+          <div
+            className="show-card"
+            key={event.id}
+            onClick={() => navigate(`/show/${event.id}`)} // ✅ 상세 페이지로 이동
+            style={{ cursor: "pointer" }}
+          >
             <div className="show-card-image">
               <img src={event.thumbnailUrl} alt={event.title} />
             </div>
@@ -77,9 +82,12 @@ function GenreRanking() {
           </div>
         ))}
       </div>
-      <button className="genre-more-btn" onClick={() => navigate("/show/ranking")}>
-            랭킹 더보기
-          </button>
+      <button
+        className="genre-more-btn"
+        onClick={() => navigate("/show/ranking")}
+      >
+        랭킹 더보기
+      </button>
     </section>
   );
 }

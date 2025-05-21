@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BsFilePerson,
@@ -6,6 +6,7 @@ import {
   BsFillGeoAltFill,
   BsDoorClosedFill,
 } from "react-icons/bs";
+import axios from "axios";
 import "./Sidebar.css";
 
 const menuList = [
@@ -25,12 +26,34 @@ const menuList = [
 
 function Sidebar({ active }) {
   const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+
+    axios
+      .get("/user/info", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        const name = res.data.member?.userName || "사용자";
+        setUserName(name);
+        console.log("✅ 유저 정보 응답", res.data);
+      })
+      .catch((err) => {
+        console.error("❌ 사이드바 사용자 이름 로딩 실패", err);
+      });
+  }, []);
 
   return (
     <aside className="sidebar">
       <div className="profile">
         <div className="profileImg" />
-        <p className="profileName">재배원 님</p>
+        <p className="profileName">{userName} 님</p>
       </div>
       <nav>
         <ul className="menu">

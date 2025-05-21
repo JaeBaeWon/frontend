@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../../components/layout/Header";
-import Footer from "../../../components/layout/Footer";
-import "./ReservationDetail.css";
 import { useNavigate, useParams } from "react-router-dom";
-import Sidebar from "../../../components/navigation/Sidebar";
-import MypageLayout from "./MypageLayout";
 import axios from "axios";
+import Header from "../../../components/layout/Header";
+import MypageLayout from "./MypageLayout";
+import "./ReservationDetail.css";
+
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
 function ReservationDetail() {
   const navigate = useNavigate();
@@ -13,6 +13,39 @@ function ReservationDetail() {
   const [reservationDetail, setReservationDetail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  // 📌 수수료 정책 계산
+  const generateCancelPolicy = (startDateStr) => {
+    const startDate = new Date(startDateStr);
+    const format = (d) => d.toISOString().slice(0, 10);
+
+    return [
+      {
+        period: "공연일 7일 전까지",
+        date: format(new Date(startDate.getTime() - 7 * 86400000)),
+        fee: "없음",
+        feeClass: "caution10",
+      },
+      {
+        period: "공연일 3~6일 전",
+        date: format(new Date(startDate.getTime() - 3 * 86400000)),
+        fee: "10%",
+        feeClass: "caution10",
+      },
+      {
+        period: "공연일 1~2일 전",
+        date: format(new Date(startDate.getTime() - 1 * 86400000)),
+        fee: "30%",
+        feeClass: "cautionRed",
+      },
+      {
+        period: "공연 당일 및 이후",
+        date: format(startDate),
+        fee: "환불 불가",
+        feeClass: "cautionRed",
+      },
+    ];
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -24,28 +57,38 @@ function ReservationDetail() {
         withCredentials: true,
       })
       .then((res) => {
-        setReservationDetail(res.data);
+        const detail = res.data;
+
+        // 📌 cancelDeadline 계산
+        const deadline = new Date(detail.performanceStartAt);
+        deadline.setDate(deadline.getDate() - 7);
+        const formattedDeadline = deadline.toISOString().slice(0, 10);
+
+        setReservationDetail({
+          ...detail,
+          cancelDeadline: formattedDeadline,
+          cancelPolicy: generateCancelPolicy(detail.performanceStartAt),
+        });
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("예약 상세 정보를 불러오지 못했습니다.");
         setLoading(false);
       });
   }, [id]);
 
-  if (loading) return <div className={styles.container}>불러오는 중...</div>;
-  if (error || !reservationDetail) return <div className={styles.container}>{error}</div>;
+  if (loading) return <div className="container">불러오는 중...</div>;
+  if (error || !reservationDetail)
+    return <div className="container">{error}</div>;
 
   return (
     <MypageLayout activeMenu="예매 내역">
-      <div style={{ flex: 1 }}>
-        <Header isLoggedIn={true} />
+      <div className="content">
         <div className="title">예매 상세 내역 확인/취소</div>
         <div className="breadcrumb">
-          &gt;{" "}
           <span className="productTitle">{reservationDetail.showTitle}</span>
         </div>
-        {/* 공연 정보 */}
+
         <div className="section">
           <div className="flexRow">
             <img
@@ -70,41 +113,22 @@ function ReservationDetail() {
                 </tr>
                 <tr>
                   <th>장소</th>
-                  <td>
-                    {reservationDetail.location}
-                    <a
-                      href={reservationDetail.mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mapBtn"
-                    >
-                      지도보기
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                </tr>
-                <tr>
-                  <th></th>
-                  <td>
-                    <div className="noticeBox">{reservationDetail.notice}</div>
-                  </td>
+                  <td>{reservationDetail.location}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        {/* 결제내역 */}
+
         <div className="section">
-          <div style={{ fontWeight: 600, marginBottom: 10 }}>결제내역</div>
+          <div className="sectionTitle">결제내역</div>
           <table className="infoTable">
             <tbody>
               <tr>
                 <th>예매일</th>
-                <td>{reservationDetail.reservationDay?.slice(0, 10)}</td>
+                <td>{reservationDetail.reservationDay?.slice(0, 10) || "-"}</td>
                 <th>현재상태</th>
                 <td>{reservationDetail.performanceStatus}</td>
-                <td>취소</td>
               </tr>
               <tr>
                 <th>결제수단</th>
@@ -114,41 +138,6 @@ function ReservationDetail() {
               </tr>
             </tbody>
           </table>
-          <table className="payTable" style={{ marginTop: 18 }}>
-            <thead>
-              <tr>
-                <th>예매번호</th>
-                <th>좌석등급</th>
-                <th>가격등급</th>
-                <th>좌석번호</th>
-                <th>가격</th>
-                <th>취소여부</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reservationDetail.seatList.map((seat, idx) => (
-                <tr key={idx}>
-                  <td>{seat.reservationNumber}</td>
-                  <td>{seat.seatGrade}</td>
-                  <td>{seat.priceGrade}</td>
-                  <td>{seat.product}</td>
-                  <td>{seat.price.toLocaleString()}원</td>
-                  <td>
-                    {seat.canceled ? (
-                      <span>
-                        취소됨 <br />
-                        <span style={{ color: "#888", fontSize: 13 }}>
-                          {seat.cancelDate}
-                        </span>
-                      </span>
-                    ) : (
-                      "-"
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
           <div className="paySummary">
             <div>
               총 결제금액{" "}
@@ -156,25 +145,27 @@ function ReservationDetail() {
             </div>
             <div>
               환불 금액{" "}
-              <span>{reservationDetail.refundAmount?.toLocaleString()}원</span>
+              <span>
+                {reservationDetail.refundAmount?.toLocaleString() || "0"}원
+              </span>
             </div>
           </div>
         </div>
-        {/* 예매취소 유의사항 */}
+
         <div className="section">
           <div className="cautionTitle">예매취소 유의사항</div>
           <div className="cautionBox">
             <b>취소 마감시간</b>{" "}
-            <span style={{ color: "var(--color-point)", fontWeight: 600 }}>
+            <span className="cancelDeadline">
               {reservationDetail.cancelDeadline}
             </span>
           </div>
           <div className="cautionBox">
             <b>취소 수수료</b> <br />
-            <span style={{ color: "var(--color-text-sub)" }}>
+            <span>
               <b>취소일자에 따라 취소수수료가 달라집니다.</b>
-              <br />* 단, 예매당일 밤 12시 이전 취소시에는 취소수수료
-              없음(취소기한내에 한함)
+              <br />* 예매당일 밤 12시 이전 취소 시 취소수수료 없음(취소기한
+              내에 한함)
             </span>
             <table className="cautionTable">
               <thead>
@@ -197,20 +188,45 @@ function ReservationDetail() {
           </div>
         </div>
 
-        {/* 버튼 */}
         <div className="btnRow">
           <button
             className="btn"
             onClick={() => navigate("/mypage/reservations")}
           >
-          예매 내역 목록
+            예매 내역 목록
           </button>
-          <button
-            className="btn btnMain"
-            onClick={() => navigate("/mypage/reservations/refundalertcomplete")}
-          >
-            예매 취소하기
-          </button>
+          {reservationDetail.paymentStatus !== "CANCELED" && (
+            <button
+              className="btn btnMain"
+              onClick={async () => {
+                const confirm = window.confirm("정말 예매를 취소하시겠습니까?");
+                if (!confirm) return;
+
+                const token = localStorage.getItem("accessToken");
+
+                try {
+                  const res = await axios.post(
+                    `${API_BASE_URL}/refund/${reservationDetail.paymentId}?reason=사용자요청`,
+                    null,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                      withCredentials: true,
+                    },
+                  );
+
+                  alert("✅ 환불 성공");
+                  navigate("/mypage/refundcomplete");
+                } catch (error) {
+                  console.error("❌ 환불 실패:", error);
+                  alert("환불 처리에 실패했습니다.");
+                }
+              }}
+            >
+              예매 취소하기
+            </button>
+          )}
         </div>
       </div>
     </MypageLayout>
