@@ -141,6 +141,7 @@
 .address-search-btn:hover,
 .address-search-btn:focus {
   background: var(--secondary, #6600bf);
+  border: none;
 }
 
 /* 주소 입력란 내 각 줄(행) 간 간격을 일정하게 */
