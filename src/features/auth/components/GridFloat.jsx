@@ -29,7 +29,7 @@ export default function GridFloat() {
           key={`r${r}c${c}`}
           src={img}
           alt="floating icon"
-          style={{ ...styles.floatImage, top, left }}
+          style={{ ...(styles.floatImage || {}), top, left }}
           animate={{
             y: [0, -6, 0],
             scale: [1, 1.03, 1],
@@ -57,7 +57,7 @@ const styles = {
     left: 0,
     width: "100%",
     height: "100vh",
-    backgroundColor: "white",
+    backgroundColor: "transparent",
     overflow: "hidden",
     zIndex: 0,
   },
