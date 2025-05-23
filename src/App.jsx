@@ -30,6 +30,8 @@ import WithdrawComplete from "./features/mypage/components/WithdrawComplete";
 import ProfileDetails from "./features/mypage/ProfileDetails";
 import SearchResult from "./features/show/SearchResult";
 import GridFloat from "./features/auth/components/GridFloat";
+import { initToolbar } from "@stagewise/toolbar";
+initToolbar();
 
 function AppContent() {
   const { startLoading, stopLoading } = useContext(LoadingContext);
