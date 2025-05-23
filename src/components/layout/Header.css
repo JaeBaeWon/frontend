@@ -24,7 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 20px;
+  gap: 10px;
 }
 
 .centerArea {
@@ -35,7 +35,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-left: 0;
+  margin-left: 32px;
   gap: 20px;
   height: 100%;
 }
@@ -154,7 +154,7 @@
 }
 
 .authLink:hover {
-  color: var(--primary-100);
+  color: #fff;
   text-decoration: underline;
 }
 
