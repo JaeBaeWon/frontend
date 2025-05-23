@@ -73,7 +73,7 @@ function ShowDetail() {
                 {beforeTicketOpen && (
                   <button
                     className="showdetail-alert-btn"
-                    onClick={() => navigate("/openalertcomplete")}
+                    onClick={() => navigate("/show/openalertcomplete")}
                   >
                     티켓 오픈 알림 받기
                   </button>
@@ -96,6 +96,11 @@ function ShowDetail() {
               <div className="showdetail-location">{show.location}</div>
               <div className="showdetail-date">{show.date}</div>
               <div className="showdetail-time">{show.time}</div>
+
+              {/* 잔여석 표시 */}
+              <div className="showdetail-remaining-seats">
+                잔여석: {show.remainSeats}석 / {show.totalSeats}석
+              </div>
 
               {!isClosed && (
                 <>
