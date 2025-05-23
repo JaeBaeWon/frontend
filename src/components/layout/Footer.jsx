@@ -8,8 +8,8 @@ function Footer() {
         <div className="footerLinks">
           <div className="footerLink">이용약관</div>
           <div className="footerLink">개인정보 처리방침</div>
-          <div className="footerLink">디지털인증센터</div>
-          <div className="footerLink">공지사항</div>
+          <div className="footerLink">회사소개</div>
+          <div className="footerLink">고객센터</div>
         </div>
         <div className="footerInfo">
           (주)재배원은 상품 거래를 중개하는 플랫폼 사업자이며, 상품과 관련된
