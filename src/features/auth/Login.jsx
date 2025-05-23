@@ -35,7 +35,7 @@ const Login = () => {
     }
     if (hasError) return;
 
-    // 실제 로그인 로직
+    // 실제 로그인 로직 (아래 부분은 API 연동이므로 주석 처리)
     try {
       const res = await axios.post(
         `${API_BASE_URL}/auth/login`,
@@ -62,6 +62,8 @@ const Login = () => {
       console.error("❌ 로그인 실패:", err.response?.data || err.message);
       alert("로그인에 실패했습니다.");
     }
+
+    navigate("/mypage");
   };
 
   return (
@@ -106,7 +108,7 @@ const Login = () => {
             로그인
           </button>
           <p className="login-linktext">
-            아직 계정이 없으신가요?{" "}
+            처음 방문하셨나요?{" "}
             <Link to="/signup" className="login-link">
               회원가입
             </Link>
