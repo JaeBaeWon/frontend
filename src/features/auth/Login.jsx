@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Login.css";
-import LoginLeftFloat from "./components/GridFloat";
+import GridFloat from "./components/GridFloat";
 import googleIcon from "./images/google_logo.png";
 import kakaoIcon from "./images/kakao_logo.png";
 import naverIcon from "./images/naver_logo.png";
@@ -66,7 +66,7 @@ const Login = () => {
 
   return (
     <div className="login-center-container">
-      <LoginLeftFloat />
+      <GridFloat />
       <div className="login-bg-overlay"></div>
       <Link to="/" className="signup-home-link">
         ← 메인으로
