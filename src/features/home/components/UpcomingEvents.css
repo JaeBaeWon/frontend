@@ -19,15 +19,25 @@
 }
 
 .upcoming-more-btn {
-  margin-top: 0;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 40px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px 20px;
-  background-color: var(--primary);
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--divider);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
   cursor: pointer;
+  outline: none;
+}
+
+.upcoming-more-btn:focus,
+.upcoming-more-btn:active {
+  outline: none;
 }

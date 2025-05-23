@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../show/ShowList.css";
 import "./UpcomingEvents.css";
+import { BsChevronRight } from "react-icons/bs";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
@@ -62,6 +63,7 @@ function UpcomingEvents() {
         onClick={() => navigate("/shows?genre=upcoming")}
       >
         오픈 예정 더보기
+        <BsChevronRight />
       </button>
     </section>
   );

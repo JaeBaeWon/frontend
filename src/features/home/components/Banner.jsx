@@ -29,7 +29,7 @@ const banners = [
 ];
 
 const variants = {
-  enter: (direction) => ({
+  enter: (direction = 0) => ({
     x: direction > 0 ? 300 : -300,
     opacity: 0,
   }),
@@ -37,7 +37,7 @@ const variants = {
     x: 0,
     opacity: 1,
   },
-  exit: (direction) => ({
+  exit: (direction = 0) => ({
     x: direction < 0 ? 300 : -300,
     opacity: 0,
   }),
@@ -78,12 +78,12 @@ export default function Banner() {
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={page}
-          custom={direction}
+          custom={direction ?? 0}
           variants={variants}
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.2 }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={1}

@@ -1,7 +1,6 @@
 @import "../../styles/colors.module.css";
 
 .mainContainer {
-  font-family: "Pretendard", "Noto Sans KR", sans-serif;
   min-height: 100vh;
   background: var(--background-light);
   display: flex;
@@ -15,12 +14,5 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-}
-.sectionCard {
-  width: 100%;
-  background: var(--background-light);
-  border-radius: 16px;
-  box-shadow: 0 2px 16px rgba(102, 51, 255, 0.06);
-  padding: 32px 40px;
-  margin-bottom: 0;
+  align-items: center;
 }

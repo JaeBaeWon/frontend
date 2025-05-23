@@ -5,15 +5,18 @@
 
 @keyframes glow {
   0% {
-    box-shadow: 0 0 0 2px rgba(221, 214, 255, 0.2),
+    box-shadow:
+      0 0 0 2px rgba(221, 214, 255, 0.2),
       0 0 24px 8px rgba(162, 136, 255, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 3px rgba(221, 214, 255, 0.4),
+    box-shadow:
+      0 0 0 3px rgba(221, 214, 255, 0.4),
       0 0 32px 12px rgba(162, 136, 255, 0.5);
   }
   100% {
-    box-shadow: 0 0 0 2px rgba(221, 214, 255, 0.2),
+    box-shadow:
+      0 0 0 2px rgba(221, 214, 255, 0.2),
       0 0 24px 8px rgba(162, 136, 255, 0.3);
   }
 }
@@ -44,7 +47,7 @@
   justify-content: center;
   color: #fff;
   padding: 0 48px;
-  transition: box-shadow 0.3s ease;
+  /* transition: box-shadow 0.3s ease; */
 }
 
 .slide-banner:hover {

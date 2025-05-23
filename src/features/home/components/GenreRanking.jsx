@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../../show/ShowList.css";
 import "./GenreRanking.css";
+import { BsChevronRight } from "react-icons/bs";
 
 const tabs = [
   { label: "뮤지컬", value: "MUSICAL" },
@@ -86,7 +87,8 @@ function GenreRanking() {
         className="genre-more-btn"
         onClick={() => navigate("/show/ranking")}
       >
-        랭킹 더보기
+        장르별 랭킹 전체 보기
+        <BsChevronRight />
       </button>
     </section>
   );
