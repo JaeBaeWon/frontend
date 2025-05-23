@@ -10,6 +10,7 @@ const ManageAddress = () => {
   const [phone, setPhone] = useState("");
   const [label, setLabel] = useState("집");
   const [isDefault, setIsDefault] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const openDaumPostcode = () => {
     new window.daum.Postcode({

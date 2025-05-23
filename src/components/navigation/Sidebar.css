@@ -2,8 +2,8 @@
 
 .sidebar {
   width: 200px;
-  background: var(--primary-100);
-  border-radius: 16px;
+  background: #fff;
+  border-radius: 8px;
   padding: 32px 16px;
   font-family: inherit;
   box-shadow: 0 2px 12px rgba(102, 51, 255, 0.04);
@@ -19,14 +19,14 @@
 .profileImg {
   width: 80px;
   height: 80px;
-  border-radius: 50%;
+  border-radius: 8px;
   background: var(--primary-100);
   margin: 0 auto 12px;
 }
 .profileName {
   font-weight: 700;
   font-size: 18px;
-  color: var(--primary);
+  color: #222;
 }
 .menu {
   list-style: none;
@@ -43,17 +43,43 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--primary-900);
+  color: #222;
   background: none;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  border: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  border: none !important;
 }
 .menuItemActive {
-  background: var(--primary-300);
-  color: var(--primary-900);
+  background: #ededed;
+  color: #222 !important;
+  border-radius: 0;
+  border: none !important;
+  position: relative;
+  padding-left: 18px; /* 인덱스 바 + 여백 */
+  overflow: hidden;
+}
+.menuItemActive::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px; /* 인덱스 바 두께 (더 두껍게) */
+  height: 100%;
+  background: #6633ff; /* 인덱스 색상 */
+  border-radius: 4px 0 0 4px;
 }
 .menuItem:hover:not(.menuItemActive) {
-  background: var(--primary-300);
-  color: var(--primary-900);
+  background: none;
+  color: #222;
+}
+.menuItem span {
+  color: #222 !important;
+}
+.menuItem * {
+  color: #222 !important;
+}
+.menu li {
+  color: #222 !important;
 }

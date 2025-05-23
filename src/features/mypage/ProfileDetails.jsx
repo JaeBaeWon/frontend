@@ -8,61 +8,12 @@ const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 function ProfileDetails() {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [streetAddress, setStreetAddress] = useState("");
-  const [detailAddress, setDetailAddress] = useState("");
-  const [extraAddress, setExtraAddress] = useState("");
   const [birth, setBirth] = useState("");
-
-  useEffect(() => {
-    if (!window.daum || !window.daum.Postcode) {
-      const script = document.createElement("script");
-      script.src =
-        "//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
 
   const handlePhoneChange = (e) => {
     // 숫자만 입력
     const value = e.target.value.replace(/[^0-9]/g, "");
     setPhone(value);
-  };
-
-  const openDaumPostcode = () => {
-    if (!window.daum || !window.daum.Postcode) {
-      alert("카카오 주소 검색 로딩 중입니다. 잠시 후 다시 시도해주세요.");
-      return;
-    }
-
-    new window.daum.Postcode({
-      oncomplete: function (data) {
-        let addr = "";
-        let extraAddr = "";
-
-        addr =
-          data.userSelectedType === "R" ? data.roadAddress : data.jibunAddress;
-
-        if (data.userSelectedType === "R") {
-          if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-            extraAddr += data.bname;
-          }
-          if (data.buildingName !== "" && data.apartment === "Y") {
-            extraAddr +=
-              extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
-          }
-          if (extraAddr !== "") {
-            extraAddr = " (" + extraAddr + ")";
-          }
-        }
-
-        setZipCode(data.zonecode);
-        setStreetAddress(addr);
-        setExtraAddress(extraAddr);
-        document.getElementById("detailAddress")?.focus();
-      },
-    }).open();
   };
 
   const handleSubmit = async (e) => {
@@ -87,9 +38,6 @@ function ProfileDetails() {
     const payload = {
       gender: gender === "male" ? "MALE" : "FEMALE",
       phone,
-      zipCode,
-      streetAdr: streetAddress,
-      detailAdr: detailAddress,
       birthDate: formattedBirth,
     };
 
@@ -120,21 +68,43 @@ function ProfileDetails() {
           {/* 성별 */}
           <div className="profile-field">
             <label className="profile-label">성별</label>
-            <div className="profile-gender-group">
-              <button
-                type="button"
-                className={`profile-gender-btn ${gender === "male" ? "active" : ""}`}
-                onClick={() => setGender("male")}
+            <div className="profile-gender-group" style={{ gap: "24px" }}>
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  fontWeight: 500,
+                }}
               >
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={gender === "male"}
+                  onChange={() => setGender("male")}
+                  className="profile-radio"
+                />
                 남
-              </button>
-              <button
-                type="button"
-                className={`profile-gender-btn ${gender === "female" ? "active" : ""}`}
-                onClick={() => setGender("female")}
+              </label>
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  fontWeight: 500,
+                }}
               >
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={gender === "female"}
+                  onChange={() => setGender("female")}
+                  className="profile-radio"
+                />
                 여
-              </button>
+              </label>
             </div>
           </div>
 
@@ -148,42 +118,6 @@ function ProfileDetails() {
               onChange={handlePhoneChange}
               className="profile-input"
               maxLength={11}
-            />
-          </div>
-
-          {/* 주소 */}
-          <div className="profile-field">
-            <label className="profile-label">주소</label>
-            <div className="address-row">
-              <input
-                type="text"
-                className="profile-input"
-                placeholder="우편번호"
-                value={zipCode}
-                readOnly
-              />
-              <button
-                type="button"
-                className="profile-button"
-                onClick={openDaumPostcode}
-              >
-                주소 찾기
-              </button>
-            </div>
-            <input
-              type="text"
-              className="profile-input"
-              placeholder="도로명 주소"
-              value={streetAddress}
-              readOnly
-            />
-            <input
-              type="text"
-              id="detailAddress"
-              className="profile-input"
-              placeholder="상세 주소"
-              value={detailAddress}
-              onChange={(e) => setDetailAddress(e.target.value)}
             />
           </div>
 

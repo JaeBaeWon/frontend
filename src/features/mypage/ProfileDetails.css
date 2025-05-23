@@ -29,7 +29,7 @@
 .profile-input {
   width: 100%;
   padding: 16px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 17px;
   box-sizing: border-box;
@@ -44,7 +44,7 @@
 .profile-gender-btn {
   flex: 1;
   padding: 14px 0;
-  border-radius: 6px;
+  border-radius: 50%;
   border: none;
   background: #fafafa;
   color: #888;
@@ -66,17 +66,30 @@
   height: 52px;
   background-color: var(--primary);
   color: #fff;
-  font-weight: bold;
-  font-size: 17px;
+  font-weight: 600;
+  font-size: 16px;
   border-radius: 8px;
   border: none;
   margin-top: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
-.profile-button:hover {
-  background-color: var(--primary-100);
+.profile-button:hover,
+.profile-button:focus {
+  background-color: var(--secondary);
+  color: #fff;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.profile-button:active {
+  transform: scale(0.97);
+  filter: brightness(0.92);
+  transition:
+    transform 0.08s,
+    filter 0.08s;
 }
 
 .profile-gender-btn:hover {
@@ -84,8 +97,26 @@
   color: #fff;
 }
 
-.address-row {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
+.profile-radio {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  margin: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #fff;
+  position: relative;
+  outline: none;
+  transition: border 0.2s;
+}
+.profile-radio:checked {
+  background: #fff;
+  border: 6px solid var(--primary);
+}
+.profile-radio:focus {
+  outline: 2px solid var(--primary);
 }

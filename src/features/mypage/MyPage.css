@@ -23,15 +23,15 @@
   flex-direction: column;
 }
 .title {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: bold;
-  color: var(--primary);
+  color: var(--text);
   margin-bottom: 28px;
 }
 .infoCard {
   background: var(--background-light);
   border: 1px solid var(--divider);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 28px;
   font-size: 17px;
   flex-grow: 1;
@@ -40,7 +40,7 @@
 .infoLabel {
   font-weight: 600;
   margin-bottom: 8px;
-  color: var(--text-secondary);
+  color: var(--text);
   font-size: 17px;
 }
 .infoValue {
@@ -53,18 +53,31 @@
   display: block;
   width: 100%;
   margin-top: 20px;
-  padding: 12px 0;
-  font-size: 1.1rem;
-  font-weight: bold;
+  height: 52px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 600;
   color: #fff;
-  background: var(--primary);
+  background-color: var(--primary);
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
 }
 
-.editProfileBtn:hover {
-  background: var(--primary-300) !important;
+.editProfileBtn:hover,
+.editProfileBtn:focus {
+  background-color: var(--secondary) !important;
   color: #fff !important;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.editProfileBtn:active {
+  transform: scale(0.97);
+  filter: brightness(0.92);
+  transition:
+    transform 0.08s,
+    filter 0.08s;
 }
