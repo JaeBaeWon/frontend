@@ -1,3 +1,9 @@
+.recaptcha-container {
+  margin: 12px 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
 .login-center-container {
   position: relative;
   min-height: 100vh;
@@ -252,7 +258,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.2); /* 흰색 반투명, 카드 강조 */
-  z-index: 0; /* floatBackground 위, 카드 아래 */
-  pointer-events: none; /* 클릭 막지 않음 */
+  background: rgba(255, 255, 255, 0.2);
+  z-index: 0;
+  pointer-events: none;
 }
