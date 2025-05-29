@@ -35,7 +35,6 @@ const Login = () => {
     }
     if (hasError) return;
 
-    // 실제 로그인 로직 (아래 부분은 API 연동이므로 주석 처리)
     try {
       const res = await axios.post(
         `${API_BASE_URL}/auth/login`,
