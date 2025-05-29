@@ -19,13 +19,12 @@ function MyPage() {
   const navigate = useNavigate(); // ✅ 누락 방지
 
   useEffect(() => {
-    1. 토큰 확인 및 미존재 시 로그인 페이지로 이동
     const token = localStorage.getItem("accessToken");
     if (!token) {
       window.location.href = "/login";
       return;
     }
-    2. 사용자 정보와 프로필 정보를 불러오는 비동기 함수
+
     const fetchInfo = async () => {
       try {
         // (1) /user/info API 호출: 회원 기본 정보 및 온보딩 완료 여부
