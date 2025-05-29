@@ -17,7 +17,7 @@ function ReservationList() {
   useEffect(() => {
     const fetchReservations = async () => {
       try {
-        const res = await axios.get("/user/reservation", {
+        const res = await axios.get(`${API_BASE_URL}/user/reservation`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },

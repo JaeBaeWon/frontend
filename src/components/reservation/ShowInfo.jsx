@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ShowInfo.css';
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const ShowInfo = ({ performId }) => {
   const [performance, setPerformance] = useState(null);
 
   useEffect(() => {
     // API 호출하여 공연 정보 가져오기
-    axios.get(`http://localhost:8080/performance/${performId}`)
+    axios.get(`${API_BASE_URL}/performance/${performId}`)
       .then((response) => {
         setPerformance(response.data); // 공연 정보 상태에 저장
       })
