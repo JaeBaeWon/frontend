@@ -67,7 +67,7 @@
 
 .editProfileBtn:hover,
 .editProfileBtn:focus {
-  background-color: var(--secondary) !important;
+  background-color: var(--primary-100) !important;
   color: #fff !important;
   border: none;
   outline: none;

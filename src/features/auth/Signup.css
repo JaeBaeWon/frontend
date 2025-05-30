@@ -226,7 +226,7 @@
 .signup-dup-btn:focus,
 .signup-submit-btn:hover,
 .signup-submit-btn:focus {
-  background-color: var(--secondary);
+  background-color: var(--primary-100);
   color: #fff;
   border: none;
   outline: none;

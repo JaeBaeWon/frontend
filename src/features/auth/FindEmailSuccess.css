@@ -108,7 +108,7 @@
 
 .fes-button:hover,
 .fes-button:focus {
-  background-color: var(--secondary);
+  background-color: var(--primary-100);
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0px 8px 32px 4px rgba(80, 0, 120, 0.25);

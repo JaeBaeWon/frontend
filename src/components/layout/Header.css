@@ -4,7 +4,8 @@
   width: 100%;
   margin: auto;
   height: 64px;
-  background: linear-gradient(to right, var(--primary), var(--secondary));
+  /* background: var(--primary); */
+  background: linear-gradient(to right, var(--primary), var(--primary-300));
   border-bottom: 1px solid #eee;
   display: flex;
   align-items: center;
@@ -223,10 +224,6 @@
   font-size: 18px;
   height: 100%;
   transition: color 0.2s;
-}
-
-.header-search-bar:focus-within {
-  border: 1.5px solid var(--primary-300);
 }
 
 .header-search-bar-wrap {

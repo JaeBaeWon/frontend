@@ -1,33 +1,24 @@
 :root {
   /* 서비스 프라이머리 컬러 */
-  --primary-100: #ddd6ff;
-  --primary-300: #a288ff;
-  --primary: #3f00bf;
-  --primary-700: #2d008f;
-  --primary-900: #1a0066;
+  --primary-100: #e3a4ef;
+  --primary-300: #b473ec;
+  --primary: #864af9;
 
-  /* 서비스 세컨더리리 컬러 */
-  --secondary: #9933ff;
-  --secondary-100: #ead6ff;
-  --secondary-300: #c488ff;
-  --secondary-700: #6600bf;
-  --secondary-900: #330066;
+  /* --primary-100: #d1fadb;
+    --primary-300: #8ee6b0;
+    --primary: #33b97a; */
 
   /* 성공 색상 */
   --success: #22c55e;
-  --success-bg: #e6f9ed;
 
   /* 경고 색상 */
   --warning: #facc15;
-  --warning-bg: #fffceb;
 
   /* 오류 색상 */
   --error: #ef4444;
-  --error-bg: #ffecec;
 
   /* 정보 색상 */
   --info: #3b82f6;
-  --info-bg: #eaf3ff;
 
   /* 텍스트 및 중립 색상*/
   --text: #000000;
@@ -35,4 +26,5 @@
   --background-light: #ffffff;
   --background-dark: #121212;
   --divider: #e0e0e0;
+  --cardbg: #f7f5f4;
 }

@@ -57,7 +57,7 @@ const styles = {
     left: 0,
     width: "100%",
     height: "100vh",
-    backgroundColor: "transparent",
+    backgroundColor: "var(--primary-300)",
     overflow: "hidden",
     zIndex: 0,
   },
@@ -67,5 +67,6 @@ const styles = {
     height: "300px",
     objectFit: "contain",
     pointerEvents: "none",
+    opacity: 0.6,
   },
 };

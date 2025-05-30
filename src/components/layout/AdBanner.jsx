@@ -14,7 +14,7 @@ export default function AdBanner() {
     <div className="ad-banner-wrapper">
       <div className="ad-banner">
         <div className="ad-text">
-          🏷️ 카카오페이 전용 혜택! 결제 즉시 2,000원 캐시백 + 간편 예매
+          🏷️카카오페이 전용 혜택! 지금 결제하면 최대 3만 원 캐시백!
         </div>
         <button className="close-btn" onClick={handleClose}>
           ✖

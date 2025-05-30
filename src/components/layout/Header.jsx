@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 import Logo from "./Logo";
+import { BsFilePerson } from "react-icons/bs";
 
 function Header({ searchBar }) {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -161,7 +162,16 @@ function Header({ searchBar }) {
               </>
             ) : (
               <>
-                <Link to="/login" className="authLink">
+                <Link
+                  to="/login"
+                  className="authLink"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                >
+                  <BsFilePerson style={{ color: "white", fontSize: 18 }} />
                   로그인
                 </Link>
                 <Link to="/signup" className="authLink">
