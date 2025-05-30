@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import MypageLayout from "./MypageLayout";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 const PAGE_SIZE = 15;
 
 function ReservationList() {
