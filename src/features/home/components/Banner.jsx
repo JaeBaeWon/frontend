@@ -4,17 +4,17 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BsChevronCompactRight } from "react-icons/bs";
 import "./Banner.css";
+import banner01 from "./images/banner_01.png";
+import banner02 from "./images/banner_02.png";
 
 const banners = [
   {
-    title: "배너 이미지 #1",
-    link: "#",
     color: "linear-gradient(to right, #041A1C, #1239E0)",
+    image: banner01,
   },
   {
-    title: "배너 이미지 #2",
-    link: "#",
     color: "linear-gradient(to right, #1A0C29, #4C0F8B)",
+    image: banner02,
   },
   {
     title: "배너 이미지 #3",
@@ -93,9 +93,26 @@ export default function Banner() {
             else if (swipe > swipeConfidenceThreshold) paginate(-1);
           }}
           className="slide-banner"
-          style={{ background: banners[bannerIndex].color }}
         >
-          <div className="banner-content">
+          {banners[bannerIndex].image && (
+            <img
+              src={banners[bannerIndex].image}
+              alt={banners[bannerIndex].title}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                zIndex: 0,
+              }}
+            />
+          )}
+          <div
+            className="banner-content"
+            style={{ position: "relative", zIndex: 1 }}
+          >
             <h2>{banners[bannerIndex].title}</h2>
           </div>
         </motion.div>

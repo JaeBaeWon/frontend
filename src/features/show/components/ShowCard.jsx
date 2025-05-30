@@ -13,14 +13,21 @@ function ShowCard({ performId, title, venue, period, thumbnailUrl, extra }) {
         fontFamily: "Pretendard, sans-serif",
       }}
     >
-      <img
-        src={thumbnailUrl}
-        alt={title}
-        style={{ width: "100%", height: "180px", objectFit: "cover" }}
-      />
+      <div className="show-card-image">
+        <img
+          src={thumbnailUrl}
+          alt={title}
+          style={{ width: "100%", height: "180px", objectFit: "cover" }}
+        />
+      </div>
       <div style={{ padding: "16px" }}>
-        <div style={{ fontSize: "16px", fontWeight: "600", marginBottom: "8px" }}>
-          <Link to={`/show/${performId}`} style={{ color: "#222", textDecoration: "none" }}>
+        <div
+          style={{ fontSize: "16px", fontWeight: "600", marginBottom: "8px" }}
+        >
+          <Link
+            to={`/show/${performId}`}
+            style={{ color: "#222", textDecoration: "none" }}
+          >
             {title}
           </Link>
         </div>
