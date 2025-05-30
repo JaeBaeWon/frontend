@@ -9,6 +9,8 @@ import {
 import axios from "axios";
 import "./Sidebar.css";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 const menuList = [
   { name: "내 정보", path: "/mypage", icon: () => <BsFilePerson /> },
   { name: "예매 내역", path: "/mypage/reservations", icon: () => <BsList /> },
@@ -33,7 +35,7 @@ function Sidebar({ active }) {
     if (!token) return;
 
     axios
-      .get("/user/info", {
+      .get(`${API_BASE_URL}/user/info`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

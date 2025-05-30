@@ -99,11 +99,10 @@ const ManageAddress = () => {
       {!isEdit ? (
         <section>
           <div className="addressBox">
-            <div>
-              <b>우편번호</b>: {zipCode}
-            </div>
-            <div>{streetAdr} {detailAdr}</div>
-            <div>{phone}</div>
+            <div><b>우편번호</b>: {zipCode || "미입력"}</div>
+            <div><b>도로명 주소</b>: {streetAdr || "미입력"}</div>
+            <div><b>상세 주소</b>: {detailAdr || "미입력"}</div>
+            <div><b>연락처</b>: {phone || "미입력"}</div>
           </div>
           <button className="btn btnMain" onClick={() => setIsEdit(true)}>
             정보 수정
