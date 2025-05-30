@@ -11,6 +11,8 @@ import Header from "../../components/layout/Header";
 import MypageLayout from "./components/MypageLayout";
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
 function MyPage() {
   const [userInfo, setUserInfo] = useState(null);
   const [onboardingComplete, setOnboardingComplete] = useState(false);
@@ -28,12 +30,12 @@ function MyPage() {
     const fetchInfo = async () => {
       try {
         // (1) /user/info API 호출: 회원 기본 정보 및 온보딩 완료 여부
-        const infoRes = await axios.get("/user/info", {
+        const infoRes = await axios.get(`${API_BASE_URL}/user/info`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
         // (2) /user/profile API 호출: 회원 프로필 상세 정보
-        const profileRes = await axios.get("/user/profile", {
+        const profileRes = await axios.get(`${API_BASE_URL}/user/profile` {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
