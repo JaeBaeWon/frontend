@@ -92,11 +92,3 @@
   font-size: 1.1rem;
   color: #444;
 }
-
-.showlist-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
-  max-width: 1400px;
-  margin: 0 auto;
-}

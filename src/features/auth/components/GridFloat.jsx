@@ -57,7 +57,7 @@ const styles = {
     left: 0,
     width: "100%",
     height: "100vh",
-    backgroundColor: "var(--primary-300)",
+    backgroundColor: "var(--cardbg)",
     overflow: "hidden",
     zIndex: 0,
   },
