@@ -14,7 +14,7 @@ const CheckUserInfo = () => {
       return;
     }
 
-    fetch("/user/info", {
+    fetch(`${API_BASE_URL}/user/info`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
