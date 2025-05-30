@@ -35,7 +35,7 @@ function MyPage() {
           withCredentials: true,
         });
         // (2) /user/profile API 호출: 회원 프로필 상세 정보
-        const profileRes = await axios.get(`${API_BASE_URL}/user/profile` {
+        const profileRes = await axios.get(`${API_BASE_URL}/user/profile`, {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
