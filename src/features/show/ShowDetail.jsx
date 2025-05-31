@@ -115,16 +115,6 @@ function ShowDetail() {
 
                 {showReservationUI && (
                   <div className="custom-datepicker-wrapper">
-                    <h3
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "bold",
-                        marginBottom: "12px",
-                        marginTop: "24px",
-                      }}
-                    >
-                      날짜를 선택하세요
-                    </h3>
                     <DatePicker
                       selected={selectedDate}
                       onChange={(date) => setSelectedDate(date)}

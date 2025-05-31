@@ -87,7 +87,7 @@ function GenreRanking() {
         className="genre-more-btn"
         onClick={() => navigate("/show/ranking")}
       >
-        장르별 랭킹 전체 보기
+        전체 랭킹 보기
         <BsChevronRight />
       </button>
     </section>

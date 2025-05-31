@@ -119,7 +119,13 @@ const Payment = ({
           if (rsp.success) {
             alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
 
-            if (!rsp.imp_uid || !rsp.merchant_uid || !performId || !selectedSeatIds.length || !selectedSeatIds[0]) {
+            if (
+              !rsp.imp_uid ||
+              !rsp.merchant_uid ||
+              !performId ||
+              !selectedSeatIds.length ||
+              !selectedSeatIds[0]
+            ) {
               alert("❌ 필수 결제 정보가 누락되었습니다.");
               console.warn("🚨 누락된 값 확인:", {
                 imp_uid: rsp.imp_uid,
@@ -149,7 +155,7 @@ const Payment = ({
                     "Content-Type": "application/json",
                   },
                   withCredentials: true,
-                }
+                },
               );
 
               const ticketId = verifyRes.data.ticketId;
@@ -164,7 +170,7 @@ const Payment = ({
                         Authorization: `Bearer ${token}`,
                       },
                       withCredentials: true,
-                    }
+                    },
                   );
 
                   setReservationId(reservationRes.data.reservationId);
@@ -176,13 +182,16 @@ const Payment = ({
                 }
               }, 2000);
             } catch (error) {
-              console.error("❌ 결제 검증 실패:", error.response?.data || error.message);
+              console.error(
+                "❌ 결제 검증 실패:",
+                error.response?.data || error.message,
+              );
               alert("결제는 성공했지만 서버에 저장되지 않았습니다.");
             }
           } else {
             alert(`❌ 결제 실패: ${rsp.error_msg}`);
           }
-        }
+        },
       );
     } catch (error) {
       console.error("❌ 예약/결제 오류:", error);
@@ -190,28 +199,27 @@ const Payment = ({
     }
   };
 
-
   return (
     <div className="payment-container">
       <div>
         <div className="payment-buttons">
           <button
-            className={selectedPg === "kakaopay" ? "selected" : ""}
+            className={selectedPg === "kakaopay" ? "selected kakaopay" : ""}
             onClick={() => {
               setSelectedPg("kakaopay");
               setSelectedMethod("card");
             }}
           >
-            🟡 카카오페이 결제
+            카카오페이 결제
           </button>
           <button
-            className={selectedPg === "html5_inicis" ? "selected" : ""}
+            className={selectedPg === "html5_inicis" ? "selected cardpay" : ""}
             onClick={() => {
               setSelectedPg("html5_inicis");
               setSelectedMethod("card");
             }}
           >
-            💳 신용카드 결제 (이니시스)
+            신용카드 결제
           </button>
         </div>
 

@@ -20,7 +20,7 @@
 .show-info .selection-header {
   font-size: 18px;
   font-weight: bold;
-  color: #4caf50;
+  color: var(--primary);
   margin-top: 20px;
 }
 

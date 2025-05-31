@@ -51,16 +51,29 @@
   font-size: 14px;
 }
 
+.agreements input[type="checkbox"] {
+  accent-color: var(--primary);
+}
+
 .next-button {
   margin-top: 30px;
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #4caf50;
+  background-color: var(--primary);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   align-self: center;
   cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition:
+    background 0.2s,
+    background-color 0.2s;
+}
+
+.next-button:hover {
+  background-color: var(--primary-300);
 }
 
 .payment-buttons {
@@ -73,19 +86,36 @@
 
 .payment-buttons button {
   font-size: 18px;
-  padding: 15px 30px;
-  background-color: #fff;
-  color: #333;
-  border: 2px solid #ccc; /* 회색 테두리 */
+  padding: 15px 0;
+  width: 180px;
+  background-color: var(--card-bg, #f5f7fa);
+  color: var(--black, #000);
+  border: 2px solid var(--devider, #e0e0e0);
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.payment-buttons button.selected.kakaopay {
+  background-color: #ffcd00;
+  color: #000;
+  border: none;
+}
+
+.payment-buttons button.selected.cardpay {
+  background-color: #87ceeb;
+  color: #000;
+  border: none;
 }
 
 .payment-buttons button.selected {
-  border-color: #1976d2;
-  color: #1976d2;
   font-weight: bold;
+}
+
+.payment-buttons button:hover {
+  background-color: #f9f9f9;
+  border-color: #888;
 }
 
 .confirm-pay-button {
@@ -94,20 +124,18 @@
   padding: 16px 50px;
   font-size: 20px;
   font-weight: bold;
-  background-color: #4caf50;
+  background-color: var(--primary);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .confirm-pay-button:disabled {
-  background-color: #ccc;
+  background-color: var(--devider);
+  color: #000;
   cursor: not-allowed;
-}
-
-.payment-buttons button:hover {
-  background-color: #f9f9f9;
-  border-color: #888;
 }

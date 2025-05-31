@@ -26,21 +26,26 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  flex-wrap: wrap; /* 화면에 맞게 줄 바꿈 */
+  flex-wrap: nowrap; /* 한 줄로만 표시 */
 }
 
 .step {
   padding: 10px;
   text-align: center;
   font-size: 14px;
-  flex: 1 1 20%; /* 최소 20% 너비로 설정 */
+  flex: 1 1 0; /* 모든 step이 동일한 너비 */
   background-color: #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px; /* 작은 간격 추가 */
+  border-radius: 8px;
+  margin-bottom: 0; /* 한 줄이므로 아래 간격 제거 */
+  margin-right: 10px; /* step 사이 간격 */
+}
+
+.step:last-child {
+  margin-right: 0; /* 마지막 step은 오른쪽 간격 없음 */
 }
 
 .step.active {
-  background-color: #4caf50;
+  background-color: var(--primary);
   color: white;
 }
 
@@ -62,19 +67,19 @@
 .seat {
   width: 30px;
   height: 30px;
-  background-color: #8e44ad;
+  background-color: #ddd; /* 기본 회색 */
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .seat:hover {
-  background-color: #9b59b6;
+  background-color: var(--primary-300); /* 마우스 오버 시 */
 }
 
 .seat.selected {
-  background-color: #2ecc71;
+  background-color: var(--primary); /* 선택 시 */
 }
 
 /* 선택된 정보 표시 */
