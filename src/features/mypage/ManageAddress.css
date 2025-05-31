@@ -111,7 +111,7 @@
 }
 .btnMain:hover,
 .btnMain:focus {
-  background-color: var(--primary-100);
+  background-color: var(--primary-300);
   color: #fff;
   border: none;
   outline: none;

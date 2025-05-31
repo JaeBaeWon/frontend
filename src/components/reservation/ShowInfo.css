@@ -20,6 +20,11 @@
 .show-info .selection-header {
   font-size: 18px;
   font-weight: bold;
-  color: #4CAF50;
+  color: #4caf50;
   margin-top: 20px;
+}
+
+.selection-header {
+  color: var(--primary);
+  font-weight: bold;
 }

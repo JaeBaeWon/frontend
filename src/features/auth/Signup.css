@@ -27,8 +27,9 @@
 
 /* 회원가입 페이지 카드 */
 .signup-card {
-  width: 500px;
-  padding: 16px 48px 32px 48px;
+  width: 420px;
+  max-width: 440px;
+  padding: 14px 32px 24px 32px;
   border-radius: 12px;
   background: #fff;
   box-shadow:
@@ -52,15 +53,15 @@
 }
 
 .signup-card-logo > * {
-  width: 360px !important;
-  height: 100px !important;
+  width: 280px !important;
+  height: 80px !important;
   max-width: 90vw;
 }
 
 .signup-title {
+  font-size: 20px;
   font-weight: bold;
-  font-size: 24px;
-  margin-bottom: 36px;
+  margin-bottom: 28px;
   text-align: center;
 }
 
@@ -72,23 +73,18 @@
   display: block;
   margin-bottom: 6px;
   font-weight: 500;
-  font-size: 18px;
-}
-
-.signup-card {
-  max-width: 520px;
-  width: 100%;
+  font-size: 16px;
 }
 
 /* 회원가입 페이지 입력 필드 */
 .signup-input,
 .signup-email-input {
-  height: 52px;
-  padding: 14px 16px;
+  height: 44px;
+  padding: 12px 14px;
   border-radius: 6px;
   border: 1.5px solid #ccc;
   box-sizing: border-box;
-  font-size: 16px;
+  font-size: 15px;
   width: 100%;
   transition: all 0.2s ease;
 }
@@ -120,10 +116,10 @@
 
 /* 회원가입 페이지 중복 확인 버튼 */
 .signup-dup-btn {
-  height: 52px;
+  height: 44px;
   padding: 0 16px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   background-color: var(--primary);
   display: flex;
   align-items: center;
@@ -135,9 +131,9 @@
 .signup-submit-btn {
   width: 100%;
   background-color: var(--primary);
-  height: 52px;
+  height: 44px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   margin-top: 8px;
   border-radius: 6px;
 }
@@ -177,10 +173,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
-  height: 52px;
+  height: 48px;
   font-size: 16px;
   background: #fff;
   cursor: pointer;
@@ -188,6 +184,7 @@
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
+  padding: 0 18px;
 }
 
 .signup-social-btn:focus {
@@ -197,10 +194,10 @@
 
 /* 아이콘, 라벨 스타일은 그대로 유지 */
 .signup-social-icon-only {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
-  margin-right: 8px;
+  margin-right: 0;
   flex-shrink: 0;
   display: block;
 }
@@ -226,7 +223,7 @@
 .signup-dup-btn:focus,
 .signup-submit-btn:hover,
 .signup-submit-btn:focus {
-  background-color: var(--primary-100);
+  background-color: var(--primary-300);
   color: #fff;
   border: none;
   outline: none;

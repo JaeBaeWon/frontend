@@ -171,7 +171,6 @@ function Header({ searchBar }) {
                     gap: 4,
                   }}
                 >
-                  <BsFilePerson style={{ color: "white", fontSize: 18 }} />
                   로그인
                 </Link>
                 <Link to="/signup" className="authLink">

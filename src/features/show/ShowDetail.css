@@ -58,7 +58,9 @@
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .showdetail-info-wrap {
@@ -139,7 +141,9 @@
   cursor: pointer;
   border: none;
   margin-top: 12px;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
 .custom-datepicker-wrapper {
@@ -148,6 +152,10 @@
   padding: 24px;
   border-radius: 12px;
   background: #f9f9f9;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 32px;
 }
 
 .react-datepicker {
@@ -174,7 +182,7 @@
 }
 
 .custom-button {
-  margin-top: 20px;
+  margin-top: 0;
   background-color: var(--primary);
   color: #fff;
   padding: 10px 24px;
@@ -182,9 +190,4 @@
   font-weight: bold;
   cursor: pointer;
   border: none;
-}
-
-:root {
-  --primary: #7b61ff;
-  --primary-light: #a993ff;
 }

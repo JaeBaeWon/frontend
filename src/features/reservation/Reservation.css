@@ -40,7 +40,7 @@
 }
 
 .step.active {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -96,17 +96,18 @@
 
 /* 버튼 스타일 */
 .next-button {
-  background-color: #4CAF50;
+  background-color: var(--primary);
   color: white;
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   margin-top: 20px;
   width: 100%;
+  transition: background 0.2s;
 }
 
 .next-button:hover {
-  background-color: #45a049;
+  background-color: var(--primary-300);
 }

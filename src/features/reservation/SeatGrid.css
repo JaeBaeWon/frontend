@@ -20,18 +20,20 @@
 .seat {
   width: 10px;
   height: 10px;
-  background-color: #c16ae6;
+  background-color: var(--cardbg);
   border: 1px solid #ffffff;
   cursor: pointer;
   padding: 0;
+  font-size: 8px;
+  color: #333;
 }
 
 .seat.selected {
-  background-color: #2ecc71;
+  background-color: var(--primary);
 }
 
 .seat.booked {
-  background-color: #e74c3c;
+  background-color: var(--divider);
   cursor: not-allowed;
 }
 
@@ -49,7 +51,7 @@
 .seat.booked:hover,
 .seat.hold:hover {
   background-color: inherit; /* 색상 유지 */
-  cursor: not-allowed;       /* 클릭 불가 표시 */
+  cursor: not-allowed; /* 클릭 불가 표시 */
 }
 
 .seat.empty:hover {

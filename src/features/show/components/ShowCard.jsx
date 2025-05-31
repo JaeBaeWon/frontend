@@ -17,7 +17,7 @@ function ShowCard({ performId, title, venue, period, thumbnailUrl, extra }) {
         <img
           src={thumbnailUrl}
           alt={title}
-          style={{ width: "100%", height: "180px", objectFit: "contain" }}
+          style={{ width: "100%", height: "320px", objectFit: "cover" }}
         />
       </div>
       <div style={{ padding: "16px" }}>
