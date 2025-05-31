@@ -65,23 +65,25 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--primary-100);
+  background: transparent;
   outline: none;
   border: none;
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--text);
   cursor: pointer;
   z-index: 2;
-  transition: background 0.2s;
+  transition: color 0.2s;
 }
 .carousel-btn.left {
   left: 24px;
 }
 .carousel-btn.right {
   right: 24px;
+}
+
+.carousel-btn:focus {
+  outline: none;
+  box-shadow: none;
 }

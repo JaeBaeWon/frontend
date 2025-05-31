@@ -6,6 +6,8 @@ import { BsChevronCompactRight } from "react-icons/bs";
 import "./Banner.css";
 import banner01 from "./images/banner_01.png";
 import banner02 from "./images/banner_02.png";
+import banner03 from "./images/banner_03.png";
+import banner04 from "./images/banner_04.png";
 
 const banners = [
   {
@@ -17,14 +19,12 @@ const banners = [
     image: banner02,
   },
   {
-    title: "배너 이미지 #3",
-    link: "#",
     color: "linear-gradient(to right, #0C291A, #0F8B4C)",
+    image: banner04,
   },
   {
-    title: "배너 이미지 #4",
-    link: "#",
     color: "linear-gradient(to right, #0C291A, #0F8B4C)",
+    image: banner03,
   },
 ];
 

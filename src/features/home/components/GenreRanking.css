@@ -90,3 +90,8 @@
 .genre-more-btn:active {
   outline: none;
 }
+
+.show-card:focus {
+  outline: none;
+  box-shadow: none;
+}
