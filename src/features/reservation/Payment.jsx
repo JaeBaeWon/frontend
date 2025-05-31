@@ -26,17 +26,16 @@ const Payment = ({
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    // 사용자 정보 불러오기 (토큰 기반)
     const token = localStorage.getItem("accessToken");
     if (!token) return;
 
-    fetch(`/user/info`, {
-      headers: { Authorization: `Bearer ${token}` },
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setUserData(data.member);
+    axios
+      .get(`${API_BASE_URL}/user/info`, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUserData(res.data.member);
       })
       .catch((err) => {
         console.error("사용자 정보 로드 실패:", err);
@@ -120,67 +119,77 @@ const Payment = ({
           if (rsp.success) {
             alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
 
+            if (!rsp.imp_uid || !rsp.merchant_uid || !performId || !selectedSeatIds.length || !selectedSeatIds[0]) {
+              alert("❌ 필수 결제 정보가 누락되었습니다.");
+              console.warn("🚨 누락된 값 확인:", {
+                imp_uid: rsp.imp_uid,
+                merchant_uid: rsp.merchant_uid,
+                performanceId: performId,
+                selectedSeatIds,
+              });
+              return;
+            }
+
             // 3️⃣ 서버에 결제 검증
             try {
               const token = localStorage.getItem("accessToken");
-              const verifyResponse = await fetch(
+
+              // 1️⃣ 결제 검증
+              const verifyRes = await axios.post(
                 `${API_BASE_URL}/payment/verify`,
                 {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                  },
-                  body: JSON.stringify({
-                    impUid: rsp.imp_uid,
-                    merchantUid: rsp.merchant_uid,
-                    performanceId: performId,
-                    seatId: selectedSeatIds[0],
-                  }),
+                  impUid: rsp.imp_uid,
+                  merchantUid: rsp.merchant_uid,
+                  performanceId: performId,
+                  seatId: selectedSeatIds[0],
                 },
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                  },
+                  withCredentials: true,
+                }
               );
 
-              if (!verifyResponse.ok) throw new Error("검증 실패");
+              const ticketId = verifyRes.data.ticketId;
 
-              const resJson = await verifyResponse.json();
-
-              // 🎯 1️⃣ ticketId 받아오기
-              const ticketId = resJson.ticketId;
-
-              // 🎯 2️⃣ reservationId 조회 요청 (딜레이 포함)
+              // 2️⃣ 예매 ID 조회
               setTimeout(async () => {
                 try {
-                  const res = await fetch(
+                  const reservationRes = await axios.get(
                     `${API_BASE_URL}/reservation/by-ticket/${ticketId}`,
                     {
-                      headers: { Authorization: `Bearer ${token}` },
-                    },
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                      withCredentials: true,
+                    }
                   );
-                  const data = await res.json();
 
-                  // 3️⃣ reservationId 저장 후 다음 단계 이동
-                  setReservationId(data.reservationId);
+                  setReservationId(reservationRes.data.reservationId);
                   alert("🎉 결제 및 예매 완료!");
-                  setCurrentStep(4); // ShowPayInfo 화면으로
+                  setCurrentStep(4);
                 } catch (error) {
                   console.error("❌ 예약 ID 조회 실패", error);
                   alert("예약 정보 확인 중 오류가 발생했습니다.");
                 }
-              }, 2000); // ⏱ 1.5초 대기 후
+              }, 2000);
             } catch (error) {
-              console.error("❌ 결제 검증 실패:", error);
+              console.error("❌ 결제 검증 실패:", error.response?.data || error.message);
               alert("결제는 성공했지만 서버에 저장되지 않았습니다.");
             }
           } else {
             alert(`❌ 결제 실패: ${rsp.error_msg}`);
           }
-        },
+        }
       );
     } catch (error) {
-      console.error("예약/결제 흐름 오류:", error);
-      alert("예약 또는 결제 과정 중 오류 발생");
+      console.error("❌ 예약/결제 오류:", error);
+      alert("결제 처리 중 문제가 발생했습니다.");
     }
   };
+
 
   return (
     <div className="payment-container">

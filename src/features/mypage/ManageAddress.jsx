@@ -80,7 +80,7 @@ const ManageAddress = () => {
 
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.put(`${API_BASE_URL}/user/profile`, payload, {
+      await axios.patch(`${API_BASE_URL}/user/profile`, payload, {
         headers: { Authorization: `Bearer ${token}` },
         withCredentials: true,
       });

@@ -26,7 +26,7 @@ const ReservationFlow = () => {
       if (!token) return;
 
       try {
-        const res = await axios.get("/user/info", {
+        const res = await axios.get(`${API_BASE_URL}/user/info`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

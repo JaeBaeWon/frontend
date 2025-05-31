@@ -19,7 +19,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    // 입력값 유효성 검사 하는 부분
+    // 입력값 유효성 검사
     let hasError = false;
     if (!email) {
       setEmailError(true);
@@ -41,29 +41,31 @@ const Login = () => {
         {
           email,
           password,
-          recaptchaToken: "test", // 로봇 검증하는 부분
+          recaptchaToken: "test",
         },
-        { withCredentials: true },
+        { withCredentials: true }
       );
 
-      const accessToken = res.data.accessToken;
-      const onboardingDone = res.data.onboardingComplete;
+      const { accessToken, onboardingComplete } = res.data;
 
       localStorage.setItem("accessToken", accessToken);
 
-      // onboarding 여부에 따라 라우팅
-      if (!onboardingDone) {
+      // 온보딩 여부에 따라 이동
+      if (!onboardingComplete) {
         navigate("/mypage/profiledetails");
       } else {
         navigate("/mypage");
       }
     } catch (err) {
-      console.error("❌ 로그인 실패:", err.response?.data || err.message);
-      alert("로그인에 실패했습니다.");
+      const message =
+        err.response?.data?.message ||
+        err.response?.data ||
+        "서버 오류로 로그인에 실패했습니다.";
+      console.error("❌ 로그인 실패:", message);
+      alert(`로그인 실패: ${message}`);
     }
-
-    navigate("/mypage");
   };
+
 
   return (
     <div className="login-center-container">

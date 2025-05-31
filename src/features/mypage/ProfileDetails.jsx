@@ -42,7 +42,7 @@ function ProfileDetails() {
     };
 
     try {
-      await axios.post(`${API_BASE_URL}/auth/onboarding`, payload, {
+      await axios.patch(`${API_BASE_URL}/user/profile`, payload, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
