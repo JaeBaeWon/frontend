@@ -1,0 +1,42 @@
+@import "../../styles/colors.module.css";
+
+.performanceForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--background-light);
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  padding: 32px 28px 24px 28px;
+  max-width: 420px;
+  margin: 0 auto;
+  box-shadow: 0 2px 12px rgba(102, 51, 255, 0.04);
+}
+.performanceInput {
+  padding: 12px 14px;
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  font-size: 1rem;
+  color: var(--text);
+  background: #fff;
+  outline: none;
+  transition: border 0.18s;
+}
+.performanceInput:focus {
+  border: 1.5px solid var(--primary);
+}
+.performanceSubmitBtn {
+  margin-top: 8px;
+  padding: 12px 0;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.performanceSubmitBtn:hover {
+  background: var(--primary-300);
+}

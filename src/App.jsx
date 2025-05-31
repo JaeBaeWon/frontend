@@ -30,6 +30,8 @@ import WithdrawComplete from "./features/mypage/components/WithdrawComplete";
 import ProfileDetails from "./features/mypage/ProfileDetails";
 import SearchResult from "./features/show/SearchResult";
 import GridFloat from "./features/auth/components/GridFloat";
+import MyPerformanceList from "./features/manage/MyPerformanceList";
+import PerformanceForm from "./features/manage/PerformanceForm";
 
 function AppContent() {
   const { startLoading, stopLoading } = useContext(LoadingContext);
@@ -80,6 +82,8 @@ function AppContent() {
       <Route path="/mypage/withdraw" element={<Withdraw />} />
       <Route path="/mypage/withdrawcomplete" element={<WithdrawComplete />} />
       <Route path="/mypage/profiledetails" element={<ProfileDetails />} />
+      <Route path="/manage/myperformances" element={<MyPerformanceList />} />
+      <Route path="/manage/performance-form" element={<PerformanceForm />} />
     </Routes>
   );
 }

@@ -1,0 +1,147 @@
+@import "../../styles/colors.module.css";
+
+.mypageContainer {
+  background: var(--background-light);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.mypageContent {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  margin: 0 auto;
+  padding: 48px 0;
+  gap: 32px;
+}
+.main {
+  flex: 1;
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.infoCard {
+  background: var(--background-light);
+  border: 1px solid var(--divider);
+  border-radius: 8px;
+  padding: 32px 32px 24px 32px;
+  font-size: 17px;
+  flex-grow: 1;
+  box-shadow: 0 2px 12px rgba(102, 51, 255, 0.04);
+  max-width: 680px;
+  width: 100%;
+  margin: 0 auto;
+  min-width: 320px;
+}
+.title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  text-align: left;
+}
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0 14px 0;
+  border-bottom: 1px solid var(--divider);
+  font-size: 1.08rem;
+}
+.listItem:last-child {
+  border-bottom: none;
+}
+.info {
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+.deleteBtn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 1px 4px rgba(102, 51, 255, 0.08);
+}
+.deleteBtn:hover {
+  background: var(--primary-300);
+  box-shadow: 0 2px 8px rgba(102, 51, 255, 0.13);
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 28px;
+}
+.paginationBtn {
+  background: var(--background-light);
+  color: var(--primary);
+  border: 1px solid var(--divider);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background 0.18s,
+    color 0.18s,
+    border 0.18s;
+  outline: none;
+  box-shadow: none;
+}
+.paginationBtn.active,
+.paginationBtn:hover:not(:disabled) {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+.paginationBtn:focus {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}
+.paginationBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.titleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+.addBtn {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s;
+  box-shadow: 0 1px 4px rgba(102, 51, 255, 0.08);
+}
+.addBtn:hover {
+  background: var(--primary-300);
+}
