@@ -20,8 +20,7 @@ function ShowCard({ performId, title, venue, period, thumbnailUrl, extra }) {
           style={{
             width: "100%",
             height: "320px",
-            objectFit: "contain",
-            background: "#eee",
+            objectFit: "cover",
           }}
         />
       </div>

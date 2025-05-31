@@ -1,3 +1,9 @@
+.recaptcha-container {
+  margin: 12px 0 20px;
+  display: flex;
+  justify-content: center;
+}
+
 .login-center-container {
   position: relative;
   min-height: 100vh;
