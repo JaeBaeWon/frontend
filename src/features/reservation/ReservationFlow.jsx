@@ -8,6 +8,7 @@ import ShowInfo from "../../components/reservation/ShowInfo";
 import CheckUserInfo from "./CheckUserInfo";
 import Payment from "./Payment";
 import ShowPayInfo from "./ShowPayInfo";
+import WaitingQueueModal from "./WaitingQueueModal";
 import "./Reservation.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
@@ -80,6 +81,29 @@ const ReservationFlow = () => {
 
   const [reservationId, setReservationId] = useState(null);
 
+  const [waitingStatus, setWaitingStatus] = useState({
+    isWaiting: false,
+    position: null,
+    estimatedTime: null,
+  });
+
+  useEffect(() => {
+    if (!performId) return;
+    const fetchQueue = async () => {
+      setTimeout(() => {
+        setWaitingStatus({ isWaiting: true, position: 12, estimatedTime: 3 });
+        setTimeout(() => {
+          setWaitingStatus({
+            isWaiting: false,
+            position: null,
+            estimatedTime: null,
+          });
+        }, 5000);
+      }, 3000);
+    };
+    fetchQueue();
+  }, [performId]);
+
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
@@ -133,6 +157,12 @@ const ReservationFlow = () => {
           </div>
         </div>
       </div>
+      {waitingStatus.isWaiting && (
+        <WaitingQueueModal
+          position={waitingStatus.position}
+          estimatedTime={waitingStatus.estimatedTime}
+        />
+      )}
     </div>
   );
 };
