@@ -12,7 +12,7 @@ function FindEmailSuccess() {
       <GridFloat />
       <div className="login-bg-overlay"></div>
       <div className="fes-container">
-        <div className="fes-left"></div>
+        {/* <div className="fes-left"></div> */}
         <div className="fes-right">
           <div className="fes-content">
             <h2 className="fes-title">아이디 찾기 완료</h2>

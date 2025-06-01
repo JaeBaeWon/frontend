@@ -11,7 +11,7 @@
   left: 48px;
   z-index: 10;
   font-size: 16px;
-  color: #3f00bf;
+  color: var(--primary);
   font-weight: 600;
   text-decoration: none;
   background: rgba(255, 255, 255, 0.85);
@@ -22,7 +22,7 @@
 }
 .back-btn:hover {
   background: #f3eaff;
-  color: #6600bf;
+  color: var(--primary);
 }
 
 .findemail-container {
@@ -137,7 +137,7 @@
 }
 
 .findemail-verify-btn.active {
-  background-color: var(--primary);
+  background-color: var(--primary-300);
   color: #fff;
   cursor: pointer;
 }
