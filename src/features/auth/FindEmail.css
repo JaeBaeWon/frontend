@@ -107,7 +107,7 @@
 
 .findemail-button:hover,
 .findemail-button:focus {
-  background-color: var(--primary-100);
+  background-color: var(--primary-300);
   color: #fff;
   outline: none;
 }

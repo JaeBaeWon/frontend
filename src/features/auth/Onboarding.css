@@ -30,14 +30,14 @@
 }
 
 .onboarding-gender-label.active {
-  background: #3f00bf;
+  background: var(--primary);
   color: #fff;
 }
 
 .onboarding-gender-checkbox {
   width: 20px;
   height: 20px;
-  accent-color: #3f00bf;
+  accent-color: var(--primary);
 }
 
 /* 기본 입력창 스타일 */
@@ -96,7 +96,7 @@
 .onboarding-radio {
   width: 20px;
   height: 20px;
-  accent-color: #3f00bf;
+  accent-color: var(--primary);
 }
 
 /* 에러 메시지 */
@@ -126,7 +126,7 @@
   font-size: 16px;
   font-weight: 600;
   color: #fff;
-  background: var(--primary, #3f00bf);
+  background: var(--primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +140,7 @@
 
 .address-search-btn:hover,
 .address-search-btn:focus {
-  background: var(--secondary, #6600bf);
+  background: var(--primary-300);
   border: none;
 }
 
