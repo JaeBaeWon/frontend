@@ -50,7 +50,7 @@ function ReservationDetail() {
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     axios
-      .get(`/user/reservation/${id}`, {
+      .get(`${API_BASE_URL}/user/reservation/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
