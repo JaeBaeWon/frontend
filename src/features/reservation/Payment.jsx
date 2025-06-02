@@ -117,7 +117,7 @@ const Payment = ({
         },
         async (rsp) => {
           if (rsp.success) {
-            alert(`✅ 결제 성공: imp_uid = ${rsp.imp_uid}`);
+            alert(`✅ 결제 성공`);
 
             if (
               !rsp.imp_uid ||
