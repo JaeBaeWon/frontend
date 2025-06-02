@@ -10,6 +10,28 @@ function ProfileDetails() {
   const [phone, setPhone] = useState("");
   const [birth, setBirth] = useState("");
 
+  useEffect(() => {
+      const fetchUserInfo = async () => {
+        try {
+          const accessToken = localStorage.getItem("accessToken");
+          const res = await axios.get(`${API_BASE_URL}/user/profile`, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+            withCredentials: true,
+          });
+
+          const data = res.data;
+          setGender(data.gender === "MALE" ? "male" : "female");
+          setPhone(data.phone || "");
+          setBirth((data.birthDate || "").replaceAll("-", "/")); // 보기 좋게 슬래시로 변경
+        } catch (error) {
+          console.error("❌ 사용자 정보 로딩 실패:", error.response?.data || error.message);
+          alert("사용자 정보를 불러오는 데 실패했습니다.");
+        }
+      };
+
+      fetchUserInfo();
+    }, []);
+
   const handlePhoneChange = (e) => {
     // 숫자만 입력
     const value = e.target.value.replace(/[^0-9]/g, "");
