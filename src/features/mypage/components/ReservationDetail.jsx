@@ -115,6 +115,10 @@ function ReservationDetail() {
                   <th>장소</th>
                   <td>{reservationDetail.location}</td>
                 </tr>
+                <tr>
+                  <th>좌석 번호</th>
+                  <td>{reservationDetail.seatInfo}</td>
+                </tr>
               </tbody>
             </table>
           </div>
