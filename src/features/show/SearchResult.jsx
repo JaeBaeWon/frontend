@@ -39,7 +39,7 @@ export default function SearchResult() {
             period: `${item.performStartAt} ~ ${item.performEndAt}`,
             thumbnailUrl: item.performImg.startsWith("/")
               ? item.performImg
-              : "/" + item.performImg,
+              : "/" + (item.performImg || "default.jpg"),
           }));
           setResults(mapped);
         } catch (error) {

@@ -46,15 +46,14 @@ const Login = () => {
         { withCredentials: true }
       );
 
-      const { accessToken, onboardingComplete } = res.data;
-
+      const { accessToken, role, onboardingComplete } = res.data;
       localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("userRole", role);
 
-      // 온보딩 여부에 따라 이동
-      if (!onboardingComplete) {
-        navigate("/mypage/profiledetails");
+      if (role === "MANAGER") {
+        navigate("/admin/dashboard"); // 관리자 전용 페이지
       } else {
-        navigate("/mypage");
+        navigate("/");
       }
     } catch (err) {
       const message =
