@@ -60,7 +60,7 @@ function ReservationList() {
               <th>관람일</th>
               <th>매수</th>
               <th>취소가능일</th>
-              <th>상태</th>
+              <th>예약상태</th>
               <th> </th>
             </tr>
           </thead>
@@ -99,7 +99,7 @@ function ReservationList() {
                   <td>{format(performanceDate)}</td>
                   <td>{r.ticketCount ?? "1"}매</td>
                   <td>{format(cancelableDate)}</td>
-                  <td>{r.performanceStatus || "-"}</td>
+                  <td>{r.reservationStatus || "-"}</td>
                   <td>
                     <button
                       className="btn"
