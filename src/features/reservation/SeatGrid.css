@@ -33,8 +33,10 @@
 }
 
 .seat.booked {
-  background-color: var(--divider);
-  cursor: not-allowed;
+  background-color: #000; /* 검정 배경 */
+  color: #fff;            /* 흰 글씨 */
+  cursor: not-allowed;    /* 클릭 못하게 시각적으로 표시 */
+  pointer-events: none;   /* 실제 클릭도 막음 */
 }
 
 .seat.hold {
