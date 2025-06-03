@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import { createPerformance, updatePerformance } from "../../api/manageApi";
 import "./PerformanceForm.css";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const initialForm = {
   title: "",
@@ -18,7 +18,7 @@ const initialForm = {
 
 const locations = ["국립 포도극장", "포도피커홀", "피커 라이브홀"];
 const categories = [
-  { value: "THEATER", label: "연극" },
+  { value: "PLAY", label: "연극" },
   { value: "MUSICAL", label: "뮤지컬" },
   { value: "CONCERT", label: "콘서트" },
 ];
@@ -27,6 +27,7 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
   const [form, setForm] = useState(initialData || initialForm);
   const [touched, setTouched] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -64,16 +65,43 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
       });
       return;
     }
+
+    setIsSubmitting(true);
     setErrorMsg("");
+
     try {
-      // if (isEdit) {
-      //   await updatePerformance(initialData.id, form, token);
-      // } else {
-      //   await createPerformance(form, token);
-      // }
-      onSubmitSuccess && onSubmitSuccess();
+      const token = localStorage.getItem("accessToken");
+      const formData = new FormData();
+      formData.append("title", form.title);
+      formData.append("category", form.category);
+      formData.append("performStartAt", form.performanceStartAt);
+      formData.append("performEndAt", form.performanceEndAt);
+      formData.append("performOpenAt", form.performanceOpenAt);
+      formData.append("location", form.location);
+      formData.append("price", form.price);
+      formData.append("image", form.performanceImg);
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_TEST_URL}/manager/performance`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        },
+      );
+
+      if (response.status === 201 || response.status === 200) {
+        alert("공연이 등록되었습니다.");
+        onSubmitSuccess ? onSubmitSuccess() : navigate("/mypage/performances");
+      }
     } catch (err) {
-      setErrorMsg("등록/수정 실패. 다시 시도해 주세요.");
+      setErrorMsg("공연 등록에 실패했습니다. 다시 시도해 주세요.");
+      console.error("❌ 공연 등록 실패", err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -82,7 +110,6 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
       ? "performanceInput error"
       : "performanceInput";
 
-  // 뒤로가기/새로고침 경고
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       if (JSON.stringify(form) !== JSON.stringify(initialForm)) {
@@ -252,6 +279,7 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                     }
                     navigate(-1);
                   }}
+                  disabled={isSubmitting}
                 >
                   취소
                 </button>
@@ -259,9 +287,9 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                   className="performanceSubmitBtn"
                   type="submit"
                   style={{ flex: 1 }}
-                  disabled={!isFormValid}
+                  disabled={!isFormValid || isSubmitting}
                 >
-                  {isEdit ? "수정" : "등록"}
+                  {isSubmitting ? "처리중..." : isEdit ? "수정" : "등록"}
                 </button>
               </div>
             </form>
