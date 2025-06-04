@@ -184,6 +184,38 @@ const Payment = ({
                     setReservationId(reservationRes.data.reservationId);
 
                     try {
+                      console.log("📦 이메일 전송 값 확인:");
+                      console.log("email:", reservationRes.data.userEmail);
+                      console.log("username:", reservationRes.data.username);
+                      console.log(
+                        "title:",
+                        reservationRes.data.performanceTitle,
+                      );
+                      console.log(
+                        "performStartAt:",
+                        reservationRes.data.performanceStartAt,
+                      );
+                      console.log(
+                        "performEndAt:",
+                        reservationRes.data.performanceEndAt,
+                      );
+                      console.log(
+                        "location:",
+                        reservationRes.data.performanceLocation,
+                      );
+                      console.log(
+                        "seatSection:",
+                        reservationRes.data.seatSection,
+                      );
+                      console.log("seatNum:", reservationRes.data.seatNum);
+                      console.log(
+                        "paymentAmount:",
+                        reservationRes.data.paymentAmount,
+                      );
+                      console.log(
+                        "paymentDate:",
+                        new Date(reservationRes.data.paymentTime).toISOString(),
+                      );
                       await axios.post(
                         `${API_BASE_URL}/email/send`,
                         {
