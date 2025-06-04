@@ -30,6 +30,10 @@ import WithdrawComplete from "./features/mypage/components/WithdrawComplete";
 import ProfileDetails from "./features/mypage/ProfileDetails";
 import SearchResult from "./features/show/SearchResult";
 import GridFloat from "./features/auth/components/GridFloat";
+import OAuthRedirect from "./features/auth/OAuthRedirect";
+import { initToolbar } from "@stagewise/toolbar";
+initToolbar();
+
 import MyPerformanceList from "./features/manage/MyPerformanceList";
 import PerformanceForm from "./features/manage/PerformanceForm";
 
@@ -64,6 +68,7 @@ function AppContent() {
       <Route path="/signup/onboarding" element={<Onboarding />} />
       <Route path="/signup/welcome" element={<Welcome />} />
       <Route path="/login/gridfloat" element={<GridFloat />} />
+      <Route path="/oauth-redirect" element={<OAuthRedirect />} />
       {/* 공연 */}
       <Route path="/shows" element={<ShowList />} />
       <Route path="/shows/search" element={<SearchResult />} />
