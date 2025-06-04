@@ -36,34 +36,41 @@ const Login = () => {
     if (hasError) return;
 
     try {
-      const res = await axios.post(
-        `${API_BASE_URL}/auth/login`,
-        {
-          email,
-          password,
-          recaptchaToken: "test",
-        },
-        { withCredentials: true }
-      );
+        const res = await axios.post(
+          `${API_BASE_URL}/auth/login`,
+          {
+            email,
+            password,
+            recaptchaToken: "test",
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json", // 이거 꼭 추가
+            },
+            withCredentials: true,
+          }
+        );
 
       const { accessToken, role, onboardingComplete } = res.data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("userRole", role);
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("userRole", role);
 
-      if (role === "MANAGER") {
-        navigate("/manage/myperformances"); // 관리자 전용 페이지
-      } else {
-        navigate("/");
-      }
-    } catch (err) {
-      const message =
-        err.response?.data?.message ||
-        err.response?.data ||
-        "서버 오류로 로그인에 실패했습니다.";
-      console.error("❌ 로그인 실패:", message);
-      alert(`로그인 실패: ${message}`);
-    }
-  };
+          navigate(role === "MANAGER" ? "/manage/myperformances" : "/");
+        } catch (err) {
+          const isHTML = typeof err?.response?.data === "string" &&
+                         err.response.data.includes("<!DOCTYPE html>");
+
+          const message = isHTML
+            ? "⚠ 로그인 실패: 서버에서 HTML 페이지를 반환했습니다. 백엔드 응답을 확인하세요."
+            : err.response?.data?.message ||
+              err.response?.data ||
+              "서버 오류로 로그인에 실패했습니다.";
+
+          console.error("❌ 로그인 실패:", message);
+          alert(`로그인 실패: ${message}`);
+        }
+      };
 
 
   return (
