@@ -24,6 +24,8 @@ const Payment = ({
   // 1️⃣ 공연 정보 가져오기
   const [performanceData, setPerformanceData] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [isWaiting, setIsWaiting] = useState(false);
+
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -161,7 +163,11 @@ const Payment = ({
               const ticketId = verifyRes.data.ticketId;
 
               // 2️⃣ 예매 ID 조회
-              setTimeout(async () => {
+              setIsWaiting(true); // 상태 메시지 표시
+
+              let retryCount = 0;
+              const maxRetries = 6;
+              const interval = setInterval(async () => {
                 try {
                   const reservationRes = await axios.get(
                     `${API_BASE_URL}/reservation/by-ticket/${ticketId}`,
@@ -173,33 +179,42 @@ const Payment = ({
                     },
                   );
 
-                  setReservationId(reservationRes.data.reservationId);
+                  if (reservationRes.data.reservationId) {
+                    clearInterval(interval);
+                    setIsWaiting(false); // 메시지 숨김
+                    setReservationId(reservationRes.data.reservationId);
 
-                  // 이메일 전송 API 호출
-                  await axios.post(`${API_BASE_URL}/email/send`, {
-                    email: reservationRes.data.userEmail,
-                    username: reservationRes.data.username,
-                    title: reservationRes.data.performanceTitle,
-                    performStartAt: reservationRes.data.performanceStartAt,
-                    performEndAt: reservationRes.data.performanceEndAt,
-                    location: reservationRes.data.performanceLocation,
-                    seatSection: reservationRes.data.seatSection,
-                    seatNum: reservationRes.data.seatNum,
-                    paymentAmount: reservationRes.data.paymentAmount,
-                    paymentDate: reservationRes.data.paymentTime,
-                  })
-                    .then(() => {
-                      console.log("✅ 이메일 전송 성공");
-                    })
-                    .catch((err) => {
-                      console.error("❌ 이메일 전송 실패:", err);
+                    await axios.post(`${API_BASE_URL}/email/send`, {
+                      email: reservationRes.data.userEmail,
+                      username: reservationRes.data.username,
+                      title: reservationRes.data.performanceTitle,
+                      performStartAt: reservationRes.data.performanceStartAt,
+                      performEndAt: reservationRes.data.performanceEndAt,
+                      location: reservationRes.data.performanceLocation,
+                      seatSection: reservationRes.data.seatSection,
+                      seatNum: reservationRes.data.seatNum,
+                      paymentAmount: reservationRes.data.paymentAmount,
+                      paymentDate: reservationRes.data.paymentTime,
                     });
 
-                  alert("🎉 결제 및 예매 완료!");
-                  setCurrentStep(4);
-                } catch (error) {
-                  console.error("❌ 예약 ID 조회 실패", error);
-                  alert("예약 정보 확인 중 오류가 발생했습니다.");
+                    alert("🎉 결제 및 예매 완료!");
+                    setCurrentStep(4);
+                  } else {
+                    retryCount++;
+                    if (retryCount >= maxRetries) {
+                      clearInterval(interval);
+                      setIsWaiting(false);
+                      alert("❌ 예약 처리 지연 중입니다. 다시 확인해주세요.");
+                    }
+                  }
+                } catch (err) {
+                  console.error("❌ 예약 상태 확인 실패:", err);
+                  retryCount++;
+                  if (retryCount >= maxRetries) {
+                    clearInterval(interval);
+                    setIsWaiting(false);
+                    alert("❌ 예약 확인에 실패했습니다.");
+                  }
                 }
               }, 2000);
             } catch (error) {
@@ -332,6 +347,11 @@ const Payment = ({
       >
         결제하기
       </button>
+      {isWaiting && (
+        <p style={{ color: "orange", marginTop: "16px" }}>
+          결제 완료 후 예약 처리 중입니다. 최대 10초 정도 소요될 수 있습니다.
+        </p>
+      )}
     </div>
   );
 };
