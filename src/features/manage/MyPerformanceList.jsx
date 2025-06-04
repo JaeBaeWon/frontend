@@ -17,7 +17,7 @@ const MyPerformanceList = () => {
     const fetchPerformances = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get(`${API_BASE_URL}/manager/performance`, {
+        const res = await axios.get(`${API_BASE_URL}/performance/manage/my`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,7 +37,7 @@ const MyPerformanceList = () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`${API_BASE_URL}/manager/performance/${id}`, {
+      await axios.delete(`${API_BASE_URL}/performance/manage/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
