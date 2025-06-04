@@ -80,7 +80,7 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
       );
       if (response.status === 200 || response.status === 201) {
         alert("공연이 등록되었습니다.");
-        onSubmitSuccess ? onSubmitSuccess() : navigate("/mypage/performances");
+        onSubmitSuccess ? onSubmitSuccess() : navigate("/manage/myperformances");
       }
     } catch (err) {
       setErrorMsg("공연 등록에 실패했습니다. 다시 시도해 주세요.");

@@ -111,10 +111,10 @@ const MyPerformanceList = () => {
                       {p.title} - {p.location}
                     </span>
                     <button
-                      className="deleteBtn"
-                      onClick={() => handleDelete(p.id)}
+                      className="detailBtn"
+                      onClick={() => navigate(`/manage/performance-detail/${p.id}`)}
                     >
-                      삭제
+                      상세보기
                     </button>
                   </li>
                 ))}

@@ -34,6 +34,7 @@ import OAuthRedirect from "./features/auth/OAuthRedirect";
 
 import MyPerformanceList from "./features/manage/MyPerformanceList";
 import PerformanceForm from "./features/manage/PerformanceForm";
+import MyPerformanceDetail from "./features/manage/MyPerformanceDetail";
 
 function AppContent() {
   const { startLoading, stopLoading } = useContext(LoadingContext);
@@ -88,6 +89,7 @@ function AppContent() {
       {/* 관리자페이지 */}
       <Route path="/manage/myperformances" element={<MyPerformanceList />} />
       <Route path="/manage/performance-form" element={<PerformanceForm />} />
+      <Route path="/manage/performance-detail/:id" element={<MyPerformanceDetail />} />
     </Routes>
   );
 }
