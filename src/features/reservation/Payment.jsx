@@ -142,7 +142,7 @@ const Payment = ({
 
               // 1️⃣ 결제 검증
               const verifyRes = await axios.post(
-                `${API_BASE_URL}/payment/verify`,
+                `${API_BASE_URL}/payment/verify-redis`,
                 {
                   impUid: rsp.imp_uid,
                   merchantUid: rsp.merchant_uid,
