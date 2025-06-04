@@ -174,6 +174,28 @@ const Payment = ({
                   );
 
                   setReservationId(reservationRes.data.reservationId);
+
+                  // 이메일 전송 API 호출
+                  await axios
+                    .post(`${API_BASE_URL}/email/send`, {
+                      email: res.data.userEmail,
+                      username: res.data.username,
+                      title: res.data.performanceTitle,
+                      performStartAt: res.data.performanceStartAt,
+                      performEndAt: res.data.performanceEndAt,
+                      location: res.data.performanceLocation,
+                      seatSection: res.data.seatSection,
+                      seatNum: res.data.seatNum,
+                      paymentAmount: res.data.paymentAmount,
+                      paymentDate: res.data.paymentTime,
+                    })
+                    .then(() => {
+                      console.log("✅ 이메일 전송 성공");
+                    })
+                    .catch((err) => {
+                      console.error("❌ 이메일 전송 실패:", err);
+                    });
+
                   alert("🎉 결제 및 예매 완료!");
                   setCurrentStep(4);
                 } catch (error) {
