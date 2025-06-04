@@ -8,6 +8,8 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
   const [seats, setSeats] = useState([]);
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
@@ -24,7 +26,7 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
       .catch((err) => {
         console.error("좌석 정보를 로드하는 데 실패했습니다.", err);
       });
-  }, [performanceId]);
+  }, [performanceId, refreshTrigger]);
 
   // ✅ 상태가 바뀔 때만 부모에게 전달
   useEffect(() => {
@@ -44,6 +46,12 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
 
   return (
     <div className="grid-wrapper">
+      <div style={{ textAlign: "center", marginBottom: "10px" }}>
+        <button className="refresh-button" onClick={handleRefresh}>
+          🔄 좌석 상태 새로고침
+        </button>
+      </div>
+
       {sections.map((section) => {
         const blockSeats = seats.filter((seat) => seat.seatSection === section);
         return (
@@ -55,6 +63,9 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
                   const seat = blockSeats.find(
                     (s) => parseInt(s.seatNum) === seatNumber,
                   );
+
+                  const seatStatus = seat.seatStatus?.toUpperCase();
+
                   if (!seat)
                     return (
                       <button
