@@ -49,12 +49,6 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
 
   return (
     <div className="grid-wrapper">
-      <div style={{ textAlign: "center", marginBottom: "10px" }}>
-        <button className="refresh-button" onClick={handleRefresh}>
-          🔄 좌석 상태 새로고침
-        </button>
-      </div>
-
       {sections.map((section) => {
         const blockSeats = seats.filter(seat => seat.seatSection === section);
         const seatNumbers = blockSeats.map(s => parseInt(s.seatNum)).filter(n => !isNaN(n));
