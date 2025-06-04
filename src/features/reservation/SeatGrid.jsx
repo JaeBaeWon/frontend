@@ -45,7 +45,7 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
     handleSeatClick(seatId);
   };
 
-  const sections = ["A", "B", "C", "D", "E", "F"];
+  const sections = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"];
 
   return (
     <div className="grid-wrapper">
