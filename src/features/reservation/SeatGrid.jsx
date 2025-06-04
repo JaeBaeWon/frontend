@@ -92,6 +92,9 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
             ))}
           </div>
         );
-})}
+      })}
+    </div>
+  );
+};
 
 export default SeatGrid;
