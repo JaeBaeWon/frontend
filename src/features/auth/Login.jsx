@@ -37,7 +37,7 @@ const Login = () => {
 
     try {
       const res = await axios.post(
-        `${API_BASE_URL}/manage/myperformances`,
+        `${API_BASE_URL}/auth/login`,
         {
           email,
           password,
@@ -51,7 +51,7 @@ const Login = () => {
       localStorage.setItem("userRole", role);
 
       if (role === "MANAGER") {
-        navigate("/admin/dashboard"); // 관리자 전용 페이지
+        navigate("/manage/myperformances"); // 관리자 전용 페이지
       } else {
         navigate("/");
       }
