@@ -26,7 +26,6 @@ const Payment = ({
   const [userData, setUserData] = useState(null);
   const [isWaiting, setIsWaiting] = useState(false);
 
-
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) return;
@@ -185,30 +184,36 @@ const Payment = ({
                     setReservationId(reservationRes.data.reservationId);
 
                     try {
-                        await axios.post(
-                          `${API_BASE_URL}/email/send`,
-                          {
-                            email: reservationRes.data.userEmail,
-                            username: reservationRes.data.username,
-                            title: reservationRes.data.performanceTitle,
-                            performStartAt: reservationRes.data.performanceStartAt,
-                            performEndAt: reservationRes.data.performanceEndAt,
-                            location: reservationRes.data.performanceLocation,
-                            seatSection: reservationRes.data.seatSection,
-                            seatNum: reservationRes.data.seatNum,
-                            paymentAmount: reservationRes.data.paymentAmount,
-                            paymentDate: reservationRes.data.paymentTime,
+                      await axios.post(
+                        `${API_BASE_URL}/email/send`,
+                        {
+                          email: reservationRes.data.userEmail,
+                          username: reservationRes.data.username,
+                          title: reservationRes.data.performanceTitle,
+                          performStartAt:
+                            reservationRes.data.performanceStartAt,
+                          performEndAt: reservationRes.data.performanceEndAt,
+                          location: reservationRes.data.performanceLocation,
+                          seatSection: reservationRes.data.seatSection,
+                          seatNum: reservationRes.data.seatNum,
+                          paymentAmount: reservationRes.data.paymentAmount,
+                          paymentDate: new Date(
+                            reservationRes.data.paymentTime,
+                          ).toISOString(),
+                        },
+                        {
+                          headers: {
+                            Authorization: `Bearer ${token}`,
                           },
-                          {
-                            headers: {
-                              Authorization: `Bearer ${token}`,
-                            },
-                            withCredentials: true,
-                          }
-                        );
-                      } catch (emailErr) {
-                        console.warn("📭 이메일 전송 실패 (무시하고 계속 진행):", emailErr);
-                      }
+                          withCredentials: true,
+                        },
+                      );
+                    } catch (emailErr) {
+                      console.warn(
+                        "📭 이메일 전송 실패 (무시하고 계속 진행):",
+                        emailErr,
+                      );
+                    }
 
                     alert("🎉 결제 및 예매 완료!");
                     setCurrentStep(4);
