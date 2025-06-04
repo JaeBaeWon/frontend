@@ -82,6 +82,7 @@ function AppContent() {
       <Route path="/mypage/withdraw" element={<Withdraw />} />
       <Route path="/mypage/withdrawcomplete" element={<WithdrawComplete />} />
       <Route path="/mypage/profiledetails" element={<ProfileDetails />} />
+      {/* 관리자페이지 */}
       <Route path="/manage/myperformances" element={<MyPerformanceList />} />
       <Route path="/manage/performance-form" element={<PerformanceForm />} />
     </Routes>
