@@ -15,7 +15,6 @@ const getPerformanceStatus = (openAt, endAt) => {
   const now = new Date();
   const open = new Date(openAt);
   const end = new Date(endAt);
-
   if (end < now) return "CLOSED";
   if (open > now) return "UPCOMING";
   return "ONGOING";
@@ -29,7 +28,7 @@ const initialForm = {
   performanceEndAt: "",
   performanceOpenAt: "",
   location: "",
-  performanceImg: null,
+  performanceImg: "", // ← 파일 대신 문자열
   price: "",
   totalSeats: "",
 };
@@ -49,11 +48,8 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setForm({
-      ...form,
-      [name]: type === "file" ? files[0] : value,
-    });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
     setTouched({ ...touched, [name]: true });
   };
 
@@ -82,7 +78,6 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
           withCredentials: true,
         }
       );
-
       if (response.status === 200 || response.status === 201) {
         alert("공연이 등록되었습니다.");
         onSubmitSuccess ? onSubmitSuccess() : navigate("/mypage/performances");
@@ -122,31 +117,15 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
     const performanceCode = generatePerformanceCode(form.category);
     const performanceStatus = getPerformanceStatus(form.performanceOpenAt, form.performanceEndAt);
 
-    if (form.performanceImg instanceof File) {
-      const reader = new FileReader();
-      reader.onloadend = async () => {
-        const imageUrl = reader.result;
-        const payload = {
-          ...form,
-          performanceCode,
-          performanceStatus,
-          performanceImg: imageUrl,
-          price: Number(form.price),
-          totalSeats: Number(form.totalSeats),
-        };
-        await submitData(payload, token);
-      };
-      reader.readAsDataURL(form.performanceImg);
-    } else {
-      const payload = {
-        ...form,
-        performanceCode,
-        performanceStatus,
-        price: Number(form.price),
-        totalSeats: Number(form.totalSeats),
-      };
-      await submitData(payload, token);
-    }
+    const payload = {
+      ...form,
+      performanceCode,
+      performanceStatus,
+      price: Number(form.price),
+      totalSeats: Number(form.totalSeats),
+    };
+
+    await submitData(payload, token);
   };
 
   const getInputClass = (name) =>
@@ -173,34 +152,26 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
             <form className="performanceForm" onSubmit={handleSubmit}>
               {errorMsg && <div className="formErrorMsg">{errorMsg}</div>}
 
-              {/* 공연명 */}
               <div className="formGroup">
-                <label htmlFor="performanceTitle">공연명</label>
+                <label>공연명</label>
                 <input
-                  id="performanceTitle"
                   name="title"
                   value={form.title}
                   onChange={handleChange}
-                  onBlur={() => setTouched({ ...touched, title: true })}
                   className={getInputClass("title")}
-                  autoComplete="off"
                 />
               </div>
 
-              {/* 설명 */}
               <div className="formGroup">
-                <label htmlFor="description">공연 설명</label>
+                <label>공연 설명</label>
                 <textarea
-                  id="description"
                   name="description"
                   value={form.description}
                   onChange={handleChange}
-                  onBlur={() => setTouched({ ...touched, description: true })}
                   className={getInputClass("description")}
                 />
               </div>
 
-              {/* 카테고리 */}
               <div className="formGroup">
                 <label>카테고리</label>
                 <div className="categoryRadioGroup">
@@ -212,7 +183,6 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                         value={cat.value}
                         checked={form.category === cat.value}
                         onChange={handleChange}
-                        onBlur={() => setTouched({ ...touched, category: true })}
                       />
                       {cat.label}
                     </label>
@@ -220,7 +190,6 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                 </div>
               </div>
 
-              {/* 공연 기간 */}
               <div className="formGroup">
                 <label>공연 기간</label>
                 <div className="periodRow">
@@ -242,7 +211,6 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                 </div>
               </div>
 
-              {/* 오픈일시 */}
               <div className="formGroup">
                 <label>예매 오픈일시</label>
                 <input
@@ -254,7 +222,6 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                 />
               </div>
 
-              {/* 장소 */}
               <div className="formGroup">
                 <label>공연 장소</label>
                 <select
@@ -272,12 +239,10 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                 </select>
               </div>
 
-              {/* 좌석 수 */}
               <div className="formGroup">
-                <label htmlFor="totalSeats">총 좌석 수</label>
+                <label>총 좌석 수</label>
                 <input
                   type="number"
-                  id="totalSeats"
                   name="totalSeats"
                   value={form.totalSeats}
                   onChange={handleChange}
@@ -285,32 +250,29 @@ const PerformanceForm = ({ isEdit, initialData, onSubmitSuccess }) => {
                 />
               </div>
 
-              {/* 이미지 */}
               <div className="formGroup">
-                <label>포스터 이미지</label>
+                <label>포스터 이미지 URL</label>
                 <input
-                  type="file"
+                  type="text"
                   name="performanceImg"
+                  placeholder="https://example.com/poster.jpg"
+                  value={form.performanceImg}
                   onChange={handleChange}
                   className={getInputClass("performanceImg")}
                 />
               </div>
 
-              {/* 가격 */}
               <div className="formGroup">
-                <label htmlFor="performancePrice">티켓 가격</label>
+                <label>티켓 가격</label>
                 <input
                   type="number"
-                  id="performancePrice"
                   name="price"
                   value={form.price}
                   onChange={handleChange}
                   className={getInputClass("price")}
-                  autoComplete="off"
                 />
               </div>
 
-              {/* 버튼 */}
               <div style={{ display: "flex", gap: "12px", width: "100%" }}>
                 <button
                   type="button"
