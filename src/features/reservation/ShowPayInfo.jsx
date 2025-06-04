@@ -24,8 +24,39 @@ const ShowPayInfo = ({ reservationId }) => {
         },
         withCredentials: true, // ✅ 필요한 경우
       })
-      .then((res) => {
+      .then(async (res) => {
         setPaymentInfo(res.data);
+
+        // ✅ 이메일 발송 요청
+        try {
+          console.log("📧 이메일 발송 요청:", res.data);
+
+          await axios.post(
+            `${API_BASE_URL}/email/send`,
+            {
+              email: res.data.userEmail,
+              username: res.data.username,
+              title: res.data.performanceTitle,
+              performStartAt: res.data.performanceStartAt,
+              performEndAt: res.data.performanceEndAt,
+              location: res.data.performanceLocation,
+              seatSection: res.data.seatSection,
+              seatNum: res.data.seatNum,
+              paymentAmount: res.data.paymentAmount,
+              paymentDate: new Date(res.data.paymentTime).toISOString(),
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+              },
+              withCredentials: true,
+            },
+          );
+
+          console.log("✅ 이메일 전송 성공");
+        } catch (err) {
+          console.warn("❌ 이메일 전송 실패 (계속 진행):", err);
+        }
       })
       .catch((err) => {
         console.error("결제 정보 조회 실패:", err);
