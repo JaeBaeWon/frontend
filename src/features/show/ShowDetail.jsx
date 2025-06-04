@@ -163,9 +163,6 @@ function ShowDetail() {
                     <button
                       className="custom-button"
                       onClick={() => {
-                        alert(
-                          `예매할 날짜: ${selectedDate.toLocaleDateString()}`,
-                        );
                         navigate("/reservation", { state: { performId } });
                       }}
                     >
