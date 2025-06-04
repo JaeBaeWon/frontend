@@ -162,32 +162,11 @@ function ShowDetail() {
                     />
                     <button
                       className="custom-button"
-                      onClick={async () => {
-                        try {
-                          const response = await axios.post(
-                            `${REST_API_GATEWAY_URL}/ticket/enter`,
-                            {
-                              performId,
-                            },
-                          );
-
-                          const data = response.data;
-
-                          if (data.action === "redirect") {
-                            navigate("/reservation", {
-                              state: { performId, userId: data.userId },
-                            });
-                          } else if (data.action === "wait") {
-                            // 모달 상태값 설정
-                            setQueuePosition(data.position ?? "대기중"); // 추후 position 정보 추가 예정
-                            setEstimatedTime(data.estimatedTime ?? 3); // 임시로 3분 예상 시간
-                            setQueueModalVisible(true);
-                          } else {
-                            console.warn("예기치 않은 응답:", data);
-                          }
-                        } catch (error) {
-                          console.error("예매 요청 중 오류:", error);
-                        }
+                      onClick={() => {
+                        alert(
+                          `예매할 날짜: ${selectedDate.toLocaleDateString()}`,
+                        );
+                        navigate("/reservation", { state: { performId } });
                       }}
                     >
                       이 날짜로 예매하기
