@@ -158,9 +158,24 @@ function ShowDetail() {
                       inline
                     />
                     <button
+                      type="button"
                       className="custom-button"
-                      onClick={() => {
-                        navigate("/reservation", { state: { performId } });
+                      onClick={async () => {
+                        const response = await fetch(
+                          `${REST_API_GATEWAY_URL}/ticket/enter`,
+                          {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ performId }),
+                          },
+                        );
+
+                        const data = await response.json();
+                        if (data.action === "redirect") {
+                          navigate("/reservation", { state: { performId } });
+                        }
                       }}
                     >
                       이 날짜로 예매하기
