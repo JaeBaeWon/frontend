@@ -31,8 +31,6 @@ import ProfileDetails from "./features/mypage/ProfileDetails";
 import SearchResult from "./features/show/SearchResult";
 import GridFloat from "./features/auth/components/GridFloat";
 import OAuthRedirect from "./features/auth/OAuthRedirect";
-import { initToolbar } from "@stagewise/toolbar";
-initToolbar();
 
 import MyPerformanceList from "./features/manage/MyPerformanceList";
 import PerformanceForm from "./features/manage/PerformanceForm";
