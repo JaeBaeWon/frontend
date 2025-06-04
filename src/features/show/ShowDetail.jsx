@@ -42,6 +42,7 @@ function ShowDetail() {
 
   // 티켓 오픈 알림 예약 연동
   const handleOpenAlert = async () => {
+    console.log("🚀 handleOpenAlert 함수 시작됨");
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) {
@@ -112,7 +113,10 @@ function ShowDetail() {
               {beforeTicketOpen && (
                 <button
                   className="showdetail-alert-btn"
-                  onClick={handleOpenAlert}
+                  onClick={() => {
+                    console.log("✅ 버튼 클릭됨");
+                    handleOpenAlert();
+                  }}
                 >
                   티켓 오픈 알림 받기
                 </button>
