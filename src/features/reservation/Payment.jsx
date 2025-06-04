@@ -170,7 +170,7 @@ const Payment = ({
               const interval = setInterval(async () => {
                 try {
                   const reservationRes = await axios.get(
-                    `${API_BASE_URL}/reservation/by-ticket/${ticketId}`,
+                    `${API_BASE_URL}/reservation/by-ticket-redis/${ticketId}`,
                     {
                       headers: {
                         Authorization: `Bearer ${token}`,
