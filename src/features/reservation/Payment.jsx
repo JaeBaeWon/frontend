@@ -184,27 +184,31 @@ const Payment = ({
                     setIsWaiting(false); // 메시지 숨김
                     setReservationId(reservationRes.data.reservationId);
 
-                    await axios.post(
-                      `${API_BASE_URL}/email/send`,
-                      {
-                        email: reservationRes.data.userEmail,
-                        username: reservationRes.data.username,
-                        title: reservationRes.data.performanceTitle,
-                        performStartAt: reservationRes.data.performanceStartAt,
-                        performEndAt: reservationRes.data.performanceEndAt,
-                        location: reservationRes.data.performanceLocation,
-                        seatSection: reservationRes.data.seatSection,
-                        seatNum: reservationRes.data.seatNum,
-                        paymentAmount: reservationRes.data.paymentAmount,
-                        paymentDate: reservationRes.data.paymentTime,
-                      },
-                      {
-                        headers: {
-                          Authorization: `Bearer ${token}`,
-                        },
-                        withCredentials: true,
+                    try {
+                        await axios.post(
+                          `${API_BASE_URL}/email/send`,
+                          {
+                            email: reservationRes.data.userEmail,
+                            username: reservationRes.data.username,
+                            title: reservationRes.data.performanceTitle,
+                            performStartAt: reservationRes.data.performanceStartAt,
+                            performEndAt: reservationRes.data.performanceEndAt,
+                            location: reservationRes.data.performanceLocation,
+                            seatSection: reservationRes.data.seatSection,
+                            seatNum: reservationRes.data.seatNum,
+                            paymentAmount: reservationRes.data.paymentAmount,
+                            paymentDate: reservationRes.data.paymentTime,
+                          },
+                          {
+                            headers: {
+                              Authorization: `Bearer ${token}`,
+                            },
+                            withCredentials: true,
+                          }
+                        );
+                      } catch (emailErr) {
+                        console.warn("📭 이메일 전송 실패 (무시하고 계속 진행):", emailErr);
                       }
-                    );
 
                     alert("🎉 결제 및 예매 완료!");
                     setCurrentStep(4);
