@@ -176,19 +176,18 @@ const Payment = ({
                   setReservationId(reservationRes.data.reservationId);
 
                   // 이메일 전송 API 호출
-                  await axios
-                    .post(`${API_BASE_URL}/email/send`, {
-                      email: res.data.userEmail,
-                      username: res.data.username,
-                      title: res.data.performanceTitle,
-                      performStartAt: res.data.performanceStartAt,
-                      performEndAt: res.data.performanceEndAt,
-                      location: res.data.performanceLocation,
-                      seatSection: res.data.seatSection,
-                      seatNum: res.data.seatNum,
-                      paymentAmount: res.data.paymentAmount,
-                      paymentDate: res.data.paymentTime,
-                    })
+                  await axios.post(`${API_BASE_URL}/email/send`, {
+                    email: reservationRes.data.userEmail,
+                    username: reservationRes.data.username,
+                    title: reservationRes.data.performanceTitle,
+                    performStartAt: reservationRes.data.performanceStartAt,
+                    performEndAt: reservationRes.data.performanceEndAt,
+                    location: reservationRes.data.performanceLocation,
+                    seatSection: reservationRes.data.seatSection,
+                    seatNum: reservationRes.data.seatNum,
+                    paymentAmount: reservationRes.data.paymentAmount,
+                    paymentDate: reservationRes.data.paymentTime,
+                  })
                     .then(() => {
                       console.log("✅ 이메일 전송 성공");
                     })
