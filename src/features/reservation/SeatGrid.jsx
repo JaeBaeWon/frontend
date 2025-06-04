@@ -7,8 +7,12 @@ const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 const SeatGrid = ({ performanceId, onSeatSelect }) => {
   const [seats, setSeats] = useState([]);
   const [selectedSeatIds, setSelectedSeatIds] = useState([]);
-
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  // 🔧 좌석 상태 수동 새로고침 트리거
+  const handleRefresh = () => {
+    setRefreshTrigger((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -28,7 +32,6 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
       });
   }, [performanceId, refreshTrigger]);
 
-  // ✅ 상태가 바뀔 때만 부모에게 전달
   useEffect(() => {
     onSeatSelect(selectedSeatIds);
   }, [selectedSeatIds, onSeatSelect]);
@@ -64,8 +67,6 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
                     (s) => parseInt(s.seatNum) === seatNumber,
                   );
 
-                  const seatStatus = seat.seatStatus?.toUpperCase();
-
                   if (!seat)
                     return (
                       <button
@@ -75,7 +76,7 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
                     );
 
                   const isSelected = selectedSeatIds.includes(seat.seatId);
-                  const seatStatus = seat.seatStatus;
+                  const seatStatus = seat.seatStatus?.toUpperCase();
 
                   return (
                     <button
