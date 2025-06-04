@@ -2,7 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 import Logo from "./Logo";
-import { BsFilePerson } from "react-icons/bs";
+import {
+  BsFilePerson,
+  BsPerson,
+  BsMagic,
+  BsFillPersonFill,
+  BsIndent,
+} from "react-icons/bs";
 
 function Header({ searchBar }) {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -150,14 +156,23 @@ function Header({ searchBar }) {
         </div>
         <div className="rightArea">
           <div className="authAreaBg"></div>
-          <div className="authLinks">
+          <div
+            className="authLinks"
+            style={{ marginRight: "20px", display: "flex" }}
+          >
             {isLoggedIn ? (
               <>
-                <Link to="/mypage" className="authLink">
-                  마이페이지
+                <Link to="/mypage" className="authLink" title="마이페이지">
+                  <BsFillPersonFill
+                    style={{ color: "white", fontSize: "24px" }}
+                  />
                 </Link>
-                <button onClick={handleLogout} className="authLink logoutBtn">
-                  로그아웃
+                <button
+                  onClick={handleLogout}
+                  className="authLink logoutBtn"
+                  title="로그아웃"
+                >
+                  <BsIndent style={{ color: "white", fontSize: "24px" }} />
                 </button>
               </>
             ) : (
@@ -165,16 +180,16 @@ function Header({ searchBar }) {
                 <Link
                   to="/login"
                   className="authLink"
+                  title="로그인"
                   style={{
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: 4,
                   }}
                 >
-                  로그인
+                  <BsPerson style={{ color: "white", fontSize: "24px" }} />
                 </Link>
-                <Link to="/signup" className="authLink">
-                  회원가입
+                <Link to="/signup" className="authLink" title="회원가입">
+                  <BsMagic style={{ color: "white", fontSize: "24px" }} />
                 </Link>
               </>
             )}
