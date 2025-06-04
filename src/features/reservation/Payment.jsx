@@ -184,18 +184,27 @@ const Payment = ({
                     setIsWaiting(false); // 메시지 숨김
                     setReservationId(reservationRes.data.reservationId);
 
-                    await axios.post(`${API_BASE_URL}/email/send`, {
-                      email: reservationRes.data.userEmail,
-                      username: reservationRes.data.username,
-                      title: reservationRes.data.performanceTitle,
-                      performStartAt: reservationRes.data.performanceStartAt,
-                      performEndAt: reservationRes.data.performanceEndAt,
-                      location: reservationRes.data.performanceLocation,
-                      seatSection: reservationRes.data.seatSection,
-                      seatNum: reservationRes.data.seatNum,
-                      paymentAmount: reservationRes.data.paymentAmount,
-                      paymentDate: reservationRes.data.paymentTime,
-                    });
+                    await axios.post(
+                      `${API_BASE_URL}/email/send`,
+                      {
+                        email: reservationRes.data.userEmail,
+                        username: reservationRes.data.username,
+                        title: reservationRes.data.performanceTitle,
+                        performStartAt: reservationRes.data.performanceStartAt,
+                        performEndAt: reservationRes.data.performanceEndAt,
+                        location: reservationRes.data.performanceLocation,
+                        seatSection: reservationRes.data.seatSection,
+                        seatNum: reservationRes.data.seatNum,
+                        paymentAmount: reservationRes.data.paymentAmount,
+                        paymentDate: reservationRes.data.paymentTime,
+                      },
+                      {
+                        headers: {
+                          Authorization: `Bearer ${token}`,
+                        },
+                        withCredentials: true,
+                      }
+                    );
 
                     alert("🎉 결제 및 예매 완료!");
                     setCurrentStep(4);
