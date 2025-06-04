@@ -56,36 +56,31 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
       </div>
 
       {sections.map((section) => {
-        const blockSeats = seats.filter((seat) => seat.seatSection === section);
+        const blockSeats = seats.filter(seat => seat.seatSection === section);
+        const maxSeatNumber = Math.max(...blockSeats.map(s => parseInt(s.seatNum)));
+        const numRows = Math.ceil(maxSeatNumber / 10);
+
         return (
           <div key={section} className="seat-block">
-            {[...Array(10)].map((_, rowIndex) => (
+            {[...Array(numRows)].map((_, rowIndex) => (
               <div key={rowIndex} className="seat-row">
                 {[...Array(10)].map((_, colIndex) => {
                   const seatNumber = rowIndex * 10 + colIndex + 1;
                   const seat = blockSeats.find(
-                    (s) => parseInt(s.seatNum) === seatNumber,
+                    (s) => s.seatNum === seatNumber.toString().padStart(2, "0")
                   );
 
-                  if (!seat)
-                    return (
-                      <button
-                        key={rowIndex * 10 + colIndex}
-                        className="seat empty"
-                      />
-                    );
+                  if (!seat) {
+                    return <button key={colIndex} className="seat empty" />;
+                  }
 
-                  const isSelected = selectedSeatIds.includes(seat.seatId);
                   const seatStatus = seat.seatStatus?.toUpperCase();
+                  const isSelected = selectedSeatIds.includes(seat.seatId);
 
                   return (
                     <button
                       key={seat.seatId}
-                      className={`seat
-                            ${isSelected ? "selected" : ""}
-                            ${seatStatus === "BOOKED" ? "booked" : ""}
-                            ${seatStatus === "HOLD" ? "hold" : ""}
-                        `}
+                      className={`seat ${isSelected ? "selected" : ""} ${seatStatus === "BOOKED" ? "booked" : ""} ${seatStatus === "HOLD" ? "hold" : ""}`}
                       onClick={() => handleClick(seat.seatId, seatStatus)}
                     >
                       {seat.seatSection}
@@ -97,9 +92,6 @@ const SeatGrid = ({ performanceId, onSeatSelect }) => {
             ))}
           </div>
         );
-      })}
-    </div>
-  );
-};
+})}
 
 export default SeatGrid;
