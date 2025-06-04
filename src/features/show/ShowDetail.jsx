@@ -41,7 +41,6 @@ function ShowDetail() {
   }, [performId]);
 
   // 티켓 오픈 알림 예약 연동
-  const userId = data.member.userId;
   const handleOpenAlert = async () => {
     console.log("🚀 handleOpenAlert 함수 시작됨");
     try {
