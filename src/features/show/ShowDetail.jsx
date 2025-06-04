@@ -10,6 +10,7 @@ import { parseISO } from "date-fns";
 import "./ShowDetail.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+const REST_API_GATEWAY_URL = import.meta.env.VITE_REST_API_GATEWAY_URL;
 
 function ShowDetail() {
   const { performId } = useParams();
@@ -35,6 +36,39 @@ function ShowDetail() {
         setLoading(false);
       });
   }, [performId]);
+
+  // 티켓 오픈 알림 예약 연동
+  const handleOpenAlert = async () => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        alert("로그인이 필요합니다.");
+        return;
+      }
+
+      const res = await fetch(`${API_BASE_URL}/user/info`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error("사용자 정보 요청 실패");
+      }
+
+      const data = await res.json();
+      const userId = data.member.userId;
+
+      await axios.post(`${API_BASE_URL}/notification/subscribe`, {
+        userId,
+        performanceId: performId,
+      });
+      navigate("/show/openalertcomplete");
+    } catch (error) {
+      console.error("오픈 알림 등록 중 오류:", error);
+    }
+  };
 
   const startDate = show ? parseISO(show.performStartAt) : null;
   const endDate = show ? parseISO(show.performEndAt) : null;
@@ -75,7 +109,7 @@ function ShowDetail() {
               {beforeTicketOpen && (
                 <button
                   className="showdetail-alert-btn"
-                  onClick={() => navigate("/show/openalertcomplete")}
+                  onClick={handleOpenAlert}
                 >
                   티켓 오픈 알림 받기
                 </button>
