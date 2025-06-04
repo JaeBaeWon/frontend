@@ -33,18 +33,7 @@ const ShowPayInfo = ({ reservationId }) => {
 
           await axios.post(
             `${API_BASE_URL}/email/send/${reservationId}`,
-            {
-              email: res.data.userEmail,
-              username: res.data.username,
-              title: res.data.performanceTitle,
-              performStartAt: res.data.performanceStartAt,
-              performEndAt: res.data.performanceEndAt,
-              location: res.data.performanceLocation,
-              seatSection: res.data.seatSection,
-              seatNum: res.data.seatNum,
-              paymentAmount: res.data.paymentAmount,
-              paymentDate: new Date(res.data.paymentTime).toISOString(),
-            },
+            {},
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
