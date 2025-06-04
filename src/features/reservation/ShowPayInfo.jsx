@@ -32,7 +32,7 @@ const ShowPayInfo = ({ reservationId }) => {
           console.log("📧 이메일 발송 요청:", res.data);
 
           await axios.post(
-            `${API_BASE_URL}/email/send`,
+            `${API_BASE_URL}/email/send/${reservationId}`,
             {
               email: res.data.userEmail,
               username: res.data.username,
