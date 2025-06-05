@@ -80,41 +80,46 @@ const MyPerformanceDetail = () => {
   }
 
   return (
-    <div className="mypageContainer">
-      <Header />
-      <div className="mypageContent">
-        <main className="main">
-          <div className="formCardWrapper">
-            <h2 className="title">공연 상세 보기</h2>
-            <div className="performanceDetail">
-              <img
-                src={performance.performanceImg}
-                alt={`${performance.title} 포스터`}
-                className="performancePoster"
-              />
-              <p><strong>공연명:</strong> {performance.title}</p>
-              <p><strong>설명:</strong> {performance.description}</p>
-              <p><strong>카테고리:</strong> {performance.category}</p>
-              <p><strong>장소:</strong> {performance.location}</p>
-              <p><strong>공연 기간:</strong> {performance.performanceStartAt} ~ {performance.performanceEndAt}</p>
-              <p><strong>예매 오픈:</strong> {performance.performanceOpenAt}</p>
-              <p><strong>좌석 수:</strong> {performance.totalSeats}</p>
-              <p><strong>가격:</strong> {performance.price}원</p>
-              <p><strong>상태:</strong> {performance.performanceStatus}</p>
-            </div>
+      <div className="mypageContainer">
+        <Header />
+        <div className="mypageContent">
+          <main className="main">
+            <div className="infoCardWrapper">
+              <h2 className="title">공연 상세 보기</h2>
+              <div className="infoCard">
+                <div className="posterRow">
+                  <img
+                    src={performance.performanceImg}
+                    alt={`${performance.title} 포스터`}
+                    className="performancePoster"
+                    style={{ width: "180px", height: "auto", marginBottom: "16px" }}
+                  />
+                </div>
+                <ul className="list">
+                  <li><strong>공연명:</strong> {performance.title}</li>
+                  <li><strong>설명:</strong> {performance.description}</li>
+                  <li><strong>카테고리:</strong> {performance.category}</li>
+                  <li><strong>장소:</strong> {performance.location}</li>
+                  <li><strong>공연 기간:</strong> {performance.performanceStartAt} ~ {performance.performanceEndAt}</li>
+                  <li><strong>예매 오픈:</strong> {performance.performanceOpenAt}</li>
+                  <li><strong>좌석 수:</strong> {performance.totalSeats}</li>
+                  <li><strong>가격:</strong> {performance.price}원</li>
+                  <li><strong>상태:</strong> {performance.performanceStatus}</li>
+                </ul>
 
-            {/* ✅ 수정/삭제 버튼 추가 */}
-            <div className="detailBtnGroup">
-              <button className="editBtn" onClick={handleEdit}>수정</button>
-              <button className="deleteBtn" onClick={handleDelete}>삭제</button>
-              <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
+                <div className="btnRow" style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "20px" }}>
+                  <button className="editBtn" onClick={handleEdit}>수정</button>
+                  <button className="deleteBtn" onClick={handleDelete}>삭제</button>
+                  <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </main>
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  );
-};
+    );
+  };
+
 
 export default MyPerformanceDetail;
