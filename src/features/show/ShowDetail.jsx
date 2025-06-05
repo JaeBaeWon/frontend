@@ -21,7 +21,7 @@ function ShowDetail() {
   const [queuePosition, setQueuePosition] = useState(null);
   const [estimatedTime, setEstimatedTime] = useState(null);
   0;
-
+  const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,10 +39,29 @@ function ShowDetail() {
       });
   }, [performId]);
 
+  // 사용자 정보 가져오기
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) return;
+
+    axios
+      .get(`${API_BASE_URL}/user/info`, {
+        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUserData(res.data.member);
+        console.log("✅ 사용자 정보 로드됨:", res.data.member);
+      })
+      .catch((err) => {
+        console.error("❌ 사용자 정보 로드 실패:", err);
+      });
+  }, []);
+
   // 티켓 오픈 알림 예약 연동
   const handleOpenAlert = async () => {
     console.log("🚀 handleOpenAlert 함수 시작됨");
-    if (!userData || !performanceData) {
+    if (!userData || !performance) {
       alert("로그인이 필요합니다.");
       return;
     }
@@ -51,14 +70,14 @@ function ShowDetail() {
       const response = await axios.post(
         `${API_BASE_URL}/notification/subscribe`,
         {
-          userId: userData.id,
-          performanceId: performanceData.id,
+          userId: userData.userId,
+          performanceId: performance.performanceId,
         },
       );
 
       // 실제 전송된 값 및 응답 출력
-      console.log("📦 전송된 userId:", userData.id);
-      console.log("📦 전송된 performanceId:", performanceData.id);
+      console.log("📦 전송된 userId:", userData.userId);
+      console.log("📦 전송된 performanceId:", performance.performanceId);
       console.log("✅ 알림 등록 성공:", response.data);
       navigate("/show/openalertcomplete");
       console.log("➡️ /show/openalertcomplete로 이동");
