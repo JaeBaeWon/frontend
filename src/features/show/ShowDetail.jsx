@@ -24,7 +24,6 @@ function ShowDetail() {
   0;
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
-  const [restApiGatewayUrl, setRestApiGatewayUrl] = useState(null);
 
   useEffect(() => {
     axios
@@ -57,19 +56,6 @@ function ShowDetail() {
       })
       .catch((err) => {
         console.error("❌ 사용자 정보 로드 실패:", err);
-      });
-  }, []);
-
-  // ✅ REST API Gateway URL 불러오기
-  useEffect(() => {
-    axios
-      .get(`${API_BASE_URL}/config`)
-      .then((res) => {
-        console.log("✅ REST API Gateway URL:", res.data.restApiGatewayUrl);
-        setRestApiGatewayUrl(res.data.restApiGatewayUrl);
-      })
-      .catch((err) => {
-        console.error("⛔ API Gateway URL 불러오기 실패:", err);
       });
   }, []);
 
