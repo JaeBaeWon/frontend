@@ -97,13 +97,13 @@ const PerformanceForm = () => {
       price: Number(form.price),
       totalSeats: Number(form.totalSeats),
       performanceStatus: getPerformanceStatus(form.performanceOpenAt, form.performanceEndAt),
-      performanceCode: form.performanceCode || generatePerformanceCode(form.category),
     };
 
-    if (id) {
-      payload.performanceCode = form.performanceCode; // 수정 시에는 유지
-    } else {
-      payload.performanceCode = generatePerformanceCode(form.category); // 등록 시에만 생성
+    // ✅ performanceCode는 있을 때만 추가
+    if (!id) {
+      payload.performanceCode = generatePerformanceCode(form.category);
+    } else if (form.performanceCode?.trim()) {
+      payload.performanceCode = form.performanceCode;
     }
 
     console.log("최종 전송 payload:", payload);
