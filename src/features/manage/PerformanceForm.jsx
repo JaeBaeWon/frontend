@@ -94,7 +94,11 @@ const PerformanceForm = () => {
 
     if (!id) {
       payload.performanceCode = generatePerformanceCode(form.category); // 등록시에만 생성
+    } else if (form.performanceCode) {
+      payload.performanceCode = form.performanceCode; // 수정 시 유지
     }
+
+    console.log("최종 전송 payload:", payload);
 
     try {
       if (id) {
@@ -145,6 +149,7 @@ const PerformanceForm = () => {
           ...data,
           price: data.price?.toString(),
           totalSeats: data.totalSeats?.toString(),
+          performanceCode: data.performanceCode || "", // ✅ 추가
         });
       } catch (err) {
         console.error("❌ 공연 데이터 불러오기 실패", err);
