@@ -83,6 +83,9 @@
   font-size: 16px;
   width: 100%;
 }
+.input:focus {
+  outline: none;
+}
 .btn {
   background: #fff;
   border: 1.5px solid var(--primary);
@@ -124,7 +127,7 @@
 .btnMain:focus {
   background-color: var(--primary-300) !important;
   color: #fff !important;
-  border: none;
+  border: none !important;
   outline: none;
   box-shadow: none;
 }
@@ -135,7 +138,6 @@
 .btn:hover:not(.btnMain) {
   background: var(--primary);
   color: #fff;
-  border: 1.5px solid var(--primary);
 }
 .formActions {
   position: absolute;
