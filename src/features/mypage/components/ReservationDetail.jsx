@@ -130,7 +130,13 @@ function ReservationDetail() {
             <tbody>
               <tr>
                 <th>예매일</th>
-                <td>{reservationDetail.paymentDate}</td>
+                <td>{new Date(reservationDetail.paymentDate).toLocaleString("ko-KR", {
+                  year: "numeric",
+                  month: "2-digit",
+                  day: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}</td>
                 <th>현재상태</th>
                 <td>{reservationDetail.performanceStatus}</td>
               </tr>
