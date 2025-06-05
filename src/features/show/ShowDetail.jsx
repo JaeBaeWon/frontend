@@ -161,6 +161,10 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
+                        console.log(
+                          "🎯 REST_API_GATEWAY_URL:",
+                          REST_API_GATEWAY_URL,
+                        );
                         try {
                           const response = await fetch(
                             `${REST_API_GATEWAY_URL}/ticket/enter`,
