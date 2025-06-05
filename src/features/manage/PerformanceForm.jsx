@@ -89,9 +89,12 @@ const PerformanceForm = () => {
       ...form,
       price: Number(form.price),
       totalSeats: Number(form.totalSeats),
-      performanceCode: generatePerformanceCode(form.category),
       performanceStatus: getPerformanceStatus(form.performanceOpenAt, form.performanceEndAt),
     };
+
+    if (!id) {
+      payload.performanceCode = generatePerformanceCode(form.category); // 등록시에만 생성
+    }
 
     try {
       if (id) {
@@ -118,9 +121,9 @@ const PerformanceForm = () => {
 
       navigate("/manage/myperformances");
     } catch (err) {
-      console.error("❌ 공연 등록/수정 실패", err);
-      setErrorMsg("요청에 실패했습니다. 다시 시도해 주세요.");
-    } finally {
+        console.error("❌ 공연 등록/수정 실패", err);
+        setErrorMsg(err?.response?.data?.message || "요청에 실패했습니다. 다시 시도해 주세요.");
+      } finally {
       setIsSubmitting(false);
     }
   };
