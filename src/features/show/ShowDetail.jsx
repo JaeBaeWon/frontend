@@ -201,70 +201,7 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
-                        console.log("예매 버튼 클릭됨");
-                        if (!restApiGatewayUrl) {
-                          console.error("API Gateway URL이 없음");
-                          return;
-                        }
-                        console.log(
-                          "✅ API Gateway URL 확인됨:",
-                          restApiGatewayUrl,
-                        );
-                        console.log("🎯 요청에 사용될 performId:", performId);
-                        try {
-                          const response = await fetch(
-                            `${restApiGatewayUrl}/ticket/enter`,
-                            {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify({ performId }),
-                            },
-                          );
-
-                          console.log(
-                            "📡 fetch 완료됨. 응답 status:",
-                            response.status,
-                          );
-
-                          const text = await response.text();
-                          console.log("🎟️ 예매 응답:", text);
-
-                          let data = null;
-                          try {
-                            data = JSON.parse(text);
-                            console.log("✅ 파싱된 JSON:", data);
-                          } catch (err) {
-                            console.error("⛔ JSON 파싱 실패:", err);
-                            // 테스트용: 강제 이동
-                            navigate("/reservation", { state: { performId } });
-                            return;
-                          }
-
-                          if (data.action === "redirect") {
-                            navigate("/reservation", { state: { performId } });
-                          } else if (data.action === "wait") {
-                            console.log("⏳ 대기열 진입됨");
-                            console.log("📍 대기 순번:", data.position);
-                            console.log(
-                              "🕒 예상 대기 시간:",
-                              data.estimatedTime,
-                            );
-
-                            setQueueModalVisible(true);
-                            setQueuePosition(data.position);
-                            setEstimatedTime(data.estimatedTime);
-                          } else {
-                            console.warn(
-                              "⚠️ 알 수 없는 action 값:",
-                              data.action,
-                            );
-                          }
-                        } catch (error) {
-                          console.error("⛔ 예매 요청 실패:", error);
-                          navigate("/reservation", { state: { performId } });
-                        }
+                        navigate("/reservation", { state: { performId } });
                       }}
                     >
                       이 날짜로 예매하기
