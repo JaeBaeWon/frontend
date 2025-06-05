@@ -71,13 +71,13 @@ function ShowDetail() {
         `${API_BASE_URL}/notification/subscribe`,
         {
           userId: userData.id,
-          performanceId: show.performanceId,
+          performanceId: show.id,
         },
       );
 
       // 실제 전송된 값 및 응답 출력
       console.log("📦 전송된 userId:", userData.id);
-      console.log("📦 전송된 performanceId:", show.performanceId);
+      console.log("📦 전송된 performanceId:", show.id);
       console.log("✅ 알림 등록 성공:", response.data);
       navigate("/show/openalertcomplete");
       console.log("➡️ /show/openalertcomplete로 이동");
