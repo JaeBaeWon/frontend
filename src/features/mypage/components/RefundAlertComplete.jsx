@@ -1,17 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import MypageLayout from "./MypageLayout";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
 function RefundAlertComplete() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [visible, setVisible] = useState(false);
+
+  const reservationId = location.state?.reservationId;
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
+
+    // ✅ 이메일 발송 요청
+    const sendEmail = async () => {
+      try {
+        console.log("📧 이메일 발송 요청:", reservationId);
+        console.log("🔑 reservationId:", reservationId);
+        console.log(
+          "🌐 API URL:",
+          `${API_BASE_URL}/email/sendCancel/${reservationId}`,
+        );
+        console.log("🔐 accessToken:", localStorage.getItem("accessToken"));
+
+        await axios.post(
+          `${API_BASE_URL}/email/sendCancel/${reservationId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            withCredentials: true,
+          },
+        );
+
+        console.log("✅ 이메일 전송 성공");
+      } catch (err) {
+        console.warn("❌ 이메일 전송 실패 (계속 진행):", err);
+      }
+    };
+
+    sendEmail();
     return () => clearTimeout(timer);
-  }, []);
+  }, [reservationId]);
 
   return (
     <MypageLayout activeMenu="예매 내역">
