@@ -97,6 +97,7 @@ const PerformanceForm = () => {
       price: Number(form.price),
       totalSeats: Number(form.totalSeats),
       performanceStatus: getPerformanceStatus(form.performanceOpenAt, form.performanceEndAt),
+      performanceCode: form.performanceCode || generatePerformanceCode(form.category),
     };
 
     if (id) {
@@ -153,10 +154,17 @@ const PerformanceForm = () => {
         });
         const data = res.data;
         setForm({
-          ...data,
+          title: data.title,
+          description: data.description,
+          category: data.category,
+          performanceStartAt: data.performanceStartAt,
+          performanceEndAt: data.performanceEndAt,
+          performanceOpenAt: data.performanceOpenAt,
+          location: data.location,
+          performanceImg: data.performanceImg,
           price: data.price?.toString(),
           totalSeats: data.totalSeats?.toString(),
-          performanceCode: data.performanceCode || "", // ✅ 추가
+          performanceCode: data.performanceCode || "",
         });
       } catch (err) {
         console.error("❌ 공연 데이터 불러오기 실패", err);
