@@ -228,8 +228,19 @@ function ShowDetail() {
                             response.status,
                           );
 
-                          const data = await response.json();
-                          console.log("🎟️ 예매 응답:", data);
+                          const text = await response.text();
+                          console.log("🎟️ 예매 응답:", text);
+
+                          let data = null;
+                          try {
+                            data = JSON.parse(text);
+                            console.log("✅ 파싱된 JSON:", data);
+                          } catch (err) {
+                            console.error("⛔ JSON 파싱 실패:", err);
+                            // 테스트용: 강제 이동
+                            navigate("/reservation", { state: { performId } });
+                            return;
+                          }
 
                           if (data.action === "redirect") {
                             navigate("/reservation", { state: { performId } });
@@ -252,6 +263,7 @@ function ShowDetail() {
                           }
                         } catch (error) {
                           console.error("⛔ 예매 요청 실패:", error);
+                          navigate("/reservation", { state: { performId } });
                         }
                       }}
                     >
