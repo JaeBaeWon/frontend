@@ -22,6 +22,14 @@ const getPerformanceStatus = (openAt, endAt) => {
   return "ONGOING";
 };
 
+const formatToLocalDatetime = (datetimeStr) => {
+  if (!datetimeStr) return "";
+  const date = new Date(datetimeStr);
+  const offset = date.getTimezoneOffset();
+  const localDate = new Date(date.getTime() - offset * 60000);
+  return localDate.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:mm"
+};
+
 const initialForm = {
   title: "",
   description: "",
@@ -153,9 +161,9 @@ const PerformanceForm = () => {
           title: data.title,
           description: data.description,
           category: data.category,
-          performanceStartAt: data.performanceStartAt,
-          performanceEndAt: data.performanceEndAt,
-          performanceOpenAt: data.performanceOpenAt,
+          performanceStartAt: formatToLocalDatetime(data.performanceStartAt),
+          performanceEndAt: formatToLocalDatetime(data.performanceEndAt),
+          performanceOpenAt: formatToLocalDatetime(data.performanceOpenAt),
           location: data.location,
           performanceImg: data.performanceImg,
           price: data.price?.toString(),
