@@ -1,19 +1,26 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const OAuthRedirect = () => {
-    const navigate = useNavigate();
-
     useEffect(() => {
-        // ✅ onboarding 여부 쿼리 파라미터로 확인
-        const params = new URLSearchParams(window.location.search);
-        const onboardingComplete = params.get("onboardingComplete") === "true";
+        const fetchRedirect = async () => {
+            try {
+                const res = await fetch("https://api.podopicker.store/auth/oauth2/success", {
+                    credentials: "include", // 🔥 쿠키 수신을 위한 필수 옵션
+                });
 
-        if (onboardingComplete) {
-            navigate("/");
-        } else {
-            navigate("/signup/onboarding");
-        }
+                if (!res.ok) {
+                    throw new Error("OAuth 리디렉션 실패");
+                }
+
+                const data = await res.json();
+                window.location.href = data.redirectUrl; // ✅ 백엔드가 알려준 곳으로 이동
+            } catch (err) {
+                console.error("OAuth 처리 실패:", err);
+                window.location.href = "/auth/login?error=true";
+            }
+        };
+
+        fetchRedirect();
     }, []);
 
     return <div>로그인 중입니다... 잠시만 기다려 주세요.</div>;
