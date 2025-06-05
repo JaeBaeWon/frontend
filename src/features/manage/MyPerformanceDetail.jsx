@@ -84,7 +84,10 @@ const MyPerformanceDetail = () => {
         <Header />
         <div className="mypageContent">
           <main className="main">
-            <h2 className="title">공연 상세 보기</h2>
+            <div className="detailTitleWrapper">
+              <h2 className="title">공연 상세 보기</h2>
+            </div>
+
             <div className="detailCard">
               <div className="detailTopRow">
                 <img
@@ -110,10 +113,12 @@ const MyPerformanceDetail = () => {
               </div>
 
               <div className="detailBtnRow">
-                <button className="editBtn" onClick={handleEdit}>수정</button>
-                <button className="deleteBtn" onClick={handleDelete}>삭제</button>
-                <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
-              </div>
+                    <div className="leftBtns">
+                      <button className="editBtn" onClick={handleEdit}>수정</button>
+                      <button className="deleteBtn" onClick={handleDelete}>삭제</button>
+                    </div>
+                    <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
+                  </div>
             </div>
           </main>
         </div>
