@@ -23,7 +23,7 @@ function RefundAlertComplete() {
         console.log("📧 이메일 발송 요청:", reservationId);
 
         await axios.post(
-          `${API_BASE_URL}/email/send/${reservationId}`,
+          `${API_BASE_URL}/email/sendCancel/${reservationId}`,
           {},
           {
             headers: {
