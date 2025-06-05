@@ -161,44 +161,7 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
-                        console.log(
-                          "🎯 REST_API_GATEWAY_URL:",
-                          REST_API_GATEWAY_URL,
-                        );
-                        try {
-                          const response = await fetch(
-                            `${REST_API_GATEWAY_URL}/ticket/enter`,
-                            {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify({ performId }),
-                            },
-                          );
-
-                          // fetch는 성공했지만 응답이 HTML일 수도 있음
-                          const text = await response.text();
-                          console.log("📦 응답 본문:", text);
-
-                          try {
-                            const data = JSON.parse(text);
-                            console.log("✅ 파싱된 JSON:", data);
-
-                            if (data.action === "redirect") {
-                              navigate("/reservation", {
-                                state: { performId },
-                              });
-                            }
-                          } catch (parseError) {
-                            console.error("❌ JSON 파싱 실패:", parseError);
-                          }
-                        } catch (fetchError) {
-                          console.error(
-                            "❌ Fetch 요청 자체가 실패:",
-                            fetchError,
-                          );
-                        }
+                        navigate("/reservation", { state: { performId } });
                       }}
                     >
                       이 날짜로 예매하기
