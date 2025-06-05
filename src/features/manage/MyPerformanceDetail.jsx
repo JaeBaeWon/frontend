@@ -110,7 +110,7 @@ const MyPerformanceDetail = () => {
                       <tr>
                         <th>공연 기간</th>
                         <td>
-                          {performance.performanceStartAt} - {performance.performanceEndAt}
+                          {formatDateTime(performance.performanceStartAt)} - {formatDateTime(performance.performanceEndAt)}
                         </td>
                       </tr>
                       <tr><th>예매 오픈</th><td>{performance.performanceOpenAt}</td></tr>
