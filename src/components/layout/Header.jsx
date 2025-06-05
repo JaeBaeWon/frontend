@@ -81,6 +81,7 @@ function Header({ searchBar }) {
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("userRole");
     alert("로그아웃 되었습니다.");
     setIsLoggedIn(false);
     navigate("/");
@@ -162,10 +163,16 @@ function Header({ searchBar }) {
           >
             {isLoggedIn ? (
               <>
-                <Link to="/mypage" className="authLink" title="마이페이지">
-                  <BsFillPersonFill
-                    style={{ color: "white", fontSize: "24px" }}
-                  />
+                <Link
+                  to={
+                    localStorage.getItem("userRole") === "MANAGER"
+                      ? "/manage/myperformances"
+                      : "/mypage"
+                  }
+                  className="authLink"
+                  title="마이페이지"
+                >
+                  <BsFillPersonFill style={{ color: "white", fontSize: "24px" }} />
                 </Link>
                 <button
                   onClick={handleLogout}
@@ -177,15 +184,7 @@ function Header({ searchBar }) {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="authLink"
-                  title="로그인"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                  }}
-                >
+                <Link to="/login" className="authLink" title="로그인">
                   <BsPerson style={{ color: "white", fontSize: "24px" }} />
                 </Link>
                 <Link to="/signup" className="authLink" title="회원가입">
