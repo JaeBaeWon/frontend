@@ -86,16 +86,23 @@ const PerformanceForm = () => {
     const token = localStorage.getItem("accessToken");
 
     const payload = {
-      ...form,
+      title: form.title,
+      description: form.description,
+      category: form.category,
+      performanceStartAt: form.performanceStartAt,
+      performanceEndAt: form.performanceEndAt,
+      performanceOpenAt: form.performanceOpenAt,
+      location: form.location,
+      performanceImg: form.performanceImg,
       price: Number(form.price),
       totalSeats: Number(form.totalSeats),
       performanceStatus: getPerformanceStatus(form.performanceOpenAt, form.performanceEndAt),
     };
 
-    if (!id) {
-      payload.performanceCode = generatePerformanceCode(form.category); // 등록시에만 생성
-    } else if (form.performanceCode) {
-      payload.performanceCode = form.performanceCode; // 수정 시 유지
+    if (id) {
+      payload.performanceCode = form.performanceCode; // 수정 시에는 유지
+    } else {
+      payload.performanceCode = generatePerformanceCode(form.category); // 등록 시에만 생성
     }
 
     console.log("최종 전송 payload:", payload);
