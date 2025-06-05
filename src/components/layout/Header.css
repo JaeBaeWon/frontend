@@ -46,6 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding-right: 2px;
 }
 
 .logo img {
@@ -137,7 +138,7 @@
 
 .authLinks {
   display: flex;
-  gap: 28px;
+  gap: 10px;
   align-items: center;
 }
 

@@ -3,12 +3,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Header.css";
 import Logo from "./Logo";
 import {
-  BsFilePerson,
-  BsPerson,
-  BsMagic,
-  BsFillPersonFill,
-  BsIndent,
+  BsBoxArrowInRight,
+  BsBoxArrowRight,
+  BsPersonCircle,
 } from "react-icons/bs";
+import { AiOutlinePlus } from "react-icons/ai";
 
 function Header({ searchBar }) {
   const [isLoggedIn, setIsLoggedIn] = useState(
@@ -170,25 +169,83 @@ function Header({ searchBar }) {
                       : "/mypage"
                   }
                   className="authLink"
-                  title="마이페이지"
+                  style={{ fontSize: "16px" }}
                 >
-                  <BsFillPersonFill style={{ color: "white", fontSize: "24px" }} />
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      marginRight: 10,
+                      position: "relative",
+                      top: "4px",
+                    }}
+                  >
+                    <BsPersonCircle
+                      style={{ fontSize: 20, color: "inherit" }}
+                    />
+                  </span>
+                  마이페이지
                 </Link>
                 <button
                   onClick={handleLogout}
                   className="authLink logoutBtn"
-                  title="로그아웃"
+                  style={{ fontSize: "16px" }}
                 >
-                  <BsIndent style={{ color: "white", fontSize: "24px" }} />
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      marginRight: 10,
+                      position: "relative",
+                      top: "4px",
+                    }}
+                  >
+                    <BsBoxArrowRight
+                      style={{ fontSize: 20, color: "inherit" }}
+                    />
+                  </span>
+                  로그아웃
                 </button>
               </>
             ) : (
               <>
-                <Link to="/login" className="authLink" title="로그인">
-                  <BsPerson style={{ color: "white", fontSize: "24px" }} />
+                <Link
+                  to="/login"
+                  className="authLink"
+                  style={{ fontSize: "16px" }}
+                >
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      marginRight: 10,
+                      position: "relative",
+                      top: "4px",
+                    }}
+                  >
+                    <BsBoxArrowInRight
+                      style={{ fontSize: 20, color: "inherit" }}
+                    />
+                  </span>
+                  로그인
                 </Link>
-                <Link to="/signup" className="authLink" title="회원가입">
-                  <BsMagic style={{ color: "white", fontSize: "24px" }} />
+                <Link
+                  to="/signup"
+                  className="authLink"
+                  style={{ fontSize: "16px", marginRight: 0, paddingRight: 0 }}
+                >
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      marginRight: 4,
+                      position: "relative",
+                      top: "4px",
+                    }}
+                  >
+                    <AiOutlinePlus style={{ fontSize: 20, color: "inherit" }} />
+                  </span>
+                  회원가입
                 </Link>
               </>
             )}
