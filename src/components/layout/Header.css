@@ -138,11 +138,15 @@
 
 .authLinks {
   display: flex;
-  gap: 10px;
+  gap: 14px;
   align-items: center;
+  min-width: 220px;
+  justify-content: flex-end;
 }
 
 .authLink {
+  min-width: 80px;
+  text-align: center;
   background: none;
   color: #fff;
   font-weight: 700;
@@ -153,11 +157,16 @@
   margin: 0;
   transition: color 0.2s;
   cursor: pointer;
+  outline: none;
 }
 
 .authLink:hover {
   color: #fff;
   text-decoration: underline;
+}
+
+.authLink:focus {
+  outline: none;
 }
 
 .authAreaBg {
