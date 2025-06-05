@@ -1,8 +1,8 @@
 @import "../../styles/colors.module.css";
 
 .container {
-  background: var(--background-light);
-  min-height: 100vh;
+  background: var(--gray-100, #f4f4f6);
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
 }
@@ -13,13 +13,13 @@
   align-items: stretch;
   width: 100%;
   margin: 0 auto;
-  padding: 56px 0 0 0;
+  padding: 0 16px 40px 16px;
   gap: 40px;
-  max-width: 900px;
+  max-width: 540px;
 }
 .main {
   flex: 1;
-  font-family: inherit;
+  font-family: "Noto Sans KR", "sans-serif";
   display: flex;
   flex-direction: column;
 }
@@ -101,13 +101,13 @@
   background-color: var(--primary);
   color: #fff;
   font-weight: 600;
-  font-size: 17px;
-  border-radius: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
   border: none;
-  height: 52px;
+  height: 44px;
   margin-top: 0;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,18 +116,15 @@
 }
 .btnMain:hover,
 .btnMain:focus {
-  background-color: var(--primary-300);
-  color: #fff;
+  background-color: var(--primary-300) !important;
+  color: var(--primary) !important;
   border: none;
   outline: none;
   box-shadow: none;
 }
 .btnMain:active {
-  transform: scale(0.97);
   filter: brightness(0.92);
-  transition:
-    transform 0.08s,
-    filter 0.08s;
+  transition: filter 0.08s;
 }
 .btn:hover:not(.btnMain) {
   background: var(--primary);

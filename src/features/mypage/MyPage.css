@@ -1,8 +1,8 @@
 @import "../../styles/colors.module.css";
 
 .mypageContainer {
-  background: var(--background-light);
-  min-height: 100vh;
+  background: var(--gray-100, #f4f4f6);
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
 }
@@ -13,13 +13,13 @@
   align-items: stretch;
   width: 100%;
   margin: 0 auto;
-  padding: 56px 0 0 0;
+  padding: 0 16px 40px 16px;
   gap: 40px;
-  max-width: 900px;
+  max-width: 540px;
 }
 .main {
   flex: 1;
-  font-family: inherit;
+  font-family: "Noto Sans KR", "sans-serif";
   display: flex;
   flex-direction: column;
 }
@@ -55,32 +55,28 @@
   display: block;
   width: 100%;
   margin-top: 24px;
-  height: 54px;
-  padding: 0 16px;
-  font-size: 17px;
+  height: 44px;
+  padding: 10px 24px;
+  font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background-color: var(--primary);
+  background: var(--primary);
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition:
-    background 0.2s,
-    transform 0.08s,
-    filter 0.08s;
+  transition: background 0.2s;
   box-shadow: 0 2px 8px rgba(102, 51, 255, 0.04);
 }
 
 .editProfileBtn:hover,
 .editProfileBtn:focus {
-  background-color: var(--primary-300) !important;
-  color: #fff !important;
+  background: var(--primary-300) !important;
+  color: var(--primary) !important;
   border: none;
   outline: none;
   box-shadow: none;
 }
 
 .editProfileBtn:active {
-  transform: scale(0.97);
   filter: brightness(0.92);
 }
