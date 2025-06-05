@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parseISO } from "date-fns";
 import "./ShowDetail.css";
-import WaitingQueueModal from "./WaitingQueueModal";
+import WaitingQueueModal from "../reservation/WaitingQueueModal";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
@@ -67,7 +67,6 @@ function ShowDetail() {
       .then((res) => {
         console.log("✅ REST API Gateway URL:", res.data.restApiGatewayUrl);
         setRestApiGatewayUrl(res.data.restApiGatewayUrl);
-        console.log("✅ API Gateway URL:", res.data.restApiGatewayUrl);
       })
       .catch((err) => {
         console.error("⛔ API Gateway URL 불러오기 실패:", err);
