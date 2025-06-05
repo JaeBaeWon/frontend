@@ -61,7 +61,7 @@ function ShowDetail() {
   // 티켓 오픈 알림 예약 연동
   const handleOpenAlert = async () => {
     console.log("🚀 handleOpenAlert 함수 시작됨");
-    if (!userData || !performance) {
+    if (!userData || !show) {
       alert("로그인이 필요합니다.");
       return;
     }
@@ -70,14 +70,14 @@ function ShowDetail() {
       const response = await axios.post(
         `${API_BASE_URL}/notification/subscribe`,
         {
-          userId: userData.userId,
-          performanceId: performance.performanceId,
+          userId: userData.id,
+          performanceId: show.id,
         },
       );
 
       // 실제 전송된 값 및 응답 출력
-      console.log("📦 전송된 userId:", userData.userId);
-      console.log("📦 전송된 performanceId:", performance.performanceId);
+      console.log("📦 전송된 userId:", userData.id);
+      console.log("📦 전송된 performanceId:", show.id);
       console.log("✅ 알림 등록 성공:", response.data);
       navigate("/show/openalertcomplete");
       console.log("➡️ /show/openalertcomplete로 이동");
