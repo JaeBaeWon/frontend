@@ -10,7 +10,6 @@ import { parseISO } from "date-fns";
 import "./ShowDetail.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
-const REST_API_GATEWAY_URL = import.meta.env.VITE_REST_API_GATEWAY_URL;
 
 function ShowDetail() {
   const { performId } = useParams();
@@ -43,27 +42,28 @@ function ShowDetail() {
   // 티켓 오픈 알림 예약 연동
   const handleOpenAlert = async () => {
     console.log("🚀 handleOpenAlert 함수 시작됨");
+    if (!userData || !performanceData) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
     try {
-      const userId = localStorage.getItem("userId");
-      console.log("📦 localStorage에서 가져온 userId:", userId);
-      if (!userId) {
-        alert("로그인이 필요합니다.");
-        console.warn("⛔ userId가 없어서 알림 등록 중단");
-        return;
-      }
+      const response = await axios.post(
+        `${API_BASE_URL}/notification/subscribe`,
+        {
+          userId: userData.id,
+          performanceId: performanceData.id,
+        },
+      );
 
-      console.log("📨 알림 등록 API 호출 시작");
-      const res = await axios.post(`${API_BASE_URL}/notification/subscribe`, {
-        userId,
-        performanceId: performId,
-      });
-
-      console.log("✅ 알림 등록 성공:", res.data);
-
+      // 실제 전송된 값 및 응답 출력
+      console.log("📦 전송된 userId:", userData.id);
+      console.log("📦 전송된 performanceId:", performanceData.id);
+      console.log("✅ 알림 등록 성공:", response.data);
       navigate("/show/openalertcomplete");
       console.log("➡️ /show/openalertcomplete로 이동");
     } catch (error) {
-      console.error("오픈 알림 등록 중 오류:", error);
+      console.error("⛔ 오픈 알림 등록 중 오류:", error);
     }
   };
 
