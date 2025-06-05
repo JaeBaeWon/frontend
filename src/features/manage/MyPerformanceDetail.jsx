@@ -7,6 +7,11 @@ import "./PerformanceForm.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
+const formatDateTime = (str) => {
+  if (!str) return "";
+  return new Date(str.replace(" ", "T")).toLocaleString();
+};
+
 const MyPerformanceDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -106,7 +111,7 @@ const MyPerformanceDetail = () => {
                         <th>공연 기간</th>
                         <td>
                           {performance.performanceStartAt && performance.performanceEndAt
-                            ? `${new Date(performance.performanceStartAt).toLocaleString()} ~ ${new Date(performance.performanceEndAt).toLocaleString()}`
+                            ? `${formatDateTime(performance.performanceStartAt)} ~ ${formatDateTime(performance.performanceEndAt)}`
                             : "-"}
                         </td>
                       </tr>
