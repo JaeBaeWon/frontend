@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import MypageLayout from "./MypageLayout";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
@@ -21,6 +21,12 @@ function RefundAlertComplete() {
     const sendEmail = async () => {
       try {
         console.log("📧 이메일 발송 요청:", reservationId);
+        console.log("🔑 reservationId:", reservationId);
+        console.log(
+          "🌐 API URL:",
+          `${API_BASE_URL}/email/sendCancel/${reservationId}`,
+        );
+        console.log("🔐 accessToken:", localStorage.getItem("accessToken"));
 
         await axios.post(
           `${API_BASE_URL}/email/sendCancel/${reservationId}`,
