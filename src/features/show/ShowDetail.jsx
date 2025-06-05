@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parseISO } from "date-fns";
 import "./ShowDetail.css";
+import WaitingQueueModal from "./WaitingQueueModal";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
@@ -23,6 +24,7 @@ function ShowDetail() {
   0;
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const [restApiGatewayUrl, setRestApiGatewayUrl] = useState(null);
 
   useEffect(() => {
     axios
@@ -55,6 +57,20 @@ function ShowDetail() {
       })
       .catch((err) => {
         console.error("❌ 사용자 정보 로드 실패:", err);
+      });
+  }, []);
+
+  // ✅ REST API Gateway URL 불러오기
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/config`)
+      .then((res) => {
+        console.log("✅ REST API Gateway URL:", res.data.restApiGatewayUrl);
+        setRestApiGatewayUrl(res.data.restApiGatewayUrl);
+        console.log("✅ API Gateway URL:", res.data.restApiGatewayUrl);
+      })
+      .catch((err) => {
+        console.error("⛔ API Gateway URL 불러오기 실패:", err);
       });
   }, []);
 
@@ -186,7 +202,58 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
-                        navigate("/reservation", { state: { performId } });
+                        console.log("예매 버튼 클릭됨");
+                        if (!restApiGatewayUrl) {
+                          console.error("API Gateway URL이 없음");
+                          return;
+                        }
+                        console.log(
+                          "✅ API Gateway URL 확인됨:",
+                          restApiGatewayUrl,
+                        );
+                        console.log("🎯 요청에 사용될 performId:", performId);
+                        try {
+                          const response = await fetch(
+                            `${restApiGatewayUrl}/ticket/enter`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ performId }),
+                            },
+                          );
+
+                          console.log(
+                            "📡 fetch 완료됨. 응답 status:",
+                            response.status,
+                          );
+
+                          const data = await response.json();
+                          console.log("🎟️ 예매 응답:", data);
+
+                          if (data.action === "redirect") {
+                            navigate("/reservation", { state: { performId } });
+                          } else if (data.action === "wait") {
+                            console.log("⏳ 대기열 진입됨");
+                            console.log("📍 대기 순번:", data.position);
+                            console.log(
+                              "🕒 예상 대기 시간:",
+                              data.estimatedTime,
+                            );
+
+                            setQueueModalVisible(true);
+                            setQueuePosition(data.position);
+                            setEstimatedTime(data.estimatedTime);
+                          } else {
+                            console.warn(
+                              "⚠️ 알 수 없는 action 값:",
+                              data.action,
+                            );
+                          }
+                        } catch (error) {
+                          console.error("⛔ 예매 요청 실패:", error);
+                        }
                       }}
                     >
                       이 날짜로 예매하기
