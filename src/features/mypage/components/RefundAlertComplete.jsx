@@ -24,12 +24,12 @@ function RefundAlertComplete() {
         console.log("🔑 reservationId:", reservationId);
         console.log(
           "🌐 API URL:",
-          `${API_BASE_URL}/email/sendCancel/${reservationId}`,
+          `${API_BASE_URL}/email/cancel/${reservationId}`,
         );
         console.log("🔐 accessToken:", localStorage.getItem("accessToken"));
 
         await axios.post(
-          `${API_BASE_URL}/email/sendCancel/${reservationId}`,
+          `${API_BASE_URL}/email/cancel/${reservationId}`,
           {},
           {
             headers: {
