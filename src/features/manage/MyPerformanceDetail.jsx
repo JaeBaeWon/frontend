@@ -84,34 +84,35 @@ const MyPerformanceDetail = () => {
         <Header />
         <div className="mypageContent">
           <main className="main">
-            <div className="infoCardWrapper">
-              <h2 className="title">공연 상세 보기</h2>
-              <div className="infoCard">
-                <div className="posterRow">
-                  <img
-                    src={performance.performanceImg}
-                    alt={`${performance.title} 포스터`}
-                    className="performancePoster"
-                    style={{ width: "180px", height: "auto", marginBottom: "16px" }}
-                  />
+            <h2 className="title">공연 상세 보기</h2>
+            <div className="detailCard">
+              <div className="detailTopRow">
+                <img
+                  src={performance.performanceImg}
+                  alt={`${performance.title} 포스터`}
+                  className="posterImage"
+                />
+                <div className="detailTableWrapper">
+                  <table className="detailTable">
+                    <tbody>
+                      <tr><th>공연명</th><td>{performance.title}</td></tr>
+                      <tr><th>설명</th><td>{performance.description}</td></tr>
+                      <tr><th>카테고리</th><td>{performance.category}</td></tr>
+                      <tr><th>장소</th><td>{performance.location}</td></tr>
+                      <tr><th>공연 기간</th><td>{performance.performanceStartAt} ~ {performance.performanceEndAt}</td></tr>
+                      <tr><th>예매 오픈</th><td>{performance.performanceOpenAt}</td></tr>
+                      <tr><th>좌석 수</th><td>{performance.totalSeats}</td></tr>
+                      <tr><th>가격</th><td>{performance.price}원</td></tr>
+                      <tr><th>상태</th><td>{performance.performanceStatus}</td></tr>
+                    </tbody>
+                  </table>
                 </div>
-                <ul className="list">
-                  <li><strong>공연명:</strong> {performance.title}</li>
-                  <li><strong>설명:</strong> {performance.description}</li>
-                  <li><strong>카테고리:</strong> {performance.category}</li>
-                  <li><strong>장소:</strong> {performance.location}</li>
-                  <li><strong>공연 기간:</strong> {performance.performanceStartAt} ~ {performance.performanceEndAt}</li>
-                  <li><strong>예매 오픈:</strong> {performance.performanceOpenAt}</li>
-                  <li><strong>좌석 수:</strong> {performance.totalSeats}</li>
-                  <li><strong>가격:</strong> {performance.price}원</li>
-                  <li><strong>상태:</strong> {performance.performanceStatus}</li>
-                </ul>
+              </div>
 
-                <div className="btnRow" style={{ display: "flex", gap: "12px", justifyContent: "flex-end", marginTop: "20px" }}>
-                  <button className="editBtn" onClick={handleEdit}>수정</button>
-                  <button className="deleteBtn" onClick={handleDelete}>삭제</button>
-                  <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
-                </div>
+              <div className="detailBtnRow">
+                <button className="editBtn" onClick={handleEdit}>수정</button>
+                <button className="deleteBtn" onClick={handleDelete}>삭제</button>
+                <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
               </div>
             </div>
           </main>
