@@ -102,23 +102,24 @@ const MyPerformanceList = () => {
                 {pagedPerformances.map((p, idx) => (
                   <li key={p.performId} className="listItem">
                     <span className="index">
-                      {String((page - 1) * ITEMS_PER_PAGE + idx + 1).padStart(
-                        3,
-                        "0",
-                      )}
+                      {String((page - 1) * ITEMS_PER_PAGE + idx + 1).padStart(3, "0")}
                     </span>
-                    <span className="info">
-                      {p.title} - {p.location}
-                    </span>
-                    <button
-                      className="detailBtn"
-                      onClick={() => {
-                        console.log("Navigating with id:", p.performId);
-                        navigate(`/manage/performance-detail/${p.performId}`);
-                      }}
-                    >
-                      상세보기
-                    </button>
+                    <span className="info">{p.title} - {p.location}</span>
+
+                    <div className="buttonGroup">
+                      <button
+                        className="detailBtn"
+                        onClick={() => navigate(`/manage/performance-detail/${p.performId}`)}
+                      >
+                        상세보기
+                      </button>
+                      <button
+                        className="deleteBtn"
+                        onClick={() => handleDelete(p.performId)}
+                      >
+                        삭제
+                      </button>
+                    </div>
                   </li>
                 ))}
               </ul>

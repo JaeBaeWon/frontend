@@ -115,7 +115,6 @@ const MyPerformanceDetail = () => {
               <div className="detailBtnRow">
                     <div className="leftBtns">
                       <button className="editBtn" onClick={handleEdit}>수정</button>
-                      <button className="deleteBtn" onClick={handleDelete}>삭제</button>
                     </div>
                     <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
                   </div>
