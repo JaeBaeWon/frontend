@@ -28,7 +28,14 @@ const MyPerformanceDetail = () => {
           },
           withCredentials: true,
         });
-        setPerformance(res.data);
+        const data = res.data;
+
+        console.log("🎯 공연 상세 데이터:", data);
+        console.log("✅ start:", data.performanceStartAt);
+        console.log("✅ end:", data.performanceEndAt);
+        console.log("✅ open:", data.performanceOpenAt);
+
+        setPerformance(data);
       } catch (err) {
         console.error("❌ 공연 상세 조회 실패:", err);
         setErrorMsg("공연 정보를 불러오는 데 실패했습니다.");
@@ -37,6 +44,7 @@ const MyPerformanceDetail = () => {
 
     fetchPerformance();
   }, [id]);
+
 
   const handleDelete = async () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
