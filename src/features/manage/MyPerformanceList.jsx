@@ -100,7 +100,7 @@ const MyPerformanceList = () => {
             <div className="infoCard">
               <ul className="list">
                 {pagedPerformances.map((p, idx) => (
-                  <li key={p.id} className="listItem">
+                  <li key={p.performId} className="listItem">
                     <span className="index">
                       {String((page - 1) * ITEMS_PER_PAGE + idx + 1).padStart(
                         3,
@@ -112,7 +112,10 @@ const MyPerformanceList = () => {
                     </span>
                     <button
                       className="detailBtn"
-                      onClick={() => navigate(`/manage/performance-detail/${p.id}`)}
+                      onClick={() => {
+                        console.log("Navigating with id:", p.performId);
+                        navigate(`/manage/performance-detail/${p.performId}`);
+                      }}
                     >
                       상세보기
                     </button>
