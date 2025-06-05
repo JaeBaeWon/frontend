@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../../components/layout/Header";
 import Footer from "../../components/layout/Footer";
-import "./PerformanceForm.css"; // 기존 스타일 재사용
+import "./PerformanceForm.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
@@ -32,6 +32,28 @@ const MyPerformanceDetail = () => {
 
     fetchPerformance();
   }, [id]);
+
+  const handleDelete = async () => {
+    if (!window.confirm("정말 삭제하시겠습니까?")) return;
+    try {
+      const token = localStorage.getItem("accessToken");
+      await axios.delete(`${API_BASE_URL}/performance/manage/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+      alert("공연이 삭제되었습니다.");
+      navigate("/manage/myperformances");
+    } catch (error) {
+      console.error("❌ 삭제 실패:", error);
+      alert("삭제 중 오류가 발생했습니다.");
+    }
+  };
+
+  const handleEdit = () => {
+    navigate(`/manage/performance-form?id=${id}`);
+  };
 
   if (errorMsg) {
     return (
@@ -80,13 +102,13 @@ const MyPerformanceDetail = () => {
               <p><strong>가격:</strong> {performance.price}원</p>
               <p><strong>상태:</strong> {performance.performanceStatus}</p>
             </div>
-            <button
-              className="cancelBtn"
-              style={{ marginTop: "20px" }}
-              onClick={() => navigate(-1)}
-            >
-              돌아가기
-            </button>
+
+            {/* ✅ 수정/삭제 버튼 추가 */}
+            <div className="detailBtnGroup">
+              <button className="editBtn" onClick={handleEdit}>수정</button>
+              <button className="deleteBtn" onClick={handleDelete}>삭제</button>
+              <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
+            </div>
           </div>
         </main>
       </div>
