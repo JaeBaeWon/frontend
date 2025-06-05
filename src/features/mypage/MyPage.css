@@ -40,8 +40,6 @@
   margin-bottom: 32px;
   max-width: 540px;
   width: 100%;
-  margin: 0 auto;
-  padding: 0 16px 40px 16px;
 }
 .infoLabel {
   font-weight: 600;
@@ -74,8 +72,8 @@
 
 .editProfileBtn:hover,
 .editProfileBtn:focus {
-  background: var(--primary-300) !important;
-  color: var(--primary) !important;
+  background: var(--primary-300);
+  color: #fff;
   border: none;
   outline: none;
   box-shadow: none;

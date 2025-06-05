@@ -1,8 +1,8 @@
 .profile-form {
   width: 100%;
   max-width: 540px;
-  margin: 0 auto;
-  padding: 0 16px 40px 16px;
+  margin-bottom: 40px;
+  padding: 0 16px;
   display: flex;
   flex-direction: column;
   gap: 28px;
@@ -78,7 +78,7 @@
 
 .profile-button:hover,
 .profile-button:focus {
-  background-color: var(--primary-100);
+  background-color: var(--primary-300);
   color: #fff;
   border: none;
   outline: none;
@@ -94,7 +94,7 @@
 }
 
 .profile-gender-btn:hover {
-  background: var(--primary-00);
+  background: var(--primary);
   color: #fff;
 }
 
