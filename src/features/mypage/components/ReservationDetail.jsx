@@ -100,6 +100,10 @@ function ReservationDetail() {
             <table className="infoTable">
               <tbody>
                 <tr>
+                  <th>예약 ID</th>
+                  <td>{reservationDetail.reservationId}</td>
+                </tr>
+                <tr>
                   <th>예매자</th>
                   <td>{reservationDetail.userName}</td>
                 </tr>
