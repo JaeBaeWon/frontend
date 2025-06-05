@@ -172,9 +172,16 @@ function ShowDetail() {
                           },
                         );
 
-                        const data = await response.json();
-                        if (data.action === "redirect") {
-                          navigate("/reservation", { state: { performId } });
+                        const text = await response.text();
+                        console.log("📦 응답 본문:", text); // 여기에 HTML이 뜨는지 확인
+
+                        try {
+                          const data = JSON.parse(text);
+                          if (data.action === "redirect") {
+                            navigate("/reservation", { state: { performId } });
+                          }
+                        } catch (e) {
+                          console.error("❌ JSON 파싱 실패:", e);
                         }
                       }}
                     >
