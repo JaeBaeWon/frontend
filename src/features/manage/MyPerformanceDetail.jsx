@@ -31,8 +31,8 @@ const MyPerformanceDetail = () => {
         const data = res.data;
 
         console.log("🎯 공연 상세 데이터:", data);
-        console.log("✅ start:", data.performanceStartAt);
-        console.log("✅ end:", data.performanceEndAt);
+        console.log("✅ start:", data.performStartAt);
+        console.log("✅ end:", data.performEndAt);
         console.log("✅ open:", data.performanceOpenAt);
 
         setPerformance(data);
