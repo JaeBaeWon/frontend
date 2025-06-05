@@ -130,7 +130,7 @@ function ReservationDetail() {
             <tbody>
               <tr>
                 <th>예매일</th>
-                <td>{reservationDetail.reservationDay?.slice(0, 10) || "-"}</td>
+                <td>{reservationDetail.paymentDate}</td>
                 <th>현재상태</th>
                 <td>{reservationDetail.performanceStatus}</td>
               </tr>
