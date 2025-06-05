@@ -11,7 +11,7 @@ import "./ShowDetail.css";
 import WaitingQueueModal from "../reservation/WaitingQueueModal";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
-const GATEWAY_URL = import.meta.env.VITE_REST_API_GATEWAY_URL;
+const GATEWAY_URL = import.meta.env.VITE_API_URL;
 
 function ShowDetail() {
   const { performId } = useParams();
