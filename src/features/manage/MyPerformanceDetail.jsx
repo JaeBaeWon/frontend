@@ -102,7 +102,14 @@ const MyPerformanceDetail = () => {
                       <tr><th>설명</th><td>{performance.description}</td></tr>
                       <tr><th>카테고리</th><td>{performance.category}</td></tr>
                       <tr><th>장소</th><td>{performance.location}</td></tr>
-                      <tr><th>공연 기간</th><td>{performance.performanceStartAt} ~ {performance.performanceEndAt}</td></tr>
+                      <tr>
+                        <th>공연 기간</th>
+                        <td>
+                          {performance.performanceStartAt && performance.performanceEndAt
+                            ? `${new Date(performance.performanceStartAt).toLocaleString()} ~ ${new Date(performance.performanceEndAt).toLocaleString()}`
+                            : "-"}
+                        </td>
+                      </tr>
                       <tr><th>예매 오픈</th><td>{performance.performanceOpenAt}</td></tr>
                       <tr><th>좌석 수</th><td>{performance.totalSeats}</td></tr>
                       <tr><th>가격</th><td>{performance.price}원</td></tr>
