@@ -44,31 +44,24 @@ function ShowDetail() {
   const handleOpenAlert = async () => {
     console.log("🚀 handleOpenAlert 함수 시작됨");
     try {
-      const token = localStorage.getItem("accessToken");
-      if (!token) {
+      const userId = localStorage.getItem("userId");
+      console.log("📦 localStorage에서 가져온 userId:", userId);
+      if (!userId) {
         alert("로그인이 필요합니다.");
+        console.warn("⛔ userId가 없어서 알림 등록 중단");
         return;
       }
 
-      const res = await fetch(`${API_BASE_URL}/user/info`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        throw new Error("사용자 정보 요청 실패");
-      }
-
-      const data = await res.json();
-      const userId = data.member.userId;
-
-      await axios.post(`${API_BASE_URL}/notification/subscribe`, {
+      console.log("📨 알림 등록 API 호출 시작");
+      const res = await axios.post(`${API_BASE_URL}/notification/subscribe`, {
         userId,
         performanceId: performId,
       });
+
+      console.log("✅ 알림 등록 성공:", res.data);
+
       navigate("/show/openalertcomplete");
+      console.log("➡️ /show/openalertcomplete로 이동");
     } catch (error) {
       console.error("오픈 알림 등록 중 오류:", error);
     }
@@ -165,9 +158,43 @@ function ShowDetail() {
                       inline
                     />
                     <button
+                      type="button"
                       className="custom-button"
-                      onClick={() => {
-                        navigate("/reservation", { state: { performId } });
+                      onClick={async () => {
+                        try {
+                          const response = await fetch(
+                            `${REST_API_GATEWAY_URL}/ticket/enter`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ performId }),
+                            },
+                          );
+
+                          // fetch는 성공했지만 응답이 HTML일 수도 있음
+                          const text = await response.text();
+                          console.log("📦 응답 본문:", text);
+
+                          try {
+                            const data = JSON.parse(text);
+                            console.log("✅ 파싱된 JSON:", data);
+
+                            if (data.action === "redirect") {
+                              navigate("/reservation", {
+                                state: { performId },
+                              });
+                            }
+                          } catch (parseError) {
+                            console.error("❌ JSON 파싱 실패:", parseError);
+                          }
+                        } catch (fetchError) {
+                          console.error(
+                            "❌ Fetch 요청 자체가 실패:",
+                            fetchError,
+                          );
+                        }
                       }}
                     >
                       이 날짜로 예매하기
