@@ -9,7 +9,7 @@
 .mypageContent {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: stretch;
   width: 100%;
   margin: 0 auto;
@@ -32,7 +32,7 @@
 .infoCard {
   background: #fff;
   border: 1.5px solid var(--divider);
-  border-radius: 16px;
+  border-radius: 8px;
   padding: 36px 32px 32px 32px;
   font-size: 18px;
   flex-grow: 1;
@@ -48,7 +48,7 @@
   font-size: 18px;
 }
 .infoValue {
-  margin-bottom: 22px;
+  margin-bottom: 16px;
   color: var(--text);
   font-size: 18px;
 }

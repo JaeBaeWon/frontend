@@ -1,30 +1,37 @@
 .profile-form {
   width: 100%;
   max-width: 540px;
-  margin-bottom: 40px;
-  padding: 0 16px;
+  margin-bottom: 32px;
+  padding: 36px 32px 32px 32px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 0;
+  background: #fff;
+  border: 1.5px solid var(--divider);
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(102, 51, 255, 0.06);
 }
 
 .profile-title {
   font-weight: bold;
-  font-size: 17px;
-  margin-bottom: 8px;
+  font-size: 28px;
+  margin-bottom: 32px;
+  color: var(--primary);
   text-align: left;
 }
 
 .profile-field {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  margin-bottom: 16px;
+  gap: 0;
 }
 
 .profile-label {
   font-weight: 600;
-  font-size: 17px;
-  margin-bottom: 2px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--text);
 }
 
 .profile-input {
@@ -32,7 +39,7 @@
   padding: 16px 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 17px;
+  font-size: 18px;
   box-sizing: border-box;
   background: #fafafa;
 }

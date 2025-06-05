@@ -63,6 +63,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  width: 100%;
 }
 .label {
   display: block;
@@ -80,6 +81,7 @@
   box-sizing: border-box;
   height: 52px;
   font-size: 16px;
+  width: 100%;
 }
 .btn {
   background: #fff;
@@ -96,6 +98,9 @@
   color: var(--primary);
   white-space: nowrap;
   font-weight: 600;
+  height: 52px;
+  min-width: 120px;
+  box-sizing: border-box;
 }
 .btnMain {
   background-color: var(--primary);
@@ -104,7 +109,7 @@
   font-size: 1rem;
   border-radius: 8px;
   border: none;
-  height: 44px;
+  height: 52px;
   margin-top: 0;
   cursor: pointer;
   transition: background 0.2s;
@@ -113,6 +118,7 @@
   justify-content: center;
   box-sizing: border-box;
   box-shadow: 0 2px 8px rgba(102, 51, 255, 0.04);
+  min-width: 120px;
 }
 .btnMain:hover,
 .btnMain:focus {
