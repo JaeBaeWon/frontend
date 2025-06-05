@@ -222,7 +222,7 @@ function ReservationDetail() {
 
                   alert("✅ 환불 성공");
                   navigate("/mypage/refundcomplete", {
-                    state: { reservationId: reservationDetail.ticketId },
+                    state: { reservationId: reservationDetail.reservationId },
                   });
                 } catch (error) {
                   console.error("❌ 환불 실패:", error);
