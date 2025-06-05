@@ -11,7 +11,6 @@ import "./ShowDetail.css";
 import WaitingQueueModal from "../reservation/WaitingQueueModal";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
-const GATEWAY_URL = import.meta.env.VITE_API_URL;
 
 function ShowDetail() {
   const { performId } = useParams();
@@ -22,8 +21,10 @@ function ShowDetail() {
   const [queueModalVisible, setQueueModalVisible] = useState(false);
   const [queuePosition, setQueuePosition] = useState(null);
   const [estimatedTime, setEstimatedTime] = useState(null);
+  0;
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const [restApiGatewayUrl, setRestApiGatewayUrl] = useState(null);
 
   useEffect(() => {
     axios
@@ -56,6 +57,19 @@ function ShowDetail() {
       })
       .catch((err) => {
         console.error("❌ 사용자 정보 로드 실패:", err);
+      });
+  }, []);
+
+  // ✅ REST API Gateway URL 불러오기
+  useEffect(() => {
+    axios
+      .get(`${API_BASE_URL}/config`)
+      .then((res) => {
+        console.log("✅ REST API Gateway URL:", res.data.restApiGatewayUrl);
+        setRestApiGatewayUrl(res.data.restApiGatewayUrl);
+      })
+      .catch((err) => {
+        console.error("⛔ API Gateway URL 불러오기 실패:", err);
       });
   }, []);
 
@@ -187,54 +201,7 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
-                        console.log("🖱️ 예매 버튼 클릭됨");
-
-                        if (!GATEWAY_URL) {
-                          console.error(
-                            "⛔ API Gateway URL이 설정되지 않았습니다.",
-                          );
-                          return;
-                        }
-
-                        console.log("✅ API Gateway URL 확인됨:", GATEWAY_URL);
-                        console.log("🎯 요청에 사용될 performId:", performId);
-                        try {
-                          const response = await fetch(
-                            `${GATEWAY_URL}/ticket/enter`,
-                            {
-                              method: "POST",
-                              headers: {
-                                "Content-Type": "application/json",
-                              },
-                              body: JSON.stringify({ performId }),
-                            },
-                          );
-
-                          const text = await response.text();
-                          let data = null;
-                          try {
-                            data = JSON.parse(text);
-                          } catch (err) {
-                            navigate("/reservation", { state: { performId } });
-                            return;
-                          }
-
-                          if (data.action === "redirect") {
-                            navigate("/reservation", { state: { performId } });
-                          } else if (data.action === "wait") {
-                            setQueueModalVisible(true);
-                            setQueuePosition(data.position);
-                            setEstimatedTime(data.estimatedTime);
-                          } else {
-                            console.warn(
-                              "⚠️ 알 수 없는 action 값:",
-                              data.action,
-                            );
-                          }
-                        } catch (error) {
-                          console.error("⛔ 예매 요청 실패:", error);
-                          navigate("/reservation", { state: { performId } });
-                        }
+                        navigate("/reservation", { state: { performId } });
                       }}
                     >
                       이 날짜로 예매하기
