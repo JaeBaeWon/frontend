@@ -161,27 +161,39 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
-                        const response = await fetch(
-                          `${REST_API_GATEWAY_URL}/ticket/enter`,
-                          {
-                            method: "POST",
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ performId }),
-                          },
-                        );
-
-                        const text = await response.text();
-                        console.log("📦 응답 본문:", text); // 여기에 HTML이 뜨는지 확인
-
                         try {
-                          const data = JSON.parse(text);
-                          if (data.action === "redirect") {
-                            navigate("/reservation", { state: { performId } });
+                          const response = await fetch(
+                            `${REST_API_GATEWAY_URL}/ticket/enter`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ performId }),
+                            },
+                          );
+
+                          // fetch는 성공했지만 응답이 HTML일 수도 있음
+                          const text = await response.text();
+                          console.log("📦 응답 본문:", text);
+
+                          try {
+                            const data = JSON.parse(text);
+                            console.log("✅ 파싱된 JSON:", data);
+
+                            if (data.action === "redirect") {
+                              navigate("/reservation", {
+                                state: { performId },
+                              });
+                            }
+                          } catch (parseError) {
+                            console.error("❌ JSON 파싱 실패:", parseError);
                           }
-                        } catch (e) {
-                          console.error("❌ JSON 파싱 실패:", e);
+                        } catch (fetchError) {
+                          console.error(
+                            "❌ Fetch 요청 자체가 실패:",
+                            fetchError,
+                          );
                         }
                       }}
                     >
