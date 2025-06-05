@@ -71,7 +71,13 @@ function ShowDetail() {
         `${API_BASE_URL}/notification/subscribe`,
         {
           userId: userData.id,
-          performanceId: !performId,
+          performanceId: performId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+          withCredentials: true,
         },
       );
 
