@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parseISO } from "date-fns";
 import "./ShowDetail.css";
+import WaitingQueueModal from "../reservation/WaitingQueueModal";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 const GATEWAY_URL = import.meta.env.VITE_API_URL;
