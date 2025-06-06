@@ -8,11 +8,10 @@ import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
-const navigate = useNavigate();
-
 function Ranking() {
   const [ranking, setRanking] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRanking = async () => {
