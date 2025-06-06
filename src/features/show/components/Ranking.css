@@ -151,8 +151,15 @@
   color: var(--primary-700);
 }
 
+.rankingCardWrap * {
+  background: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
 .rankingCardWrap img {
-  width: 180px;
-  height: 240px;
-  object-fit: cover;
+  width: 180px !important;
+  height: 240px !important;
+  object-fit: cover !important;
+  display: block !important;
 }
