@@ -20,7 +20,7 @@
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 16px;
-  color: var(--primary);
+  color: var(--text);
 }
 
 .withdraw-box {
@@ -97,4 +97,59 @@
   background: var(--gray-300, #ddd);
   color: var(--gray-600, #aaa);
   cursor: not-allowed;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.infoLabel {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 18px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.infoValue {
+  font-size: 18px;
+  color: var(--text);
+  margin: 0;
+  max-width: 65%;
+  word-break: keep-all;
+  line-height: 1.4;
+  text-align: right;
+}
+
+.editProfileBtn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  height: 44px;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(102, 51, 255, 0.04);
+}
+
+.editProfileBtn:hover,
+.editProfileBtn:focus {
+  background: var(--primary-300);
+  color: #fff;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+.editProfileBtn:active {
+  filter: brightness(0.92);
 }
