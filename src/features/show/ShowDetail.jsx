@@ -259,7 +259,7 @@ function ShowDetail() {
                                 navigate("/reservation", {
                                   state: { performId },
                                 });
-                              } else if (msg.action === "rank") {
+                              } else if (msg.action === "queueStatus") {
                                 setQueuePosition(msg.rank); // ✅ 모달에 순번 전달
                                 setEstimatedTime(msg.estimatedTime); // ✅ 모달에 시간 전달
                               }
