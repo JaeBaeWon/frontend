@@ -116,7 +116,7 @@ const PerformanceForm = () => {
         id && form.performanceCode?.trim()
           ? form.performanceCode
           : generatePerformanceCode(form.category),
-      performanceImg: form.performanceImg, // 이미지 유지
+      performanceImg: undefined, // 이미지 유지
     };
 
     try {
