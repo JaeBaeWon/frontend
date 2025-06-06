@@ -1,23 +1,9 @@
-.profile-form {
-  width: 100%;
-  max-width: 540px;
-  margin-bottom: 32px;
-  padding: 36px 32px 32px 32px;
+@import "./MyPage.css"; /* infoCard 스타일 재사용 */
+
+.infoForm {
   display: flex;
   flex-direction: column;
   gap: 0;
-  background: #fff;
-  border: 1.5px solid var(--divider);
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(102, 51, 255, 0.06);
-}
-
-.profile-title {
-  font-weight: bold;
-  font-size: 28px;
-  margin-bottom: 32px;
-  color: var(--primary);
-  text-align: left;
 }
 
 .profile-field {
@@ -46,7 +32,7 @@
 
 .profile-gender-group {
   display: flex;
-  gap: 12px;
+  gap: 24px;
 }
 
 .profile-gender-btn {
@@ -122,8 +108,8 @@
   transition: border 0.2s;
 }
 .profile-radio:checked {
-  background: #fff;
-  border: 6px solid var(--primary);
+  background: var(--primary);
+  border: 2px solid var(--primary);
 }
 .profile-radio:focus {
   outline: 2px solid var(--primary);

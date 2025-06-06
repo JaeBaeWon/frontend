@@ -11,26 +11,29 @@ function ProfileDetails() {
   const [birth, setBirth] = useState("");
 
   useEffect(() => {
-      const fetchUserInfo = async () => {
-        try {
-          const accessToken = localStorage.getItem("accessToken");
-          const res = await axios.get(`${API_BASE_URL}/user/profile`, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-            withCredentials: true,
-          });
+    const fetchUserInfo = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const res = await axios.get(`${API_BASE_URL}/user/profile`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+          withCredentials: true,
+        });
 
-          const data = res.data;
-          setGender(data.gender === "MALE" ? "male" : "female");
-          setPhone(data.phone || "");
-          setBirth((data.birthDate || "").replaceAll("-", "/")); // 보기 좋게 슬래시로 변경
-        } catch (error) {
-          console.error("❌ 사용자 정보 로딩 실패:", error.response?.data || error.message);
-          alert("사용자 정보를 불러오는 데 실패했습니다.");
-        }
-      };
+        const data = res.data;
+        setGender(data.gender === "MALE" ? "male" : "female");
+        setPhone(data.phone || "");
+        setBirth((data.birthDate || "").replaceAll("-", "/")); // 보기 좋게 슬래시로 변경
+      } catch (error) {
+        console.error(
+          "❌ 사용자 정보 로딩 실패:",
+          error.response?.data || error.message,
+        );
+        alert("사용자 정보를 불러오는 데 실패했습니다.");
+      }
+    };
 
-      fetchUserInfo();
-    }, []);
+    fetchUserInfo();
+  }, []);
 
   const handlePhoneChange = (e) => {
     // 숫자만 입력
@@ -85,8 +88,8 @@ function ProfileDetails() {
   return (
     <MypageLayout activeMenu="내 정보">
       <h2 className="title">회원 정보 수정</h2>
-      <div className="infoCard">
-        <form className="profile-form" onSubmit={handleSubmit}>
+      <section className="infoCard">
+        <form className="infoForm" onSubmit={handleSubmit}>
           {/* 성별 */}
           <div className="profile-field">
             <label className="profile-label">성별</label>
@@ -159,7 +162,7 @@ function ProfileDetails() {
             저장
           </button>
         </form>
-      </div>
+      </section>
     </MypageLayout>
   );
 }

@@ -55,44 +55,40 @@ function MyPage() {
 
   return (
     <MypageLayout activeMenu="내 정보">
-      <div className="withdraw-wrapper">
-        <div className="withdraw-container">
-          <h2 className="withdraw-title">내 정보</h2>
-          <div className="withdraw-box">
-            <div className="infoRow">
-              <p className="infoLabel">성별</p>
-              <p className="infoValue">{userInfo?.gender || "미입력"}</p>
-            </div>
-            <div className="infoRow">
-              <p className="infoLabel">주소</p>
-              <p className="infoValue">
-                {(userInfo?.streetAdr || "미입력") +
-                  " " +
-                  (userInfo?.detailAdr || "") +
-                  (userInfo?.zipCode ? ` (${userInfo.zipCode})` : "")}
-              </p>
-            </div>
-            <div className="infoRow">
-              <p className="infoLabel">전화번호</p>
-              <p className="infoValue">{userInfo?.phone || "미입력"}</p>
-            </div>
-            <div className="infoRow">
-              <p className="infoLabel">생년월일</p>
-              <p className="infoValue">
-                {userInfo?.birthDate
-                  ? userInfo.birthDate.replaceAll("-", "/")
-                  : "미입력"}
-              </p>
-            </div>
-            <button
-              className="editProfileBtn"
-              onClick={() => navigate("/mypage/profiledetails")}
-            >
-              내 정보 수정하기
-            </button>
-          </div>
+      <h2 className="title">내 정보</h2>
+      <section className="infoCard">
+        <div className="infoRow">
+          <p className="infoLabel">성별</p>
+          <p className="infoValue">{userInfo?.gender || "미입력"}</p>
         </div>
-      </div>
+        <div className="infoRow">
+          <p className="infoLabel">주소</p>
+          <p className="infoValue">
+            {(userInfo?.streetAdr || "미입력") +
+              " " +
+              (userInfo?.detailAdr || "") +
+              (userInfo?.zipCode ? ` (${userInfo.zipCode})` : "")}
+          </p>
+        </div>
+        <div className="infoRow">
+          <p className="infoLabel">전화번호</p>
+          <p className="infoValue">{userInfo?.phone || "미입력"}</p>
+        </div>
+        <div className="infoRow">
+          <p className="infoLabel">생년월일</p>
+          <p className="infoValue">
+            {userInfo?.birthDate
+              ? userInfo.birthDate.replaceAll("-", "/")
+              : "미입력"}
+          </p>
+        </div>
+        <button
+          className="profile-button"
+          onClick={() => navigate("/mypage/profiledetails")}
+        >
+          내 정보 수정하기
+        </button>
+      </section>
     </MypageLayout>
   );
 }
