@@ -70,7 +70,6 @@ const PerformanceForm = () => {
     form.performanceEndAt &&
     form.performanceOpenAt &&
     form.location &&
-    form.performanceImg &&
     form.price &&
     form.totalSeats;
 
