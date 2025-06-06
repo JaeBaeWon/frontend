@@ -292,7 +292,13 @@ function ShowDetail() {
           </div>
         </section>
       </main>
-
+      {/* ✅ 대기열 모달 조건부 렌더링 */}
+      {queueModalVisible && (
+        <WaitingQueueModal
+          position={queuePosition}
+          estimatedTime={estimatedTime}
+        />
+      )}
       <Footer />
     </div>
   );
