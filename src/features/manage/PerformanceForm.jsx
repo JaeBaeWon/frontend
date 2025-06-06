@@ -52,7 +52,9 @@ const categories = [
 
 const PerformanceForm = () => {
   const [form, setForm] = useState(initialForm);
-  const [previewUrl, setPreviewUrl] = useState(""); // 이미지 미리보기
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [imgInputMode, setImgInputMode] = useState("file");
+  const [imgUrl, setImgUrl] = useState("");
   const [touched, setTouched] = useState({});
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -83,7 +85,7 @@ const PerformanceForm = () => {
     if (file) {
       setForm((prev) => ({ ...prev, performanceImg: file }));
       setTouched((prev) => ({ ...prev, performanceImg: true }));
-      setPreviewUrl(URL.createObjectURL(file)); // 새 이미지 미리보기
+      setPreviewUrl(URL.createObjectURL(file));
     }
   };
 
@@ -118,36 +120,49 @@ const PerformanceForm = () => {
     };
 
     try {
-      if (!(form.performanceImg instanceof File)) {
-        setErrorMsg("이미지 파일을 업로드 해주세요.");
-        setIsSubmitting(false);
-        return;
-      }
+      if (imgInputMode === "file") {
+        if (!(form.performanceImg instanceof File)) {
+          setErrorMsg("이미지 파일을 업로드 해주세요.");
+          setIsSubmitting(false);
+          return;
+        }
 
-      const formData = new FormData();
-      formData.append("dto", new Blob([JSON.stringify(dto)], { type: "application/json" }));
-      formData.append("image", form.performanceImg);
+        const formData = new FormData();
+        formData.append("dto", new Blob([JSON.stringify(dto)], { type: "application/json" }));
+        formData.append("image", form.performanceImg);
 
-      if (id) {
-        await axios.put(`${API_BASE_URL}/manage/${id}`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        });
-        alert("공연이 수정되었습니다.");
+        await axios[id ? "put" : "post"](
+          `${API_BASE_URL}/manage${id ? `/${id}` : ""}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+            withCredentials: true,
+          }
+        );
       } else {
-        await axios.post(`${API_BASE_URL}/manage`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        });
-        alert("공연이 등록되었습니다.");
+        if (!imgUrl.trim()) {
+          setErrorMsg("이미지 URL을 입력해 주세요.");
+          setIsSubmitting(false);
+          return;
+        }
+
+        await axios[id ? "put" : "post"](
+          `${API_BASE_URL}/manage${id ? `/${id}` : ""}`,
+          { ...dto, performanceImg: imgUrl },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
       }
 
+      alert(id ? "공연이 수정되었습니다." : "공연이 등록되었습니다.");
       navigate("/manage/myperformances");
     } catch (err) {
       console.error("❌ 공연 등록/수정 실패", err);
@@ -176,12 +191,14 @@ const PerformanceForm = () => {
           performanceEndAt: formatToLocalDatetime(data.performanceEndAt),
           performanceOpenAt: formatToLocalDatetime(data.performanceOpenAt),
           location: data.location,
-          performanceImg: "", // 수정 시에도 파일로 받게 하기 위해 비움
+          performanceImg: "",
           price: data.price?.toString(),
           totalSeats: data.totalSeats?.toString(),
           performanceCode: data.performanceCode || "",
         });
-        setPreviewUrl(data.performanceImg); // 기존 이미지 미리보기
+        setPreviewUrl(data.performanceImg);
+        setImgUrl(data.performanceImg);
+        setImgInputMode("url");
       } catch (err) {
         console.error("❌ 공연 데이터 불러오기 실패", err);
         alert("공연 정보를 불러오는 데 실패했습니다.");
@@ -255,18 +272,6 @@ const PerformanceForm = () => {
                 <label>총 좌석 수</label>
                 <input type="number" name="totalSeats" value={form.totalSeats} onChange={handleChange} className={getInputClass("totalSeats")} />
               </div>
-
-              <div className="formGroup">
-                <label>포스터 이미지 업로드</label>
-                <input type="file" name="performanceImg" accept="image/*" onChange={handleFileChange} className={getInputClass("performanceImg")} />
-              </div>
-
-              {previewUrl && (
-                <div className="formGroup">
-                  <label>미리보기</label>
-                  <img src={previewUrl} alt="포스터 미리보기" style={{ width: "200px", borderRadius: "8px", marginTop: "8px" }} />
-                </div>
-              )}
 
               <div className="formGroup">
                 <label>티켓 가격</label>
