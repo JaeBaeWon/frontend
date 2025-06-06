@@ -32,6 +32,7 @@
   font-weight: bold;
   color: var(--primary);
   margin-bottom: 16px;
+  padding-left: 32px;
 }
 
 .infoWrapper {

@@ -114,3 +114,11 @@
 .profile-radio:focus {
   outline: 2px solid var(--primary);
 }
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 16px;
+  padding-left: 32px;
+}
