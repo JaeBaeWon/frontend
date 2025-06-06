@@ -17,12 +17,15 @@ const MyPerformanceDetail = () => {
     const fetchPerformance = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get(`${API_BASE_URL}/performance/manage/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const res = await axios.get(
+          `${API_BASE_URL}/performance/manage/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            withCredentials: true,
           },
-          withCredentials: true,
-        });
+        );
         const data = res.data;
 
         console.log("🎯 공연 상세 데이터:", data);
@@ -39,7 +42,6 @@ const MyPerformanceDetail = () => {
 
     fetchPerformance();
   }, [id]);
-
 
   const handleDelete = async () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
@@ -88,56 +90,81 @@ const MyPerformanceDetail = () => {
   }
 
   return (
-      <div className="mypageContainer">
-        <Header />
-        <div className="mypageContent">
-          <main className="main">
-            <div className="detailTitleWrapper">
-              <h2 className="title">공연 상세 보기</h2>
-            </div>
-
-            <div className="detailCard">
-              <div className="detailTopRow">
-                <img
-                  src={performance.performanceImg}
-                  alt={`${performance.title} 포스터`}
-                  className="posterImage"
-                />
-                <div className="detailTableWrapper">
-                  <table className="detailTable">
-                    <tbody>
-                      <tr><th>공연명</th><td>{performance.title}</td></tr>
-                      <tr><th>설명</th><td>{performance.description}</td></tr>
-                      <tr><th>카테고리</th><td>{performance.category}</td></tr>
-                      <tr><th>장소</th><td>{performance.location}</td></tr>
-                      <tr>
-                        <th>공연 기간</th>
-                        <td>
-                          {performance.performStartAt} - {performance.performEndAt}
-                        </td>
-                      </tr>
-                      <tr><th>예매 오픈</th><td>{performance.performanceOpenAt}</td></tr>
-                      <tr><th>좌석 수</th><td>{performance.totalSeats}</td></tr>
-                      <tr><th>가격</th><td>{performance.price}원</td></tr>
-                      <tr><th>상태</th><td>{performance.performanceStatus}</td></tr>
-                    </tbody>
-                  </table>
-                </div>
+    <div className="mypageContainer">
+      <Header />
+      <div className="mypageContent">
+        <main className="main">
+          <div className="detailCard">
+            <h2 className="title">공연 상세 보기</h2>
+            <div className="detailTopRow">
+              <img
+                src={performance.performanceImg}
+                alt={`${performance.title} 포스터`}
+                className="posterImage"
+              />
+              <div className="detailTableWrapper">
+                <table className="detailTable">
+                  <tbody>
+                    <tr>
+                      <th>공연명</th>
+                      <td>{performance.title}</td>
+                    </tr>
+                    <tr>
+                      <th>설명</th>
+                      <td>{performance.description}</td>
+                    </tr>
+                    <tr>
+                      <th>카테고리</th>
+                      <td>{performance.category}</td>
+                    </tr>
+                    <tr>
+                      <th>장소</th>
+                      <td>{performance.location}</td>
+                    </tr>
+                    <tr>
+                      <th>공연 기간</th>
+                      <td>
+                        {performance.performStartAt} -{" "}
+                        {performance.performEndAt}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>예매 오픈</th>
+                      <td>{performance.performanceOpenAt}</td>
+                    </tr>
+                    <tr>
+                      <th>좌석 수</th>
+                      <td>{performance.totalSeats}</td>
+                    </tr>
+                    <tr>
+                      <th>가격</th>
+                      <td>{performance.price}원</td>
+                    </tr>
+                    <tr>
+                      <th>상태</th>
+                      <td>{performance.performanceStatus}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-
-              <div className="detailBtnRow">
-                    <div className="leftBtns">
-                      <button className="editBtn" onClick={handleEdit}>수정</button>
-                    </div>
-                    <button className="cancelBtn" onClick={() => navigate(-1)}>돌아가기</button>
-                  </div>
             </div>
-          </main>
-        </div>
-        <Footer />
-      </div>
-    );
-  };
 
+            <div className="detailBtnRow">
+              <div className="leftBtns">
+                <button className="editBtn" onClick={handleEdit}>
+                  수정
+                </button>
+              </div>
+              <button className="cancelBtn" onClick={() => navigate(-1)}>
+                돌아가기
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
+      <Footer />
+    </div>
+  );
+};
 
 export default MyPerformanceDetail;
