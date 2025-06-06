@@ -25,6 +25,7 @@ function ShowDetail() {
   const [userData, setUserData] = useState(null);
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const navigate = useNavigate();
+  const [statusMessage, setStatusMessage] = useState("");
 
   useEffect(() => {
     axios
@@ -235,7 +236,13 @@ function ShowDetail() {
                               data.estimatedTime,
                             );
 
-                            const wsUrl = `${WEBSOCKET_URL}?userId=${userId}`;
+                            if (!userId || !performId) {
+                              console.error(
+                                "❌ WebSocket 연결 전에 userId 또는 performId가 비어있음",
+                              );
+                              return;
+                            }
+                            const wsUrl = `${WEBSOCKET_URL}?userId=${userId}&performId=${performId}`;
                             console.log("🔌 WebSocket 연결 시도:", wsUrl);
 
                             const ws = new WebSocket(wsUrl);
@@ -258,8 +265,9 @@ function ShowDetail() {
 
                             ws.onerror = (error) => {
                               console.error("❌ WebSocket 에러:", error);
-                              document.getElementById("status").innerText =
-                                "⚠️ 연결 오류가 발생했습니다.";
+                              setStatusMessage(
+                                "⚠️ WebSocket 연결 오류가 발생했습니다.",
+                              );
                             };
 
                             ws.onclose = () => {
