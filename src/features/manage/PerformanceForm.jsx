@@ -115,7 +115,7 @@ const PerformanceForm = () => {
     try {
       if (id) {
         // 수정 요청
-        await axios.put(`${API_BASE_URL}/performance/manage/${id}`, payload, {
+        await axios.put(`${API_BASE_URL}/manage/${id}`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -125,7 +125,7 @@ const PerformanceForm = () => {
         alert("공연이 수정되었습니다.");
       } else {
         // 등록 요청
-        await axios.post(`${API_BASE_URL}/performance/manage`, payload, {
+        await axios.post(`${API_BASE_URL}/manage`, payload, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -150,7 +150,7 @@ const PerformanceForm = () => {
     const fetchPerformance = async () => {
       try {
         const token = localStorage.getItem("accessToken");
-        const res = await axios.get(`${API_BASE_URL}/performance/manage/${id}`, {
+        const res = await axios.get(`${API_BASE_URL}/manage/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
