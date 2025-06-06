@@ -248,8 +248,6 @@ function ShowDetail() {
 
                             const ws = new WebSocket(wsUrl);
 
-                            setQueueModalVisible(true); // ✅ 모달 띄우기
-
                             ws.onmessage = (event) => {
                               const msg = JSON.parse(event.data);
                               console.log("📨 WebSocket 메시지 수신:", msg);
@@ -259,9 +257,10 @@ function ShowDetail() {
                                 navigate("/reservation", {
                                   state: { performId },
                                 });
-                              } else if (msg.action === "rank") {
-                                setQueuePosition(msg.rank); // ✅ 모달에 순번 전달
+                              } else if (msg.action === "queueStatus") {
+                                setQueuePosition(msg.position); // ✅ 모달에 순번 전달
                                 setEstimatedTime(msg.estimatedTime); // ✅ 모달에 시간 전달
+                                setQueueModalVisible(true); // ✅ 모달 띄우기
                               }
                             };
 
