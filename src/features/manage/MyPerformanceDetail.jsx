@@ -97,11 +97,6 @@ const MyPerformanceDetail = () => {
           <div className="detailCard">
             <h2 className="title">공연 상세 보기</h2>
             <div className="detailTopRow">
-              <img
-                src={performance.performanceImg}
-                alt={`${performance.title} 포스터`}
-                className="posterImage"
-              />
               <div className="detailTableWrapper">
                 <table className="detailTable">
                   <tbody>
