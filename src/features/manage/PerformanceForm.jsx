@@ -117,50 +117,21 @@ const PerformanceForm = () => {
         id && form.performanceCode?.trim()
           ? form.performanceCode
           : generatePerformanceCode(form.category),
+      performanceImg: form.performanceImg, // 이미지 유지
     };
 
     try {
-      if (imgInputMode === "file") {
-        if (!(form.performanceImg instanceof File)) {
-          setErrorMsg("이미지 파일을 업로드 해주세요.");
-          setIsSubmitting(false);
-          return;
+      await axios[id ? "put" : "post"](
+        `${API_BASE_URL}/manage${id ? `/${id}` : ""}`,
+        dto,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
         }
-
-        const formData = new FormData();
-        formData.append("dto", new Blob([JSON.stringify(dto)], { type: "application/json" }));
-        formData.append("image", form.performanceImg);
-
-        await axios[id ? "put" : "post"](
-          `${API_BASE_URL}/manage${id ? `/${id}` : ""}`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "multipart/form-data",
-            },
-            withCredentials: true,
-          }
-        );
-      } else {
-        if (!imgUrl.trim()) {
-          setErrorMsg("이미지 URL을 입력해 주세요.");
-          setIsSubmitting(false);
-          return;
-        }
-
-        await axios[id ? "put" : "post"](
-          `${API_BASE_URL}/manage${id ? `/${id}` : ""}`,
-          { ...dto, performanceImg: imgUrl },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
-        );
-      }
+      );
 
       alert(id ? "공연이 수정되었습니다." : "공연이 등록되었습니다.");
       navigate("/manage/myperformances");
@@ -171,6 +142,7 @@ const PerformanceForm = () => {
       setIsSubmitting(false);
     }
   };
+
 
   useEffect(() => {
     if (!id) return;
