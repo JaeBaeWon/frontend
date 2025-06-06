@@ -56,7 +56,7 @@ const PerformanceForm = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [searchParams] = useSearchParams();
-  const id = searchParams.get("id"); // 있으면 수정 모드
+  const id = searchParams.get("id");
   const navigate = useNavigate();
 
   const isFormValid =
@@ -77,8 +77,13 @@ const PerformanceForm = () => {
     setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
-  const getInputClass = (name) =>
-    !form[name] && touched[name] ? "performanceInput error" : "performanceInput";
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setForm((prev) => ({ ...prev, performanceImg: file }));
+      setTouched((prev) => ({ ...prev, performanceImg: true }));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,7 +98,7 @@ const PerformanceForm = () => {
     setErrorMsg("");
     const token = localStorage.getItem("accessToken");
 
-    const payload = {
+    const dto = {
       title: form.title,
       description: form.description,
       category: form.category,
@@ -101,21 +106,22 @@ const PerformanceForm = () => {
       performanceEndAt: form.performanceEndAt,
       performanceOpenAt: form.performanceOpenAt,
       location: form.location,
-      performanceImg: form.performanceImg,
       price: Number(form.price),
       totalSeats: Number(form.totalSeats),
       performanceStatus: getPerformanceStatus(form.performanceOpenAt, form.performanceEndAt),
-      performanceCode: id && form.performanceCode?.trim()
-        ? form.performanceCode
-        : generatePerformanceCode(form.category),
+      performanceCode:
+        id && form.performanceCode?.trim()
+          ? form.performanceCode
+          : generatePerformanceCode(form.category),
     };
-
-    console.log("최종 전송 payload:", payload);
 
     try {
       if (id) {
-        // 수정 요청
-        await axios.put(`${API_BASE_URL}/manage/${id}`, payload, {
+        // 수정 요청: 이미지 수정 불가능 (백엔드 지원 안됨)
+        await axios.put(`${API_BASE_URL}/manage/${id}`, {
+          ...dto,
+          performanceImg: typeof form.performanceImg === "string" ? form.performanceImg : "",
+        }, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
@@ -124,11 +130,15 @@ const PerformanceForm = () => {
         });
         alert("공연이 수정되었습니다.");
       } else {
-        // 등록 요청
-        await axios.post(`${API_BASE_URL}/manage`, payload, {
+        // 등록 요청: 이미지와 dto를 multipart로 전송
+        const formData = new FormData();
+        formData.append("dto", new Blob([JSON.stringify(dto)], { type: "application/json" }));
+        formData.append("image", form.performanceImg);
+
+        await axios.post(`${API_BASE_URL}/manage`, formData, {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         });
@@ -137,9 +147,9 @@ const PerformanceForm = () => {
 
       navigate("/manage/myperformances");
     } catch (err) {
-        console.error("❌ 공연 등록/수정 실패", err);
-        setErrorMsg(err?.response?.data?.message || "요청에 실패했습니다. 다시 시도해 주세요.");
-      } finally {
+      console.error("❌ 공연 등록/수정 실패", err);
+      setErrorMsg(err?.response?.data?.message || "요청에 실패했습니다. 다시 시도해 주세요.");
+    } finally {
       setIsSubmitting(false);
     }
   };
@@ -151,9 +161,7 @@ const PerformanceForm = () => {
       try {
         const token = localStorage.getItem("accessToken");
         const res = await axios.get(`${API_BASE_URL}/manage/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         });
         const data = res.data;
@@ -165,7 +173,7 @@ const PerformanceForm = () => {
           performanceEndAt: formatToLocalDatetime(data.performanceEndAt),
           performanceOpenAt: formatToLocalDatetime(data.performanceOpenAt),
           location: data.location,
-          performanceImg: data.performanceImg,
+          performanceImg: data.performanceImg, // URL
           price: data.price?.toString(),
           totalSeats: data.totalSeats?.toString(),
           performanceCode: data.performanceCode || "",
@@ -179,6 +187,9 @@ const PerformanceForm = () => {
 
     fetchPerformance();
   }, [id]);
+
+  const getInputClass = (name) =>
+    !form[name] && touched[name] ? "performanceInput error" : "performanceInput";
 
   return (
     <div className="mypageContainer">
@@ -270,9 +281,7 @@ const PerformanceForm = () => {
                 >
                   <option value="">장소 선택</option>
                   {locations.map((loc) => (
-                    <option key={loc} value={loc}>
-                      {loc}
-                    </option>
+                    <option key={loc} value={loc}>{loc}</option>
                   ))}
                 </select>
               </div>
@@ -289,13 +298,12 @@ const PerformanceForm = () => {
               </div>
 
               <div className="formGroup">
-                <label>포스터 이미지 URL</label>
+                <label>포스터 이미지 업로드</label>
                 <input
-                  type="text"
+                  type="file"
                   name="performanceImg"
-                  placeholder="https://example.com/poster.jpg"
-                  value={form.performanceImg}
-                  onChange={handleChange}
+                  accept="image/*"
+                  onChange={handleFileChange}
                   className={getInputClass("performanceImg")}
                 />
               </div>
