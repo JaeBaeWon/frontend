@@ -8,7 +8,6 @@ import ShowInfo from "../../components/reservation/ShowInfo";
 import CheckUserInfo from "./CheckUserInfo";
 import Payment from "./Payment";
 import ShowPayInfo from "./ShowPayInfo";
-import WaitingQueueModal from "./WaitingQueueModal";
 import "./Reservation.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
@@ -157,12 +156,6 @@ const ReservationFlow = () => {
           </div>
         </div>
       </div>
-      {waitingStatus.isWaiting && (
-        <WaitingQueueModal
-          position={waitingStatus.position}
-          estimatedTime={waitingStatus.estimatedTime}
-        />
-      )}
     </div>
   );
 };

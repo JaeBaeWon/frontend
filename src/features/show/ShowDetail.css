@@ -179,13 +179,24 @@
 }
 
 .custom-button {
-  margin-top: 0;
+  margin-top: 12px;
   background-color: var(--primary);
   color: #fff;
-  padding: 10px 24px;
+  padding: 12px 32px;
   border-radius: 6px;
-  font-weight: bold;
+  font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
   border: none;
   outline: none;
+  transition:
+    background 0.2s,
+    color 0.2s;
+  width: auto;
+  height: auto;
+}
+
+.react-datepicker__day:hover {
+  background-color: var(--primary-300);
+  color: #fff;
 }

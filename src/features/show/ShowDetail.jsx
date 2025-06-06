@@ -8,7 +8,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { parseISO } from "date-fns";
 import "./ShowDetail.css";
-import WaitingQueueModal from "../reservation/WaitingQueueModal";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
 
@@ -21,8 +20,8 @@ function ShowDetail() {
   const [queueModalVisible, setQueueModalVisible] = useState(false);
   const [queuePosition, setQueuePosition] = useState(null);
   const [estimatedTime, setEstimatedTime] = useState(null);
-  0;
   const [userData, setUserData] = useState(null);
+  const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -103,8 +102,8 @@ function ShowDetail() {
     );
 
   const statusTextMap = {
-    UPCOMING: "공연 예정",
-    ONGOING: "공연 진행 중",
+    UPCOMING: "오픈 예정",
+    ONGOING: "진행 중",
     CLOSED: "공연 종료",
   };
 
@@ -167,13 +166,13 @@ function ShowDetail() {
             {!isClosed && (
               <>
                 <button
-                  className="showdetail-select-btn"
-                  onClick={() => setShowReservationUI(true)}
+                  className="custom-button"
+                  onClick={() => setIsDatePickerOpen((prev) => !prev)}
                 >
                   날짜 선택
                 </button>
 
-                {showReservationUI && (
+                {isDatePickerOpen && (
                   <div className="custom-datepicker-wrapper">
                     <DatePicker
                       selected={selectedDate}
@@ -190,7 +189,7 @@ function ShowDetail() {
                         navigate("/reservation", { state: { performId } });
                       }}
                     >
-                      이 날짜로 예매하기
+                      예매하기
                     </button>
                   </div>
                 )}
@@ -199,14 +198,6 @@ function ShowDetail() {
           </div>
         </section>
       </main>
-
-      {/* ✅ 대기열 모달 조건부 렌더링 */}
-      {queueModalVisible && (
-        <WaitingQueueModal
-          position={queuePosition}
-          estimatedTime={estimatedTime}
-        />
-      )}
 
       <Footer />
     </div>
