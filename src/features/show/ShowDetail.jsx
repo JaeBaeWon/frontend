@@ -10,6 +10,8 @@ import { parseISO } from "date-fns";
 import "./ShowDetail.css";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+const GATEWAY_URL = import.meta.env.VITE_API_URL;
+const WEBSOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
 function ShowDetail() {
   const { performId } = useParams();
@@ -186,7 +188,89 @@ function ShowDetail() {
                       type="button"
                       className="custom-button"
                       onClick={async () => {
-                        navigate("/reservation", { state: { performId } });
+                        console.log("🖱️ 예매 버튼 클릭됨");
+
+                        if (!GATEWAY_URL) {
+                          console.error(
+                            "⛔ API Gateway URL이 설정되지 않았습니다.",
+                          );
+                          return;
+                        }
+
+                        console.log("✅ API Gateway URL 확인됨:", GATEWAY_URL);
+                        console.log("🎯 요청에 사용될 performId:", performId);
+                        try {
+                          const response = await fetch(
+                            `${GATEWAY_URL}/ticket/enter`,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify({ performId }),
+                            },
+                          );
+
+                          const text = await response.text();
+                          console.log("✅ 받은 응답:", text);
+
+                          let data = null;
+                          try {
+                            data = JSON.parse(text);
+                          } catch (err) {
+                            navigate("/reservation", { state: { performId } });
+                            return;
+                          }
+
+                          const userId = data.userId;
+                          localStorage.setItem("userId", userId);
+
+                          if (data.action === "redirect") {
+                            navigate("/reservation", { state: { performId } });
+                          } else if (data.action === "wait") {
+                            console.log("⏳ 대기열 진입됨");
+                            console.log("📍 대기 순번:", data.position);
+                            console.log(
+                              "🕒 예상 대기 시간:",
+                              data.estimatedTime,
+                            );
+
+                            const wsUrl = `${WEBSOCKET_URL}?userId=${userId}`;
+                            console.log("🔌 WebSocket 연결 시도:", wsUrl);
+
+                            const ws = new WebSocket(wsUrl);
+
+                            ws.onmessage = (event) => {
+                              const msg = JSON.parse(event.data);
+                              console.log("📨 WebSocket 메시지 수신:", msg);
+
+                              if (msg.action === "enter") {
+                                console.log("🎉 입장 가능!");
+                                navigate("/reservation", {
+                                  state: { performId },
+                                });
+                              } else if (msg.action === "rank") {
+                                setQueueModalVisible(true); // ✅ 모달 띄우기
+                                setQueuePosition(msg.rank); // ✅ 모달에 순번 전달
+                                setEstimatedTime(msg.estimatedTime); // ✅ 모달에 시간 전달
+                              }
+                            };
+
+                            ws.onerror = (error) => {
+                              console.error("❌ WebSocket 에러:", error);
+                              document.getElementById("status").innerText =
+                                "⚠️ 연결 오류가 발생했습니다.";
+                            };
+
+                            ws.onclose = () => {
+                              console.log("🔌 WebSocket 연결 종료");
+                            };
+                          } else {
+                            throw new Error("알 수 없는 action 값");
+                          }
+                        } catch (error) {
+                          console.error("⛔ 예매 요청 실패:", error);
+                        }
                       }}
                     >
                       예매하기
