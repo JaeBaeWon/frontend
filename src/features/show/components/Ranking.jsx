@@ -14,18 +14,16 @@ function Ranking() {
   useEffect(() => {
     const fetchRanking = async () => {
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/performance/ranking?size=15`,
-        );
-        const shows = response.data.content.map((item) => ({
-          id: item.performId,
+        const response = await axios.get(`${API_BASE_URL}/performance/ranking`);
+        const shows = response.data.map((item) => ({
+          id: item.performanceId,
           title: item.title,
           genre: item.category,
-          thumbnailUrl: item.performImg.startsWith("/")
-            ? item.performImg
-            : "/" + item.performImg,
+          thumbnailUrl: item.performanceImg?.startsWith("/")
+            ? item.performanceImg
+            : "/" + item.performanceImg,
           venue: item.location,
-          period: `${item.performStartAt} ~ ${item.performEndAt}`,
+          period: `${formatDate(item.performanceStartAt)} ~ ${formatDate(item.performanceEndAt)}`,
         }));
         setRanking(shows.slice(0, 15));
       } catch (error) {
@@ -38,6 +36,16 @@ function Ranking() {
 
     fetchRanking();
   }, []);
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
 
   return (
     <div className="rankingContainer">
@@ -59,7 +67,7 @@ function Ranking() {
             </div>
             {/* 4~15위 리스트 */}
             <ul className="rankingList">
-              {ranking.slice(3, 15).map((show, idx) => (
+              {ranking.slice(3).map((show, idx) => (
                 <li key={show.id} className="rankingListItem">
                   <span className="listRank">{idx + 4}</span>
                   <img
