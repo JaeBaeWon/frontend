@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../../components/layout/Header";
 import Footer from "../../../components/layout/Footer";
 import "./Ranking.css";
@@ -6,6 +7,8 @@ import ShowCard from "./ShowCard";
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_TEST_URL;
+
+const navigate = useNavigate();
 
 function Ranking() {
   const [ranking, setRanking] = useState([]);
@@ -59,7 +62,12 @@ function Ranking() {
             {/* 1~3위 카드 */}
             <div className="rankingGrid">
               {ranking.slice(0, 3).map((show, idx) => (
-                <div key={show.id} className="rankingCardWrap">
+                <div
+                  key={show.id}
+                  className="rankingCardWrap"
+                  onClick={() => navigate(`/show/${show.id}`)}
+                  style={{ cursor: "pointer" }}
+                >
                   <div className="rankBadge">{idx + 1}</div>
                   <ShowCard {...show} />
                 </div>
@@ -68,13 +76,14 @@ function Ranking() {
             {/* 4~15위 리스트 */}
             <ul className="rankingList">
               {ranking.slice(3).map((show, idx) => (
-                <li key={show.id} className="rankingListItem">
+                <li
+                  key={show.id}
+                  className="rankingListItem"
+                  onClick={() => navigate(`/show/${show.id}`)}
+                  style={{ cursor: "pointer" }}
+                >
                   <span className="listRank">{idx + 4}</span>
-                  <img
-                    src={show.thumbnailUrl}
-                    alt={show.title}
-                    className="listThumb"
-                  />
+                  <img src={show.thumbnailUrl} alt={show.title} className="listThumb" />
                   <div className="listInfo">
                     <div className="listTitle">{show.title}</div>
                     <div className="listVenue">{show.venue}</div>
